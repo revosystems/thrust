@@ -14,8 +14,8 @@
                     <div class='{{$field->getSortableHeaderClass()}}'>{{ $field->getTitle(true) }}
                     @if ($field->sortableInIndex() && !request('search'))
                         <div class='sortArrows'>
-                            <a href='{{ BadChoice\Thrust\ResourceFilters\Sort::link($field->field, 'desc')}}' class='sortUp'>▲</a>
-                            <a href='{{ BadChoice\Thrust\ResourceFilters\Sort::link($field->field, 'asc')}}'  class='sortDown'>▼</a>
+                            <a href='{{ BadChoice\Thrust\ResourceFilters\Sort::link($field->field, 'asc')}}' class='sortUp'>▲</a>
+                            <a href='{{ BadChoice\Thrust\ResourceFilters\Sort::link($field->field, 'desc')}}'  class='sortDown'>▼</a>
                         </div>
                     @endif
                     </div>
