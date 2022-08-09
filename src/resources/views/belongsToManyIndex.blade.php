@@ -13,7 +13,7 @@
 <div id="popup-results"></div>
 
 @if (app(BadChoice\Thrust\ResourceGate::class)->can($pivotResourceName, 'create'))
-    <div class="mt4">
+    <div class="mt-6">
         <form id='belongsToManyForm' action="{{route('thrust.belongsToMany.store', [$resourceName, $object->id, $belongsToManyField->field]) }}" method="POST">
             {{ csrf_field() }}
             <select id="id" name="id" @if($belongsToManyField->searchable) class="searchable" @endif >

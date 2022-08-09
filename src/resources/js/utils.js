@@ -39,7 +39,7 @@ function addActionsDropdownListener() {
 }
 
 function addListeners(){
-    $('.dropdown.inline').on('click', function () {
+    $('.dropdown.inline-block').on('click', function () {
         addActionsDropdownListener()
     });
 

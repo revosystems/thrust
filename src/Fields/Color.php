@@ -13,7 +13,7 @@ class Color extends Text
         if (! $color && $this->colorIndexCallback) {
             $color = call_user_func($this->colorIndexCallback, $object) ?? $color;
         }
-        return "<div class='circle inline mr1' style='vertical-align:bottom; width:{$this->blockSize}px; height:{$this->blockSize}px; background-color:{$color}'></div>{$this->getValue($object)}";
+        return "<div class='circle inline-block mr1' style='vertical-align:bottom; width:{$this->blockSize}px; height:{$this->blockSize}px; background-color:{$color}'></div>{$this->getValue($object)}";
     }
 
     public function colorIndexCallback($colorCallback)

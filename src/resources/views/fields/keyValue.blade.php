@@ -2,16 +2,16 @@
     <input type="hidden" name="{{$field}}" value="">
     <script type="template/html" id="template-{{$field}}">
 {{--    <template id="template-{{$field}}">--}}
-        <div id="keyValue-template" class="mb2 keyValueField-{{$field}}" style="height:auto">
-            <div class="inline" id="keyValueFields-template">
-                <div class="inline" id="key">
+        <div id="keyValue-template" class="mb-2 keyValueField-{{$field}}" style="height:auto">
+            <div class="inline-block" id="keyValueFields-template">
+                <div class="inline-block" id="key">
                     @if(! $keyValueField->keyOptions) 
                         <input type='text' id='{{$field.'[template][null]'}}' value='' name='{{$field.'[template][null]'}}' placeholder='key' style='width:132px'>
                     @else
                         <select id='{{$field.'[template][null]'}}' name='{{$field.'[template][null]'}}' style='width:132px'>{!! $keyValueField->generateOptions($keyValueField->keyOptions, null) !!}</select>
                     @endif
                 </div>
-                <div class="inline" id="value">
+                <div class="inline-block" id="value">
                     @if(! $keyValueField->valueOptions)
                         <input type='text' id='{{$field.'[template][null]'}}' value='' name='{{$field.'[template][null]'}}' placeholder='value' style='width:132px'>
                     @else
@@ -28,9 +28,9 @@
     <div id="keyValue-{{$field}}">
         @if (! empty($value))
             @foreach($value as $v)
-                <div id="keyValue-{{$loop->iteration}}" class="mb2 keyValueField-{{$field}}" style="height:auto">
-                    <div class="inline" id="keyValueFields-{{$loop->iteration}}">
-                        <div class="inline" id="key">
+                <div id="keyValue-{{$loop->iteration}}" class="mb-2 keyValueField-{{$field}}" style="height:auto">
+                    <div class="inline-block" id="keyValueFields-{{$loop->iteration}}">
+                        <div class="inline-block" id="key">
 
                             @if(! $keyValueField->keyOptions) 
                                 <input @if($fixed) readonly="readonly" @endif type='text' id='{{$field.'['.$loop->iteration.'][key]'}}' value='{{$v->key}}' name='{{$field.'['.$loop->iteration.'][key]'}}' placeholder='key' style='width:132px'>
@@ -43,7 +43,7 @@
                                 @endif
                             @endif
                         </div>
-                        <div class="inline" id="value">
+                        <div class="inline-block" id="value">
                             @if(! $keyValueField->valueOptions)
                                 <input type='text' id='{{$field.'['.$loop->iteration.'][value]'}}' value='{{$v->value}}' name='{{$field.'['.$loop->iteration.'][value]'}}' placeholder='value' style='width:132px'>
                             @else
@@ -62,7 +62,7 @@
     </div>
     @if(! $fixed)
         <div>
-            <a class="button secondary" onclick="keyValueAdd('{{$field}}')" class="pointer"> @icon(plus) {{ __('admin.add') }}</a>
+            <a class="button secondary" onclick="keyValueAdd('{{$field}}')" class="cursor-pointer"> @icon(plus) {{ __('admin.add') }}</a>
         </div>
     @endif
 

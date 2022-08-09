@@ -1,6 +1,6 @@
-<div class="thrust-panel thrust-partition-metric m2">
+<div class="thrust-panel thrust-partition-metric m-2">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
-    <h4 class="ml2 lighter-gray mb-2">{{ $metric->getTitle() }}</h4>
+    <h4 class="ml-2 lighter-gray mb-2">{{ $metric->getTitle() }}</h4>
     <canvas id="{{$metric->uriKey()}}" width="400" height="145"></canvas>
     <script>
         new Chart('{{$metric->uriKey()}}', {

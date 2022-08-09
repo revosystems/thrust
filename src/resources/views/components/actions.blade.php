@@ -10,7 +10,7 @@ $actions = collect($resource->actions());
                 @foreach($actions->where('main', false) as $action)
                     <div class="">
                         @if (count($action->fields()) == 0)
-                            <a class='pointer' onclick='runAction("{{ $action->getClassForJs() }}", "{{$action->needsConfirmation}}", "{{$action->needsSelection}}", "{{$action->getConfirmationMessage()}}")'>
+                            <a class='cursor-pointer' onclick='runAction("{{ $action->getClassForJs() }}", "{{$action->needsConfirmation}}", "{{$action->needsSelection}}", "{{$action->getConfirmationMessage()}}")'>
                                 {!! $action->getIcon() !!} {!! $action->getTitle() !!}
                             </a>
                         @else
