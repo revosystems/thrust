@@ -37,10 +37,16 @@ class ResourceGate
     public function checkPolicyValidation($resource, $ability, $object, $policy): bool
     {
         $policyInstance = new $policy;
-        if (method_exists($policyInstance, 'before') && $policyInstance->before(auth()->user(), $ability, $object) !== null) {
-            return $policyInstance->before(auth()->user(), $ability, $object);
+        $abilityResult = $policyInstance->$ability(auth()->user(), $object ?? $resource::$model);
+        if (!method_exists($policyInstance, 'before')) {
+            return $abilityResult;
         }
-        return $policyInstance->$ability(auth()->user(), $object ?? $resource::$model);
+        $beforeResult = $policyInstance->before(auth()->user(), $ability, $object);
+        if ($beforeResult === null) {
+            return $abilityResult;
+        }
+
+        return $beforeResult && $abilityResult;
     }
 
     public function policyFor($resource){
