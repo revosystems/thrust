@@ -4,7 +4,6 @@ namespace BadChoice\Thrust\Fields;
 
 class KeyValue extends Field
 {
-    public $showInEdit   = false;
     public $keyOptions   = null;
     public $valueOptions = null;
     public $searchable   = false;
