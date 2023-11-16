@@ -30,6 +30,6 @@ enum Status: int
 
     public function html(string $tooltip): string
     {
-        return "<i class='{$this->icon()}' style='font-size: 18px; color: {$this->color()};' title='$tooltip'></i>";
+        return '<i class="' . $this->icon() . '" style="font-size: 18px; color: ' . $this->color() . '" title="' . $tooltip . '"></i>';
     }
 }
