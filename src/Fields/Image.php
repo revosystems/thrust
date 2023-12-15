@@ -100,11 +100,12 @@ class Image extends File implements Prunable
         }
 
         $filename = $this->forceFilename ?? Str::random(10) . '.png';
-        $this->getStorage()->put($this->getPath() . $filename, (string)$image->encode('png'), ['cache-control' => 'no-cache']);
+        $this->getStorage()->put($this->getPath() . $filename, (string)$image->encode('png'), ['cache-control' => 'no-cache, public']);
         $this->getStorage()->put($this->getPath() . "{$this->resizedPrefix}{$filename}", (string)$image->resize(100, 100, function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
-        })->encode('png'), ['cache-control' => 'no-cache']);
+        })->encode('png'), 
+        ['cache-control' => 'no-cache, public']);
         $this->updateField($object, $filename);
     }
 
