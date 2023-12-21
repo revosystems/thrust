@@ -19,7 +19,7 @@ class Image extends File implements Prunable
     protected $maxWidth  = 400;
     protected $square  = false;
     protected $forceFilename = null;
-
+    protected $saveCopyAs = null;
     protected $maxFileSize = 1024; // 1 MB
 
     public function gravatar($field = 'email', $default = null)
@@ -32,6 +32,12 @@ class Image extends File implements Prunable
     public function withForcedFilename($filename) : self
     {
         $this->forceFilename = $filename;
+        return $this;
+    }
+
+    public function withCopyAs($saveCopyAs) : self
+    {
+        $this->saveCopyAs = $saveCopyAs;
         return $this;
     }
 
@@ -87,6 +93,31 @@ class Image extends File implements Prunable
     public function store($object, $file)
     {
         $this->delete($object, false);
+        $image = $this->makeImage($file);
+
+        $filename = $this->forceFilename ?? Str::random(10) . '.png';
+
+        $this->uploadToStorage($filename, $image);
+        $this->updateField($object, $filename);
+
+        if($this->saveCopyAs){
+            $image = $this->makeImage($file);
+
+            $this->uploadToStorage($this->saveCopyAs, $image);
+        }
+    }
+
+    protected function uploadToStorage($filename, $image)
+    {
+        $this->getStorage()->put($this->getPath() . $filename, (string)$image->encode('png'), $this->storageVisibility);
+        $this->getStorage()->put($this->getPath() . "{$this->resizedPrefix}{$filename}", (string)$image->resize(100, 100, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        })->encode('png'), $this->storageVisibility);
+    }
+
+    protected function makeImage ($file) 
+    {
         $image      = InterventionImage::make($file);
 
         $image->resize($this->maxWidth, $this->maxHeight, function ($constraint) {
@@ -98,14 +129,7 @@ class Image extends File implements Prunable
             $size = min($image->width(), $image->height());
             $image->crop($size, $size);
         }
-
-        $filename = $this->forceFilename ?? Str::random(10) . '.png';
-        $this->getStorage()->put($this->getPath() . $filename, (string)$image->encode('png'), $this->storageVisibility);
-        $this->getStorage()->put($this->getPath() . "{$this->resizedPrefix}{$filename}", (string)$image->resize(100, 100, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        })->encode('png'), $this->storageVisibility);
-        $this->updateField($object, $filename);
+        return $image;
     }
 
     protected function deleteFile($object)
