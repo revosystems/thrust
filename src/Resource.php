@@ -444,7 +444,7 @@ abstract class Resource
     /**
      * @throws ValidationException
      */
-    final public function validate(Request $request, mixed $id = null): void
+    final public function validate(Request $request, string|int|null $id = null): void
     {
         $validator = \Illuminate\Support\Facades\Validator::make($request->all(), $this->getValidationRules($id));
         $this->withValidator($request, $validator);
