@@ -67,7 +67,7 @@ abstract class Field
 
     public function getRowCss() : string {
         if ($this->displayFrom) {
-            return "hidden {$this->displayFrom}:block " . $this->rowClass;
+            return "hidden {$this->displayFrom}:table-cell " . $this->rowClass;
         }
         return $this->rowClass;
     }
