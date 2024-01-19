@@ -10,7 +10,7 @@
                 <th class="hide-mobile">  </th>
             @endif
             @foreach($fields as $field)
-                <th class="{{ $field->rowClass }}">
+                <th class="{{ $field->getRowCss() }}">
                     @include('thrust::fieldHeader')
                 </th>
             @endforeach
@@ -24,7 +24,7 @@
                     <td class="sort action hide-mobile"></td>
                 @endif
                 @foreach($fields as $field)
-                    <td class="{{$field->rowClass}}">
+                    <td class="{{$field->getRowCss()}}">
                         @if (! $field->shouldHide($row, 'index') && $field->shouldShow($row, 'index') && $resource->can($field->policyAction, $row))
                             {!! $field->displayInIndex($row) !!}
                         @endif

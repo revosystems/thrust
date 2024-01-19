@@ -28,6 +28,7 @@ abstract class Field
     public $withoutIndexHeader  = false;
     public $with                = [];
     public $rowClass            = '';
+    public $displayFrom         = null;
 
     public $excludeOnMultiple = false;
 
@@ -52,10 +53,23 @@ abstract class Field
         return $this;
     }
 
+    public function displayFrom(string $size) : self
+    {
+        $this->displayFrom = $size;
+        return $this;
+    }
+
     public function rowClass($class)
     {
         $this->rowClass = $class;
         return $this;
+    }
+
+    public function getRowCss() : string {
+        if ($this->displayFrom) {
+            return "hidden {$this->displayFrom}:block " . $this->rowClass;
+        }
+        return $this->rowClass;
     }
 
     public function withoutIndexHeader($withoutIndexHeader = true)
