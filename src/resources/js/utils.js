@@ -109,6 +109,7 @@ function loadPopup(url){
     $("#popupContent").load(url,function(response,status,xhr) {
         console.log('ok', url, status);
         $(".loadingImage").hide();
+        $('#popup').popup('show')
         if(status == "error")
             $("#popupContent").html("Error while loading: " + xhr.status + " " + xhr.statusText);
         else
