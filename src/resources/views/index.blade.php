@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div id="all" @if(request('search')) style="display: none;" @endif>
+    <div id="all" @class(['hidden' => request('search')])>
         {!! (new BadChoice\Thrust\Html\Index($resource))->show() !!}
     </div>
     <div id="results"></div>
