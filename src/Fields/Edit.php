@@ -15,7 +15,7 @@ class Edit extends Field {
     public function displayInIndex($object)
     {
         $link = route('thrust.edit', [Thrust::resourceNameFromModel($object), $object->id]);
-        return "<a class='showPopup edit thrust-edit' href='{$link}'></a> </td>";
+        return "<a class='showPopup' href='{$link}'>Edit</a>";
     }
 
     public function displayInEdit($object, $inline = false){ }

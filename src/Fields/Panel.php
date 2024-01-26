@@ -41,11 +41,12 @@ class Panel extends FieldContainer
 
     public function displayInEdit($object, $inline = false)
     {
-        $html = '<div class="'. $this->panelClass .'" id="panel_'.$this->getId().'" title="'. $this->title .'">';
-        $html .= $this->getTitle();
-        return $html . collect($this->fields)->filter->shouldShow($object, 'edit')->where('showInEdit', true)->reduce(function ($carry, $field) use ($object) {
-            return $carry . ($field->shouldHide($object, 'edit') ? '' : $field->displayInEdit($object));
-        }) .'</div>';
+        return view('thrust::fields.panel', [
+            'id' => $this->panelId,
+            'object' => $object,
+            'title' => $this->getTitle(),
+            'fields' => $this->fields
+        ]);
     }
 
     protected function getTitle()

@@ -22,7 +22,7 @@ class Delete extends Field {
         $escapedConfirmMessage = htmlentities($this->getDeleteConfirmationMessage(), ENT_QUOTES);
         return "<a class='delete-resource thrust-delete'".
             ( $this->deleteConfirmationMessage ? "data-delete='resource confirm' confirm-message='{$escapedConfirmMessage}'" : "data-delete='resource'") .
-            " href='{$link}'></a>";
+            " href='{$link}'>Delete</a>";
     }
 
     public function displayInEdit($object, $inline = false){ }

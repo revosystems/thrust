@@ -40,10 +40,10 @@ class Text extends Field
             'inline'          => $inline,
             'title'           => $this->getTitle(),
             'type'            => $this->getFieldType(),
-            'field'           => $this->field,
+            'field'            => $this->field,
             'value'           => htmlspecialchars_decode($this->getValue($object)),
             'validationRules' => $this->getHtmlValidation($object, $this->getFieldType()),
-            'attributes'      => $this->getFieldAttributes(),
+            'fieldAttributes'  => $this->getFieldAttributes(),
             'description'     => $this->getDescription(),
         ])->render();
     }

@@ -1,4 +1,7 @@
-<a class="button secondary thrust-inline-creation-button" onclick="thrustCreateInline{{$field}}()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+@props(['field', 'inlineCreationData'])
+<x-ui::secondary-button class="thrust-inline-creation-button" onclick="thrustCreateInline{{$field}}()">
+    @icon(plus)
+</x-ui::secondary-button>
 <div class="thrust-inline-creation hidden" id="inline-creation-{{$field}}"></div>
 {{--@push('edit-scripts')--}}
     <script>

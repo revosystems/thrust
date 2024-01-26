@@ -3,12 +3,12 @@
         {{ $slot }}
     </div>
 @else
-    <div class='formField' id="{{$field}}_div">
-        <div class="label">{{ $title }}</div>
-        <div class="field">
+    <div class='w-full flex flex-col sm:flex-row sm:items-center' id="{{$field}}_div">
+        <div class="w-44">{{ $title }}</div>
+        <div class="field flex flex-col grow w-full">
             {{ $slot }}
             @if (isset($description))
-                <p>{!! $description !!}</p>
+                <div class="text-gray-400">{!! $description !!}</div>
             @endif
         </div>
     </div>

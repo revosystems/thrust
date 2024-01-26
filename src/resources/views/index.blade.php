@@ -10,7 +10,7 @@
             {!! $description ?? "" !!}
         </div>
 
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between space-x-4">
             @if($searchable) <x-thrust::search /> @endif
             <div class="flex items-center space-x-2">
                 <x-thrust::filters :resource="$resource" :filters="$resource->filters()" />

@@ -1,8 +1,11 @@
     @if ($fullPage)
-	<h2>{{ $title }}</h2>
+	    <div>{{ $title }}</div>
     @else
-        <div class="configForm">
-            <span> {{ $breadcrumbs }} </span>
+        <div class="flex space-x-2 items-center">
+            @if($breadcrumbs)
+                <span> {{ $breadcrumbs }} </span>
+                <x-ui::icon class="text-gray-400 text-xs">chevron-right</x-ui::icon>
+            @endif
             <h2> {{ $object->{$nameField} ?: __('thrust::messages.new') }} </h2>
         </div>
     @endif
@@ -15,25 +18,28 @@
     @endif
     {{ csrf_field() }}
     <div class="thrust-tabs"><ul id="thrust-tabs-list"></ul></div>
-    <div class="configForm">
-        @foreach($fields as $field)
-            @if (! $field->shouldHide($object, 'edit') && $field->shouldShow($object, 'edit'))
-                {!! $field->displayInEdit($object) !!}
-            @endif
-        @endforeach
+
+    {{-- Fields --}}
+    <div>
+        <x-thrust::fields.edit-fields :object="$object" :fields="$fields" />
         @includeWhen($multiple, 'thrust::quantityInput')
     </div>
 
-    @if (isset($object->id))
-        @if (app(BadChoice\Thrust\ResourceGate::class)->can($resourceName, 'update', $object))
-            @include('thrust::components.saveButton', ["updateConfirmationMessage" => $updateConfirmationMessage])
-                <a class="secondary button hidden" id="thrust-save-and-continue" onclick="submitAjaxForm('thrust-form-{{$object->id}}')">{{ __("thrust::messages.saveAndContinueEditing") }}</a>
+    {{-- SAVE BUTTONS --}}
+    <div class="mt-4 border-t pt-4">
+        @if (isset($object->id))
+            @if (app(BadChoice\Thrust\ResourceGate::class)->can($resourceName, 'update', $object))
+                <x-thrust::saveButton :updateConfirmationMessage="$updateConfirmationMessage" />
+                <x-ui::secondary-button class="hidden" id="thrust-save-and-continue" onclick="submitAjaxForm('thrust-form-{{$object->id}}')">
+                    {{ __("thrust::messages.saveAndContinueEditing") }}
+                </x-ui::secondary-button>
+            @endif
+        @else
+            @if (app(BadChoice\Thrust\ResourceGate::class)->can($resourceName, 'create', $object))
+                <x-thrust::saveButton :updateConfirmationMessage="$updateConfirmationMessage" />
+            @endif
         @endif
-    @else
-        @if (app(BadChoice\Thrust\ResourceGate::class)->can($resourceName, 'create', $object))
-            @include('thrust::components.saveButton', ["updateConfirmationMessage" => $updateConfirmationMessage])
-        @endif
-    @endif
+    </div>
 
 </form>
 

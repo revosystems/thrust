@@ -67,7 +67,7 @@ class Select extends Field
             'value'       => $this->getValue($object),
             'options'     => $this->getOptions(),
             'description' => $this->getDescription(),
-            'attributes'  => $this->getFieldAttributes(),
+            'fieldAttributes'  => $this->getFieldAttributes(),
             'hasCategories' => $this->hasCategories(),
         ])->render();
     }
