@@ -28,20 +28,19 @@ class MainAction
         if ($parent_id) {
             $link .= "?parent_id={$parent_id}";
         }
-        return "<a class='{$this->getClasses()}' href='{$link}'> {$this->getIcon()} {$title} </a>";
+        return view('thrust::actions.main',[
+            'classes' => $this->getClasses(),
+            'link' => $link,
+            'title' => $title,
+            'icon' => $this->icon
+        ]);
     }
 
     public function getClasses()
     {
         return 'button showPopup';
     }
-
-    protected function getIcon() : string
-    {
-        return $this->icon
-            ? "<i class='fa fa-{$this->icon}'></i>"
-            : '';
-    }
+    
 
     protected function getAction($resourceName) : string
     {

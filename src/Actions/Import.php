@@ -13,12 +13,7 @@ class Import extends MainAction
     {
         $this->title = 'import';
     }
-
-    public function getClasses()
-    {
-        return "button secondary";
-    }
-
+    
     public function getAction($resourceName) : string
     {
         return route('thrust.import', $resourceName);

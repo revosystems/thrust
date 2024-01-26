@@ -1,33 +1,22 @@
 @extends(config('thrust.indexLayout'))
 @section('content')
-    <div class="thrust-index-header description">
-        <span class="thrust-index-title title">
-            @if (isset($parent_id) )
-                @php $parent = $resource->parent($parent_id) @endphp
-                @if($isChild)
-                    <a href="{{ route('thrust.hasMany', $hasManyBackUrlParams) }}"> {{ \BadChoice\Thrust\Facades\Thrust::make(app(\BadChoice\Thrust\ResourceManager::class)->resourceNameFromModel($parent))->parent($parent)->name }} </a>
-                @elseif (in_array(\BadChoice\Thrust\Contracts\CustomBackRoute::class,class_implements(get_class($resource))))
-                    <a href="{{ $resource->backRoute() }}"> {{ $resource->backRouteTitle() }} </a>
-                @else
-                    <a href="{{ route('thrust.index', [app(\BadChoice\Thrust\ResourceManager::class)->resourceNameFromModel($parent) ]) }}"> {{ trans_choice(config('thrust.translationsPrefix') . Illuminate\Support\Str::singular(app(\BadChoice\Thrust\ResourceManager::class)->resourceNameFromModel($parent)), 2) }} </a>
-                @endif
-                 / {{ $parent->name }} -
-            @endif
-            {{ $resource->getTitle() }}
-            ({{ $resource->rows()->total() }})
-        </span>
-        <br><br>
-        @include('thrust::components.mainActions')
-        <div class="thrust-title-description">
+    <div class="flex flex-col space-y-2">
+        <div class="flex items-center justify-between">
+            <x-thrust::index.title :resource="$resource" :parentId="$parent_id" :isChild="$isChild"/>
+            <x-thrust::mainActions :resource="$resource" :resourceName="$resourceName"/>
+        </div>
+
+        <div class="">
             {!! $description ?? "" !!}
         </div>
 
-        @include('thrust::components.search')
-        <div class="thrust-actions">
-            @include('thrust::components.filters')
-            @include('thrust::components.actions')
+        <div class="flex items-center justify-between">
+            @if($searchable) <x-thrust::search /> @endif
+            <div class="">
+                @include('thrust::components.filters')
+                @include('thrust::components.actions')
+            </div>
         </div>
-
     </div>
 
 
@@ -45,5 +34,4 @@
     @include('thrust::components.js.actions', ['resourceName' => $resourceName])
     @include('thrust::components.js.filters', ['resourceName' => $resourceName])
     @include('thrust::components.js.editInline', ['resourceName' => $resourceName])
-
 @stop

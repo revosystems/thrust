@@ -1,4 +1,5 @@
-<div class="thrust-main-actions">
+@props(['resource', 'resourceName'])
+<div class="flex items-center space-x-2">
     <?php
         $mainActions = collect($resource->mainActions());
         if ($resource->sortableIsActive()) {
