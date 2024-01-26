@@ -1,13 +1,22 @@
+@props(['actions', 'resourceName'])
+<div>
 @foreach($actions->where('main', false) as $action)
     <div class="">
         @if (count($action->fields()) == 0)
-            <a class='pointer' onclick='runAction("{{ $action->getClassForJs() }}", "{{$action->needsConfirmation}}", "{{$action->needsSelection}}", "{{$action->getConfirmationMessage()}}")'>
-                {!! $action->getIcon() !!} {!! $action->getTitle() !!}
-            </a>
+            <x-ui::tertiary-button onclick='runAction("{{ $action->getClassForJs() }}", "{{$action->needsConfirmation}}", "{{$action->needsSelection}}", "{{$action->getConfirmationMessage()}}")'>
+                <div class="flex items-center space-x-2">
+                    <x-ui::icon class="text-gray-700">{{$action->icon}}</x-ui::icon>
+                    <div>{{ $action->getTitle() }}</div>
+                </div>
+            </x-ui::tertiary-button>
         @else
-            <a class='actionPopup' href="{{route('thrust.actions.create',[$resourceName])}}?action={{get_class($action)}}">
-                {!! $action->getIcon() !!} {!! $action->getTitle() !!}
-            </a>
+            <x-ui::tertiary-button class='actionPopup' href="{{route('thrust.actions.create',[$resourceName])}}?action={{get_class($action)}}">
+                <div class="flex items-center space-x-2">
+                    <x-ui::icon class="text-gray-700">{{$action->icon}}</x-ui::icon>
+                    <div>{{ $action->getTitle() }}</div>
+                </div>
+            </x-ui::tertiary-button >
         @endif
     </div>
 @endforeach
+</div>

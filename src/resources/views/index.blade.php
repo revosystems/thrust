@@ -2,7 +2,7 @@
 @section('content')
     <div class="flex flex-col space-y-2">
         <div class="flex items-center justify-between">
-            <x-thrust::index.title :resource="$resource" :parentId="$parent_id" :isChild="$isChild"/>
+            <x-thrust::index.title :resource="$resource" :parentId="$parent_id ?? null" :isChild="$isChild ?? false"/>
             <x-thrust::mainActions :resource="$resource" :resourceName="$resourceName"/>
         </div>
 
@@ -12,13 +12,12 @@
 
         <div class="flex items-center justify-between">
             @if($searchable) <x-thrust::search /> @endif
-            <div class="">
-                @include('thrust::components.filters')
-                @include('thrust::components.actions')
+            <div class="flex items-center space-x-2">
+                <x-thrust::filters :resource="$resource" :filters="$resource->filters()" />
+                <x-thrust::actions :actions="$actions" :resourceName="$resourceName"/>
             </div>
         </div>
     </div>
-
 
     <div id="all" @if(request('search')) style="display: none;" @endif>
         {!! (new BadChoice\Thrust\Html\Index($resource))->show() !!}

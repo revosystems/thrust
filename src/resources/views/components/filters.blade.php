@@ -1,10 +1,14 @@
-<?php $filters = $resource->filters() ?>
+@props(['resource', 'filters'])
 @if ($filters && count($filters) > 0)
-    <div x-data = "{isOpen : false}">
-        <button class="secondary relative" x-on:click="isOpen = !isOpen"> @icon(filter) @icon(caret-down)</button>
+    <x-ui::dropdown :arrow="true" :offset="8">
+        <x-slot name="trigger">
+            <x-ui::secondary-button>
+                @icon(filter) @icon(caret-down)
+            </x-ui::secondary-button>
+        </x-slot>
         <?php $filtersApplied = $resource->filtersApplied(); ?>
-        <div class="thrust-filters-dropdown absolute" x-show="isOpen" x-transition x-cloak x-on:click.away = "isOpen = false">
-            <form id="filtersForm" class="thrust-filters-form">
+        <div class="flex flex-col space-y-4">
+            <form id="filtersForm">
             @foreach (collect($filters) as $filter)
                 <div>
                     <div> {!! $filter->getIcon() !!} {!! $filter->getTitle() !!}</div>
@@ -13,8 +17,8 @@
                     </div>
                 </div>
             @endforeach
-            <button class="secondary">{{ __("thrust::messages.apply") }}</button>
+            <x-ui::secondary-button async="true" type="submit">{{ __("thrust::messages.apply") }}</x-ui::secondary-button>
             </form>
         </div>
-    </div>
+    </x-ui::dropdown>
 @endif
