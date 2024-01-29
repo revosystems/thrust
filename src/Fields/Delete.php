@@ -8,7 +8,7 @@ class Delete extends Field {
 
     public $showInEdit          = false;
     public $withoutIndexHeader  = true;
-    public $rowClass            = 'action';
+    public $rowClass            = 'w-10 text-center';
     public $policyAction        = 'delete';
     public $importable          = false;
 

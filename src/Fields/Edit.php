@@ -8,7 +8,7 @@ class Edit extends Field {
 
     public $showInEdit          = false;
     public $withoutIndexHeader  = true;
-    public $rowClass            = 'action';
+    public $rowClass            = 'w-10 text-center';
     public $policyAction        = 'update';
     public $importable          = false;
 

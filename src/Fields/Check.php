@@ -9,7 +9,7 @@ class Check extends Text
     protected $withLink = true;
     protected $withLinkPolicyAction = null;
     protected $asSwitch = false;
-    public $rowClass    = 'action';
+    public $rowClass    = 'w-10 text-center';
 
     public function withLink($withLink = true, $policyAction = null)
     {

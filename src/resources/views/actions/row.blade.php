@@ -1,4 +1,5 @@
 <x-ui::tertiary-button
+        :async="false"
         class='{{$classes}}'
         href='{{$link}}' :confirm="$confirm ?? null"
 >
