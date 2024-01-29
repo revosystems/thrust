@@ -1,10 +1,14 @@
 @component('thrust::components.formField', ["field" => $field, "title" => $title, "description" => $description ?? null, "inline" => $inline])
-    <select id="{{$field}}" name="{{$field}}">
-        <option value="{{$value}}" selected>{{$name}}</option>
-    </select>
-    @if(isset($inlineCreation) && $inlineCreation)
-        @include('thrust::fields.inlineCreation')
-    @endif
+    <div class="flex flex-row items-center">
+        <select id="{{$field}}" name="{{$field}}">
+            <option value="{{$value}}" selected>{{$name}}</option>
+        </select>
+        @if(isset($inlineCreation) && $inlineCreation)
+            <div>
+            @include('thrust::fields.inlineCreation')
+            </div>
+        @endif
+    </div>
     @push('edit-scripts')
         <script>
             new RVAjaxSelect2('{{ route('thrust.relationship.search', [$resourceName, $id ?? 0, $relationship]) }}?allowNull={{$allowNull}}',{

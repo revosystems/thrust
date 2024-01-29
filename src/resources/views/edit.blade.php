@@ -17,7 +17,6 @@
         <form action="{{route($multiple ? 'thrust.store.multiple' : 'thrust.store', [$resourceName] )}}" method="POST">
     @endif
     {{ csrf_field() }}
-    <div class="thrust-tabs"><ul id="thrust-tabs-list"></ul></div>
 
     {{-- Fields --}}
     <div>
