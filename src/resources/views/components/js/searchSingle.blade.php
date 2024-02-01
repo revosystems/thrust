@@ -9,12 +9,12 @@
     $('#searchSingle').on('keyup', function(e){
         var searchText = $(this).val();
         if (searchText.length == 0){
-            $(".formPanel h4").show();
+            $(".formPanel").show();
             $(".label").parent().show();
-            $(".configForm .formPanel").css('border-bottom', '1px solid #f0f0f0');
+            $(".formPanel").css('border-bottom', '1px solid #f0f0f0');
         }
         else{
-            $(".formPanel h4").hide();
+            $(".formPanel").hide();
             $(".label").parent().hide();
             $(".label").filter(function() {
                 var reg = new RegExp(searchText, "i");

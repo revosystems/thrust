@@ -1,5 +1,8 @@
     @if ($fullPage)
-	    <div>{{ $title }}</div>
+        <div class="flex items-center space-x-2">
+            @component(config('thrust.sidebar-collapsed-button'))@endcomponent
+	        <div>{{ $title }}</div>
+        </div>
     @else
         <div class="flex space-x-2 items-center">
             @if($breadcrumbs)

@@ -2,11 +2,13 @@
 
 namespace BadChoice\Thrust\Fields;
 
+use Illuminate\View\ComponentAttributeBag;
+
 class Text extends Field
 {
     protected $displayInIndexCallback = null;
     protected $editableHint           = false;
-    protected $attributes             = '';
+    protected $attributes             = [];
     protected $shouldAllowScripts     = false;
 
     public function editableHint($editableHint = true)
@@ -42,10 +44,16 @@ class Text extends Field
             'type'            => $this->getFieldType(),
             'field'            => $this->field,
             'value'           => htmlspecialchars_decode($this->getValue($object)),
-            'validationRules' => $this->getHtmlValidation($object, $this->getFieldType()),
-            'fieldAttributes'  => $this->getFieldAttributes(),
+            'attributes'      => $this->getComponentBagAttributes($object),
             'description'     => $this->getDescription(),
         ])->render();
+    }
+
+    protected function getComponentBagAttributes($object) : ComponentAttributeBag {
+        return new ComponentAttributeBag([
+            ...$this->getHtmlValidation($object, 'text'),
+            ...$this->attributes
+        ]);
     }
 
     protected function getFieldType()
@@ -53,7 +61,7 @@ class Text extends Field
         return 'text';
     }
 
-    public function attributes($attributes)
+    public function attributes(array $attributes)
     {
         $this->attributes = $attributes;
         return $this;

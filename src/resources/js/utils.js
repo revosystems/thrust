@@ -190,25 +190,25 @@ function ajaxGet(url, callback){
 //========================================
 // SORT
 //========================================
-function saveOrder(model, startAt){
+async function saveOrder(model, startAt){
     $(".loadingImage").show();
-    postSaveOrder(window.location.origin + '/thrust/' + model + '/updateOrder?startAt=' + startAt,
+    await postSaveOrder(window.location.origin + '/thrust/' + model + '/updateOrder?startAt=' + startAt,
                  ".sortable");
 }
 
-function saveChildOrder(model, id, field){
+async function saveChildOrder(model, id, field){
     $(".loadingImage").show();
-    postSaveOrder(window.location.origin + '/thrust/' + model + '/' + id + '/belongsToMany/' + field + '/updateOrder',
+    await postSaveOrder(window.location.origin + '/thrust/' + model + '/' + id + '/belongsToMany/' + field + '/updateOrder',
                  '.sortableChild');
 }
 
-function postSaveOrder(url, classToSerialize){
+async function postSaveOrder(url, classToSerialize){
     let serialized  =  $(classToSerialize).sortable('serialize');
     serialized = serialized + "&_token="+csrf_token;
     console.log("Url:"   + url);
     console.log("Serialized:"   + serialized);
 
-    $.post(url, serialized, function(){})
+    await $.post(url, serialized, function(){})
         .done(function(data) {
             if(data) {
                 $(".loadingImage").hide();

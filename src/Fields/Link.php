@@ -68,6 +68,14 @@ class Link extends Field
         return $this;
     }
 
+    public function getRowCss(): string
+    {
+        if($icon = $this->icon) {
+            return parent::getRowCss() . " w-10 ";
+        }
+        return parent::getRowCss();
+    }
+
     public function getUrl($object)
     {
         if ($this->route) {
