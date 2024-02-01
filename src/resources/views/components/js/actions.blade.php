@@ -18,7 +18,7 @@
         })
     }
 
-    function runAction(actionClass, needsConfirmation, needsSelection, confirmationMessage){
+    async function runAction(actionClass, needsConfirmation, needsSelection, confirmationMessage){
         var selected = getSelectedRowsIds()
 
         if (needsSelection == 1 && selected.length == 0){
@@ -26,13 +26,13 @@
         }
 
         if (! needsConfirmation || confirm(confirmationMessage)){
-            doAction(actionClass, selected)
+            await doAction(actionClass, selected)
         }
     }
 
-    function doAction(actionClass, selected){
+    async function doAction(actionClass, selected){
         document.getElementById('actions-loading').style.display = 'block'
-        $.post("{{ route('thrust.actions.perform', [$resourceName]) }}", {
+        await $.post("{{ route('thrust.actions.perform', [$resourceName]) }}", {
             "_token": "{{ csrf_token() }}",
             "action" : actionClass,
             "ids" : selected,
