@@ -41,5 +41,5 @@
     </x-ui::table.table>
     @include('thrust::components.paginator',["data" => $rows])
 @else
-    @include('thrust::components.noData')
+    <x-thrust::no-data />
 @endif

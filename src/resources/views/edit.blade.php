@@ -64,7 +64,7 @@
     </script>
 
     <script>
-        Array.from(document.getElementsByClassName('formTab')).forEach(function(element){
+        /*Array.from(document.getElementsByClassName('formTab')).forEach(function(element){
             document.getElementById('thrust-tabs-list').insertAdjacentHTML('beforeend', "<li class='thrust-tab-header " + element.id + "' onclick='showTab(this, \"" + element.id +"\")'>" + element.title + "</li>")
         })
 
@@ -91,7 +91,7 @@
                     showTab(document.getElementsByClassName('thrust-tab-header ' + tab.id).item(0), tab.id)
                 }
             })
-        })
+        })*/
     </script>
 @endpush
 
