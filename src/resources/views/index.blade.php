@@ -2,7 +2,10 @@
 @section('content')
     <div class="flex flex-col space-y-2">
         <div class="flex items-center justify-between">
-            <x-thrust::index.title :resource="$resource" :parentId="$parent_id ?? null" :isChild="$isChild ?? false"/>
+            <div class="flex items-center space-x-2">
+                @component(config('thrust.sidebar-collapsed-button'))@endcomponent
+                <x-thrust::index.title :resource="$resource" :parentId="$parent_id ?? null" :isChild="$isChild ?? false"/>
+            </div>
             <x-thrust::mainActions :resource="$resource" :resourceName="$resourceName"/>
         </div>
 
