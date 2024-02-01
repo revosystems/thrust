@@ -11,7 +11,7 @@
             @endif
             @foreach($fields as $field)
                 <x-ui::table.header-cell class="{{ $field->getRowCss() }}">
-                    @include('thrust::fieldHeader')
+                    <x-thrust::index.field-header :field="$field"/>
                 </x-ui::table.header-cell>
             @endforeach
             </x-ui::table.row>

@@ -65,37 +65,6 @@
         }
         setupVisibility({!! json_encode($hideVisibility)  !!}, {!! json_encode($showVisibility)  !!});
     </script>
-
-    <script>
-        /*Array.from(document.getElementsByClassName('formTab')).forEach(function(element){
-            document.getElementById('thrust-tabs-list').insertAdjacentHTML('beforeend', "<li class='thrust-tab-header " + element.id + "' onclick='showTab(this, \"" + element.id +"\")'>" + element.title + "</li>")
-        })
-
-        document.getElementsByClassName('thrust-tab-header').item(0)?.classList?.add('active')
-        document.getElementsByClassName('formTab').item(0)?.classList?.add('active')
-
-        function showTab(header, tabId){
-            const newTab = document.getElementById(tabId)
-            const oldTab = document.getElementsByClassName('formTab active').item(0)
-
-            oldTab.style.display = 'none'
-            oldTab.classList.remove('active')
-            newTab.style.display = 'block'
-            newTab.classList.add('active')
-
-            document.getElementsByClassName('thrust-tab-header active').item(0).classList.remove('active')
-            header.classList.add('active')
-        }
-
-        Array.from(document.getElementsByTagName('input')).forEach(function(elem){
-            elem.addEventListener('invalid', () => {
-                const tab = elem.closest('.formTab')
-                if (tab) {
-                    showTab(document.getElementsByClassName('thrust-tab-header ' + tab.id).item(0), tab.id)
-                }
-            })
-        })*/
-    </script>
 @endpush
 
 @if(!$fullPage)
