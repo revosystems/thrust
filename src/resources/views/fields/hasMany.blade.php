@@ -1,11 +1,11 @@
 @if ($withLink)
     @if($link)
-        <a href="{{ url($link) }}" class="">
+        <a href="{{ url($link) }}">
     @else
-        <a href="{{route('thrust.hasMany', [$resourceName, $id , $relationship])}}" class="">
+        <a href="{{ route('thrust.hasMany', [$resourceName, $id , $relationship]) }}">
     @endif
         @if($icon)
-            <i class="fa fa-{{$icon}}" style="color:black; font-size:15px"></i> {{ $value }}
+            <x-ui::icon>{{$icon}}</x-ui::icon> {{ $value }}
         @elseif( strlen($value) == 0)
             --
         @else

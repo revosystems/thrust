@@ -20,7 +20,7 @@
                 </div>
             </div>
             <span>
-                <a class="button secondary" onclick="keyValueRemove(this)">@icon(times)</a>
+                <a class="border rounded cursor-pointer p-2 hover:bg-neutral-100 transition" onclick="keyValueRemove(this)">@icon(times)</a>
             </span>
         </div>
 {{--    </template>--}}
@@ -62,7 +62,7 @@
     </div>
     @if(! $fixed)
         <div>
-            <a class="button secondary" onclick="keyValueAdd('{{$field}}')" class="pointer"> @icon(plus) {{ __('admin.add') }}</a>
+            <x-ui::secondary-button onclick="keyValueAdd('{{$field}}')" class="pointer"> @icon(plus) {{ __('admin.add') }}</x-ui::secondary-button>
         </div>
     @endif
 
