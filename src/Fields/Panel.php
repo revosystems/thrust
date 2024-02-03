@@ -44,17 +44,10 @@ class Panel extends FieldContainer
         return view('thrust::fields.panel', [
             'id' => $this->panelId,
             'object' => $object,
-            'title' => $this->getTitle(),
+            'title' => $this->title,
+            'icon' => $this->icon,
             'fields' => $this->fields
         ]);
-    }
-
-    protected function getTitle()
-    {
-        if (! $this->title && ! $this->icon) {
-            return '';
-        }
-        return implode('', ['<h4>', $this->icon ? icon($this->icon) : '', ' ', $this->title, '</h4>']);
     }
 
     public function getId()
