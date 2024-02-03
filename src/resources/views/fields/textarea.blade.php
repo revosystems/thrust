@@ -1,3 +1,8 @@
-@component('thrust::components.formField', ["field" => $field, "title" => $title, "description" => $description ?? null])
-    <textarea id="{{$field}}" name="{{$field}}" placeholder="{{$title}}" {{$attributes}} {!! $validationRules !!} >{{$value}}</textarea>
-@endcomponent
+<x-thrust::formField :field="$field" :title="$title" :description="$description">
+    <x-ui::forms.textarea id="{{$field}}"
+                    name="{{$field}}"
+                    class="w-full"
+                    placeholder="{{$title}}"
+                    {{ $attributes }}
+    >{{$value}}</x-ui::forms.textarea>
+</x-thrust::formField>

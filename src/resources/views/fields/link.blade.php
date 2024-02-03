@@ -1,7 +1,9 @@
 <a href="{{$url}}" class="{{$class}}" {{$attributes ?? ''}}>
-    @if(isset($icon) && $icon)
-        <i class="fa fa-{{$icon}}" style="color:black; font-size:15px"></i>
-    @else
-        {{$value}}
-    @endif
+        <x-ui::tertiary-button>
+            @if(isset($icon) && $icon)
+                <x-ui::icon>{{$icon}}</x-ui::icon>
+            @else
+                {{$value}}
+            @endif
+        </x-ui::tertiary-button>
 </a>

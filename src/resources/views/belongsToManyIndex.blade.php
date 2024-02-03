@@ -1,12 +1,19 @@
 <h2> {{$title}} </h2>
 
-@include('thrust::components.searchPopup')
-
-@if($sortable)
-    <div class="actions">
-        <button class="secondary" onclick="saveChildOrder('{{$resourceName}}','{{$object->id}}', '{{$belongsToManyField->field}}')">@icon(sort) {{__('thrust::messages.saveOrder')}}</button>
-    </div>
-@endif
+<div class="flex justify-between items-center space-x-2">
+    <x-ui::forms.search-text-input id='popup-searcher'
+                                   :placeholder="__('thrust::messages.search')"
+                                   class="w-full"
+                                   autofocus />
+    @if($sortable)
+        <div class="actions">
+            <x-ui::secondary-button onclick="saveChildOrder('{{$resourceName}}','{{$object->id}}', '{{$belongsToManyField->field}}')">
+                @icon(sort)
+                {{__('thrust::messages.saveOrder')}}
+            </x-ui::secondary-button>
+        </div>
+    @endif
+</div>
 <div id="popup-all">
     @include('thrust::belongsToManyTable')
 </div>
@@ -28,13 +35,12 @@
                     {!! $field->displayInEdit(null, true)  !!}
                 @endif
             @endforeach
-            <button class="secondary">{{__('thrust::messages.add') }} </button>
+            <x-ui::secondary-button class="secondary">@icon(plus) {{__('thrust::messages.add') }} </x-ui::secondary-button>
         </form>
     </div>
 @endif
 
 <script>
-
     $("{{config('thrust.popupId', '#popup')}} .thrust-toggle").each(function(index, el){
         $(el).addClass('ajax-get');
     });

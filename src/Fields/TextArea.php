@@ -2,9 +2,11 @@
 
 namespace BadChoice\Thrust\Fields;
 
+use Illuminate\View\ComponentAttributeBag;
+
 class TextArea extends Field
 {
-    protected $attributes         = '';
+    protected $attributes         = [];
     protected $shouldAllowScripts = false;
 
     public $showInIndex = false;
@@ -14,11 +16,6 @@ class TextArea extends Field
         return $this->getValue($object);
     }
 
-    protected function getFieldAttributes()
-    {
-        return 'cols=50 rows=10'.' '.$this->attributes;
-    }
-
     public function displayInEdit($object, $inline = false)
     {
         return view('thrust::fields.textarea', [
@@ -26,16 +23,22 @@ class TextArea extends Field
             'field'           => $this->field,
             'value'           => $this->getValue($object),
             'validationRules' => $this->getHtmlValidation($object, 'textarea'),
-            'attributes'      => $this->getFieldAttributes(),
+            'attributes'      => $this->getComponentBagAttributes($object),
             'description'     => $this->getDescription(),
         ])->render();
+    }
+
+    protected function getComponentBagAttributes($object) : ComponentAttributeBag {
+        return new ComponentAttributeBag([
+            ...$this->getHtmlValidation($object, 'textarea'),
+            ...$this->attributes
+        ]);
     }
 
     public function getValue($object)
     {
         return htmlspecialchars($object->{$this->field});
     }
-
 
     public function allowScripts()
     {
@@ -48,7 +51,7 @@ class TextArea extends Field
         return parent::mapAttributeFromRequest(!$this->shouldAllowScripts ? strip_tags($value) : $value);
     }
 
-    public function attributes($attributes)
+    public function attributes(array $attributes)
     {
         $this->attributes = $attributes;
         return $this;

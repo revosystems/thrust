@@ -1,6 +1,8 @@
-<div id="searchSingleContainer" class="mb2">
-    <input id="searchSingle" autofocus placeholder="{{__("thrust::messages.search")}}" class="shadow-outer-3 b0">
-    <div class="resourceSearch-icon" style="">
-        @icon(search)
-    </div>
+<div id="searchSingleContainer">
+    <x-ui::forms.search-text-input
+            id="searchSingle"
+            placeholder="{{__('thrust::messages.search')}}"
+            autofocus
+            class="grow"
+    />
 </div>

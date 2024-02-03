@@ -67,7 +67,7 @@ class ThrustActionsController extends Controller
     {
         $resource = Thrust::make($resourceName);
 
-        return view('thrust::components.actionsIndex', [
+        return view('thrust::components.actions-index', [
             'actions' => collect($resource->searchActions(request('search'))),
             'resourceName' => $resource->name(),
         ]);

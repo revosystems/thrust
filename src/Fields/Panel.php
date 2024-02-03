@@ -44,9 +44,9 @@ class Panel extends FieldContainer
         return view('thrust::fields.panel', [
             'id' => $this->panelId,
             'object' => $object,
-            'title' => $this->title,
             'icon' => $this->icon,
-            'fields' => $this->fields
+            'title' => $this->title,
+            'fields' => collect($this->fields)->filter->showInEdit,
         ]);
     }
 

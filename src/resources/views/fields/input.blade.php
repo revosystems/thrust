@@ -1,11 +1,7 @@
 <x-thrust::formField :field="$field" :title="$title" :description="$description"  :inline="$inline">
     <x-ui::forms.text-input
-            type="{{$type}}"
-            id="{{$field}}"
-            value="{{$value}}"
-            name="{{$field}}"
-            placeholder="{{$title}}"
-            {{--{!! $fieldAttributes !!}
-            {!! $validationRules !!} --}}
+            id="{{$field}}" name="{{$field}}" type="{{$type}}"
+            value="{{$value}}" placeholder="{{$title}}"
+            {{ $attributes }}
 />
 </x-thrust::formField>

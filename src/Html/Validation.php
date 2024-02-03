@@ -23,85 +23,100 @@ class Validation
 
     public function generate()
     {
-        return $this->rules->reduce(function ($carry, $rule) {
-            return $carry . $this->appendRule($carry, $rule);
+        return $this->rules->flatMap(function ($rule) {
+            return $this->appendRule($rule);
         });
     }
 
-    public function appendRule(&$output, $rule)
+    public function appendRule($rule) : array
     {
         $params = collect(explode(':', $rule));
         $rule   = $params->first();
         if ($rule == 'required') {
-            $this->appendRuleRequired($output);
+            return $this->ruleRequired();
         } elseif ($rule == 'min') {
-            $this->appendRuleMin($output, $params[1]);
+            return $this->ruleMin($params[1]);
         } elseif ($rule == 'max') {
-            $this->appendRuleMax($output, $params[1]);
+            return $this->ruleMax($params[1]);
         } elseif ($rule == 'digits') {
-            $this->appendRuleDigits($output, $params[1]);
+            return $this->ruleDigits($params[1]);
         } elseif ($rule == 'email') {
-            $this->appendRuleEmail($output);
+            return $this->ruleEmail();
         } elseif ($rule == 'ip') {
-            $this->appendRuleIp($output);
+            return $this->ruleIp();
         } elseif ($rule == 'regex') {
-            $this->appendRuleRegex($output, $params[1]);
+            return $this->ruleRegex($params[1]);
         }
+        return [];
     }
 
-    public function appendRuleRequired(&$output)
+    public function ruleRequired() : array
     {
-        $output .= ' required ';
+        return ['required' => 'true'];
     }
 
-    public function appendRuleMin(&$output, $min)
+    public function ruleMin($min) : array
     {
         if ($this->type == 'number') {
-            return $this->appendRuleNumberMin($output, $min);
+            return $this->ruleNumberMin($min);
         }
-        $output .= " pattern='.{".$min.",}' title='Min ".$min." or more characters' ";
+        return [
+            'pattern' => ".{{$min},}",
+            'title' => "Min $min or more characters"
+        ];
     }
 
-    public function appendRuleMax(&$output, $max)
+    public function ruleMax($max) : array
     {
         if ($this->type == 'number') {
-            return $this->appendRuleNumberMax($output, $max);
+            return $this->ruleNumberMax($max);
         }
-        $output .= " pattern='.{0,".$max."}' title='Max ".$max." characters' ";
+        return [
+            'pattern' => ".{0,$max}",
+            'title' => "Max $max characters"
+        ];
     }
 
-    public function appendRuleDigits(&$output, $digits)
+    public function ruleDigits($digits) : array
     {
-        $output .= "pattern='.{".$digits.','.$digits."}' title='Digits ".$digits." characters' ";
+        return [
+            "pattern" => ".{".$digits.','.$digits."}",
+            "title" => "Digits ".$digits." characters"
+        ];
     }
 
-    public function appendRuleEmail(&$output)
+    public function ruleEmail() : array
     {
         if ($this->type == 'email') {
-            return;
+            return [];
         }
-        $output .= " pattern='/^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$/' ";
+        return [
+            "pattern" => '/^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$/'
+        ];
     }
 
-    public function appendRuleIp(&$output)
+    public function ruleIp() : array
     {
-        $output .= " pattern='((^|\\.)((25[0-5])|(2[0-4]\\d)|(1\\d\\d)|([1-9]?\\d))){4}$' ";
+        return ["pattern" => '((^|\\.)((25[0-5])|(2[0-4]\\d)|(1\\d\\d)|([1-9]?\\d))){4}$'];
     }
 
-    public function appendRuleNumberMin(&$output, $min)
+    public function ruleNumberMin($min) : array
     {
-        $output .= " min='{$min}' ";
+        return ["min" => $min];
     }
 
-    public function appendRuleNumberMax(&$output, $max)
+    public function ruleNumberMax($max) : array
     {
-        $output .= " max='{$max}' ";
+        return ["max" => $max];
     }
 
-    public function appendRuleRegex(&$output, $regex)
+    public function ruleRegex($regex) : array
     {
         $pattern = str_replace('/', '', $regex);
-        $output .= " pattern='{$pattern}' title='{$pattern}' ";
+        return [
+            "pattern" => '{$pattern}',
+            "title" => '{$pattern}'
+        ];
     }
 }
 

@@ -11,7 +11,7 @@
             @endif
             @foreach($fields as $field)
                 <x-ui::table.header-cell class="{{ $field->getRowCss() }}">
-                    @include('thrust::fieldHeader')
+                    <x-thrust::index.field-header :field="$field"/>
                 </x-ui::table.header-cell>
             @endforeach
             </x-ui::table.row>
@@ -19,7 +19,7 @@
 
         <x-ui::table.body class="@if($sortable) sortable @endif">
             @foreach ($rows as $row)
-                <x-ui::table.row id="sort_{{$row->id}}">
+                <x-ui::table.row id="sort_{{$row->id}}" >
                     <x-ui::table.cell class="w-10 text-center hidden sm:table-cell">
                         <input class='actionCheckbox' type="checkbox" name="selected[{{$row->id}}]" meta:id="{{$row->id}}">
                     </x-ui::table.cell>
@@ -41,5 +41,5 @@
     </x-ui::table.table>
     @include('thrust::components.paginator',["data" => $rows])
 @else
-    @include('thrust::components.noData')
+    <x-thrust::no-data />
 @endif
