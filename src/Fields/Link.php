@@ -2,6 +2,8 @@
 
 namespace BadChoice\Thrust\Fields;
 
+use Illuminate\View\ComponentAttributeBag;
+
 class Link extends Field
 {
     public $showInEdit = false;
@@ -11,7 +13,7 @@ class Link extends Field
     protected $icon         = '';
     protected $displayCount = false;
     protected $displayCallback;
-    protected $attributes;
+    protected $attributes = [];
     public $importable = false;
 
     public function link($link)
@@ -33,7 +35,7 @@ class Link extends Field
         return $this;
     }
 
-    public function attributes($attributes)
+    public function attributes(array $attributes)
     {
         $this->attributes = $attributes;
         return $this;
@@ -49,7 +51,12 @@ class Link extends Field
     {
         if ($this->displayCallback) {
             $value = call_user_func($this->displayCallback, $object);
-            return "<a href='{$this->getUrl($object)}' class='{$this->classes}'>{$value}</a>";
+            return view('thrust::fields.link',[
+                'class'      => $this->classes,
+                'url'        => $this->getUrl($object),
+                'value'      => $value,
+                'attributes' => null
+            ]);
         }
         return view('thrust::fields.link', [
             'class'        => $this->classes,
@@ -57,7 +64,7 @@ class Link extends Field
             'value'        => $this->getTitle(),
             'displayCount' => $this->displayCount,
             'url'          => $this->getUrl($object),
-            'attributes'   => $this->attributes,
+            'attributes'   => new ComponentAttributeBag($this->attributes),
         ])->render();
     }
 

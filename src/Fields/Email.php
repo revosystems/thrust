@@ -6,8 +6,9 @@ class Email extends Text
 {
     public function displayInIndex($object)
     {
-        $value = $this->getValue($object);
-        return "<a href='mailto:$value'>$value</a>" ;
+        return view('thrust::fields.email', [
+            "value" => $this->getValue($object)
+        ]);
     }
 
     protected function getFieldType()
