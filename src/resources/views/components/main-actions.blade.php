@@ -10,6 +10,8 @@
         }
     ?>
     @foreach($mainActions as $action)
-        {!! $action->display($resourceName, $parent_id ?? null) !!}
+        <div>
+            {!! $action->display($resourceName, $parent_id ?? null) !!}
+        </div>
     @endforeach
 </div>
