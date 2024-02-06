@@ -6,7 +6,7 @@
                 @component(config('thrust.sidebar-collapsed-button'))@endcomponent
                 <x-thrust::index.title :resource="$resource" :parentId="$parent_id ?? null" :isChild="$isChild ?? false"/>
             </div>
-            <x-thrust::main-actions :resource="$resource" :resourceName="$resourceName"/>
+            <x-thrust::main-actions :resource="$resource" :resourceName="$resourceName" :parentId="$parent_id ?? null"/>
         </div>
 
         <div class="">

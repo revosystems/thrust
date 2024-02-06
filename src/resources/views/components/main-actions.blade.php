@@ -1,4 +1,4 @@
-@props(['resource', 'resourceName'])
+@props(['resource', 'resourceName', 'parentId'])
 <div class="flex items-center space-x-2">
     <?php
         $mainActions = collect($resource->mainActions());
@@ -11,7 +11,7 @@
     ?>
     @foreach($mainActions as $action)
         <div>
-            {!! $action->display($resourceName, $parent_id ?? null) !!}
+            {!! $action->display($resourceName, $parentId) !!}
         </div>
     @endforeach
 </div>
