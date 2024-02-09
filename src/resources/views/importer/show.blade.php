@@ -31,7 +31,9 @@
             ])
            @endforeach
             <div class="mt-4">
-                <button class="button"> {{ __('thrust::messages.import') }}</button>
+                <x-ui::primary-button :async="true" type="submit">
+                    {{ __('thrust::messages.import') }}
+                </x-ui::primary-button>
             </div>
         </form>
     </div>
