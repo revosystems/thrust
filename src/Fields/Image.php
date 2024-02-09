@@ -62,7 +62,6 @@ class Image extends File implements Prunable
             'classes'       => $this->classes,
             'style'         => $this->indexStyle,
             'exists'        => $this->exists($object),
-            'exists'        => true,
             'resourceName'  => app(ResourceManager::class)->resourceNameFromModel($object),
             'id'            => $object->id,
             'field'         => $this->field,

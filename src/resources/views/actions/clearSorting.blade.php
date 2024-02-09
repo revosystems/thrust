@@ -1,3 +1,3 @@
-<a href='{{ request()->url() }}' class="button secondary hide-mobile" >
-    {{ $title }}
+<a href='{{ request()->url() }}' class="hidden sm:block">
+    <x-ui::secondary-button>{{ $title }}</x-ui::secondary-button>
 </a>
