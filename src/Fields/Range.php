@@ -2,6 +2,8 @@
 
 namespace BadChoice\Thrust\Fields;
 
+use Illuminate\View\ComponentAttributeBag;
+
 class Range extends Text
 {
     protected $unit = '';
@@ -33,13 +35,17 @@ class Range extends Text
             'unit'            => $this->unit,
             'value'           => $this->getValue($object),
             'validationRules' => $this->getHtmlValidation($object, $this->getFieldType()),
-            'attributes'      => $this->getFieldAttributes(),
+            'attributes'      => $this->getComponentBagAttributes($object),
             'description'     => $this->getDescription(),
         ])->render();
     }
 
-    protected function getFieldAttributes()
-    {
-        return "{$this->attributes} min={$this->min} max={$this->max} step={$this->step} ";
+    protected function getComponentBagAttributes($object) : ComponentAttributeBag {
+        return new ComponentAttributeBag([
+            'min' => $this->min,
+            'max' => $this->max,
+            'step' => $this->step,
+            ...$this->attributes
+        ]);
     }
 }
