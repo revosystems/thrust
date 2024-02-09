@@ -1,12 +1,12 @@
 @extends(config('thrust.indexLayout'))
 @section('content')
-    <div class="flex flex-col space-y-2">
+    <div class="flex flex-col space-y-2 px-4 py-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
                 @component(config('thrust.sidebar-collapsed-button'))@endcomponent
                 <x-thrust::index.title :resource="$resource" :parentId="$parent_id ?? null" :isChild="$isChild ?? false"/>
             </div>
-            <x-thrust::main-actions :resource="$resource" :resourceName="$resourceName"/>
+            <x-thrust::main-actions :resource="$resource" :resourceName="$resourceName" :parentId="$parent_id ?? null"/>
         </div>
 
         <div class="">

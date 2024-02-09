@@ -1,13 +1,15 @@
     @if ($fullPage)
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-2 mb-4">
             @component(config('thrust.sidebar-collapsed-button'))@endcomponent
-	        <div>{{ $title }}</div>
+	        <h2>{{ $title }}</h2>
         </div>
     @else
         <div class="flex space-x-2 items-center">
             @if($breadcrumbs)
-                <span> {{ $breadcrumbs }} </span>
-                <x-ui::icon class="text-gray-400 text-xs">chevron-right</x-ui::icon>
+                <h2>
+                    {{ $breadcrumbs }} <x-ui::icon class="text-gray-400">chevron-right</x-ui::icon>
+                </h2>
+
             @endif
             <h2> {{ $object->{$nameField} ?: __('thrust::messages.new') }} </h2>
         </div>

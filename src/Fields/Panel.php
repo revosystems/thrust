@@ -47,6 +47,8 @@ class Panel extends FieldContainer
             'icon' => $this->icon,
             'title' => $this->title,
             'fields' => collect($this->fields)->filter->showInEdit,
+            'description' => $this->description,
+            'descriptionIcon' => $this->descriptionIcon
         ]);
     }
 

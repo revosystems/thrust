@@ -1,12 +1,12 @@
 @props(['field'])
-<div class='max-w-sm {{$field->getSortableHeaderClass()}}'>
+<div class='{{$field->getSortableHeaderClass()}}'>
     @if ($field->sortableInIndex() && !request('search'))
     <x-ui::sort-header
-            :active="request('sort') == $field->field"
-            direction="{{strtolower(request('sort_order'))}}"
-            :sortDescLink="BadChoice\Thrust\ResourceFilters\Sort::link($field->field, 'desc')"
-            :sortAscLink="BadChoice\Thrust\ResourceFilters\Sort::link($field->field, 'asc')"
-            :tooltip="$field->getTooltip()"
+        :active="request('sort') == $field->field"
+        direction="{{strtolower(request('sort_order'))}}"
+        :sortDescLink="BadChoice\Thrust\ResourceFilters\Sort::link($field->field, 'desc')"
+        :sortAscLink="BadChoice\Thrust\ResourceFilters\Sort::link($field->field, 'asc')"
+        :tooltip="$field->getTooltip()"
     >
         {{ $field->getTitle(true) }}
     </x-ui::sort-header>
