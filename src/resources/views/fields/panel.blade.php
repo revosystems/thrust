@@ -1,7 +1,10 @@
 <div id="{{$id}}" class="border-t py-4">
     @if($title)
-        <div class="py-2">
-            <x-ui::icon>{{$icon}}</x-ui::icon> {{ $title }}
+        <div class="py-2 font-semibold mb-2">
+            @if($icon)
+                <x-ui::icon>{{$icon}}</x-ui::icon>
+            @endif
+            {{ $title }}
         </div>
     @endif
     @if($description)

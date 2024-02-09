@@ -4,6 +4,7 @@ namespace BadChoice\Thrust\Controllers;
 
 use BadChoice\Thrust\Facades\Thrust;
 use Illuminate\Routing\Controller;
+use Illuminate\View\ComponentAttributeBag;
 
 class ThrustActionsController extends Controller
 {
@@ -70,6 +71,7 @@ class ThrustActionsController extends Controller
         return view('thrust::components.actions-index', [
             'actions' => collect($resource->searchActions(request('search'))),
             'resourceName' => $resource->name(),
+            'attributes' => new ComponentAttributeBag([])
         ]);
     }
 
