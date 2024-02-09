@@ -24,7 +24,7 @@
                         <input class='actionCheckbox' type="checkbox" name="selected[{{$row->id}}]" meta:id="{{$row->id}}">
                     </x-ui::table.cell>
                     @if ($sortable)
-                        <x-ui::table.cell class="sort w-4 text-center hidden sm:table-cell text-gray-300">
+                        <x-ui::table.cell class="sort w-4 text-center hidden sm:table-cell text-gray-300 cursor-grab">
                             @icon(grip-lines)
                         </x-ui::table.cell>
                     @endif
