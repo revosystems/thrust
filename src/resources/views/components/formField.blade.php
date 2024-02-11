@@ -4,7 +4,7 @@
     </div>
 @else
     <div class='w-full flex flex-col sm:flex-row sm:items-center' id="{{$field}}_div">
-        <div class="w-44">{{ $title }}</div>
+        <div class="sm:w-52">{{ $title }}</div>
         <div class="field flex flex-col grow w-full">
             {{ $slot }}
             @if (isset($description))
