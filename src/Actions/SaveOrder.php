@@ -6,7 +6,7 @@ use BadChoice\Thrust\Facades\Thrust;
 
 class SaveOrder extends MainAction
 {
-    public function display($resourceName, $parent_id = null)
+    public function display($resourceName, $parent_id = null, $morphed = null)
     {
         $title = __('thrust::messages.'.$this->title);
         return view('thrust::actions.saveOrder', [

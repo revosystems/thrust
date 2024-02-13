@@ -8,7 +8,7 @@ class Export extends MainAction
 {
     public $title = 'export';
 
-    public function display($resourceName, $parent_id = null)
+    public function display($resourceName, $parent_id = null, $morphed = null)
     {
         if (! app(ResourceGate::class)->can($resourceName, 'index')) {
             return '';

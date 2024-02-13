@@ -2,7 +2,7 @@
     @if ($actions->where('main', false)->count() > 0)
         <div x-data = "{isOpen : false}">
             <button class="secondary relative" x-on:click="isOpen = !isOpen"> <i id='actions-loading' class="fa fa-circle-o-notch fa-spin fa-fw" style="display:none"></i> {{ __("thrust::messages.actions") }} @icon(caret-down) </button>
-            <div id="thrust-resource-actions" class="thrust-actions-dropdown absolute min-w-64" x-show="isOpen" x-transition x-cloak x-on:click.away = "isOpen = false">
+            <div id="thrust-resource-actions" class="thrust-actions-dropdown absolute" x-show="isOpen" x-transition x-cloak x-on:click.away = "isOpen = false">
                 @include('thrust::components.actionsIndex')
             </div>
         </div>

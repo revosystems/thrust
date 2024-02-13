@@ -17,7 +17,7 @@ class MainAction
         return $action;
     }
 
-    public function display($resourceName, $parent_id = null)
+    public function display($resourceName, $parent_id = null, $morphed = null)
     {
         if (! app(ResourceGate::class)->can($resourceName, 'create')) {
             return '';
@@ -26,7 +26,7 @@ class MainAction
         $title = $this->getTitle();
         $link  = $this->getAction($resourceName);
         if ($parent_id) {
-            $link .= "?parent_id={$parent_id}";
+            $link .= "?parent_id={$parent_id}&morphed={$morphed}";
         }
         return "<a class='{$this->getClasses()}' href='{$link}'> {$this->getIcon()} {$title} </a>";
     }

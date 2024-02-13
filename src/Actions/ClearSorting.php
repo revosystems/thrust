@@ -4,7 +4,7 @@ namespace BadChoice\Thrust\Actions;
 
 class ClearSorting extends MainAction
 {
-    public function display($resourceName, $parent_id = null)
+    public function display($resourceName, $parent_id = null, $morphed = null)
     {
         $title = __('thrust::messages.'.$this->title);
         return view('thrust::actions.clearSorting', [

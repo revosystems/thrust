@@ -5,7 +5,9 @@ namespace BadChoice\Thrust\Html;
 use BadChoice\Thrust\ChildResource;
 use BadChoice\Thrust\Fields\Field;
 use BadChoice\Thrust\Fields\Hidden;
+use BadChoice\Thrust\Fields\MorphedType;
 use BadChoice\Thrust\Fields\ParentId;
+use BadChoice\Thrust\MorphedResource;
 use BadChoice\Thrust\Resource;
 use Illuminate\Support\Str;
 
@@ -35,6 +37,10 @@ class Edit
         }
         if ($this->resource instanceof ChildResource) {
             $fields->prepend(ParentId::make($this->resource->parentForeignKey()));
+        }
+        if ($this->resource instanceof MorphedResource) {
+            $fields->prepend(ParentId::make($this->resource->parentForeignKey()));
+            $fields->prepend(MorphedType::make($this->resource::$parentRelation));
         }
         return $fields;
     }

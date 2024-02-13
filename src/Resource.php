@@ -97,7 +97,6 @@ abstract class Resource
     public static $sortField    = 'order';
     public static $defaultSort  = 'id';
     public static $defaultOrder = 'ASC';
-    public static $canSaveOrderWhenSorted = false;
 
     /**
      * @var array Set the default eager loading relationships
@@ -419,7 +418,7 @@ abstract class Resource
 
     public function sortableIsActive()
     {
-        return $this->canSort() && (static::$canSaveOrderWhenSorted || ! request('sort'));
+        return $this->canSort() && ! request('sort');
     }
 
     public function getUpdateConfirmationMessage()

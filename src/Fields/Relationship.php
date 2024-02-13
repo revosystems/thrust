@@ -65,7 +65,7 @@ abstract class Relationship extends Field
         $query = $this->getRelation($object)->getRelated()->query();
 
         if ($this->relatedScope) {
-            $query = call_user_func($this->relatedScope, $query);
+            $query = call_user_func($this->relatedScope, $query, $object);
         }
 
         if (! $allowDuplicates) {

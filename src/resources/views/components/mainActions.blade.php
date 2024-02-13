@@ -1,4 +1,4 @@
-<div class="thrust-main-actions flex items-center">
+<div class="thrust-main-actions">
     <?php
         $mainActions = collect($resource->mainActions());
         if ($resource->sortableIsActive()) {
@@ -9,8 +9,6 @@
         }
     ?>
     @foreach($mainActions as $action)
-        <div>
-            {!! $action->display($resourceName, $parent_id ?? null) !!}
-        </div>
+        {!! $action->display($resourceName, $parent_id ?? null, $morphed ?? null) !!}
     @endforeach
 </div>

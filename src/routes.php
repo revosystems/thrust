@@ -55,6 +55,7 @@ Route::group(['prefix' => config('thrust.routePrefix', 'thrust'), 'namespace' =>
     Route::get('{resourceName}/{id}/belongsToMany/{relationship}/{pivotId}/editInline', 'ThrustBelongsToManyController@editInline')->name('thrust.belongsToMany.editInline');
 
     Route::get('{resourceName}/{id}/hasMany/{relationship}', 'ThrustHasManyController@index')->name('thrust.hasMany');
+    Route::get('{resourceName}/{id}/morphMany/{relationship}', 'ThrustMorphManyController@index')->name('thrust.morphMany');
 
     Route::get('{resourceName}/{id}/related/{relationship}', 'ThrustRelationshipController@search')->name('thrust.relationship.search');
 
