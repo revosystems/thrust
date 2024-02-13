@@ -25,7 +25,9 @@
             </select>
             @foreach($belongsToManyField->pivotFields as $field)
                 @if($field->showInEdit && $resource->can($field->policyAction))
-                    {!! $field->displayInEdit($object, true)  !!}
+                    {!! $field->displayInEdit(
+                        new ($object->{$belongsToManyField->field}()->getPivotClass()), true
+                    )  !!}
                 @endif
             @endforeach
             <button class="secondary">{{__('thrust::messages.add') }} </button>
