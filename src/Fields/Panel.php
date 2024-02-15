@@ -42,7 +42,7 @@ class Panel extends FieldContainer
     public function displayInEdit($object, $inline = false)
     {
         return view('thrust::fields.panel', [
-            'id' => $this->panelId,
+            'id' => $this->getId(),
             'object' => $object,
             'icon' => $this->icon,
             'title' => $this->title,
