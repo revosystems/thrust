@@ -1,8 +1,8 @@
 <div id="{{$id}}" class="border-t py-4">
     @if($title)
-        <div class="py-2 font-semibold mb-2">
+        <div class="py-2 text-lg mb-2">
             @if($icon)
-                <x-ui::icon>{{$icon}}</x-ui::icon>
+                <x-ui::icon class="text-gray-400 mr-1">{{$icon}}</x-ui::icon>
             @endif
             {{ $title }}
         </div>

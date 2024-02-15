@@ -1,4 +1,4 @@
-<x-ui::forms.text-input class="w-full"
+<x-ui::forms.text-input class=""
     name="{{ $filter->class() }}"
     title="{{$filter->getTitle()}}"
     value="{{$value}}"
