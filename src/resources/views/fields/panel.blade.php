@@ -1,4 +1,4 @@
-<div id="{{$id}}" class="border-t py-4">
+<div id="{{$id}}" class="py-4">
     @if($title)
         <div class="py-2 text-lg mb-2">
             @if($icon)

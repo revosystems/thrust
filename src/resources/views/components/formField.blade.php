@@ -5,7 +5,7 @@
 @else
     <div id="{{$field}}_div"
         @class([
-            'w-full flex',
+            'w-full flex py-4',
             'flex-col' => !isset($aside),
             'flex-row items-center space-x-4' => isset($aside)
         ])
