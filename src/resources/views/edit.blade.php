@@ -30,7 +30,7 @@
     </div>
 
     {{-- SAVE BUTTONS --}}
-    <div class="mt-4 border-t pt-4">
+    <div class="mt-4 pt-4">
         @if (isset($object->id))
             @if (app(BadChoice\Thrust\ResourceGate::class)->can($resourceName, 'update', $object))
                 <x-thrust::saveButton :updateConfirmationMessage="$updateConfirmationMessage" />
