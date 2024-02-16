@@ -6,11 +6,11 @@ use BadChoice\Thrust\Facades\Thrust;
 
 class Delete extends Field {
 
-    public $showInEdit          = false;
-    public $withoutIndexHeader  = true;
-    public $rowClass            = 'w-10 text-center';
-    public $policyAction        = 'delete';
-    public $importable          = false;
+    public bool $showInEdit          = false;
+    public bool $withoutIndexHeader  = true;
+    public string $rowClass          = 'w-10 text-center';
+    public $policyAction             = 'delete';
+    public bool $importable          = false;
 
     public function displayInIndex($object)
     {

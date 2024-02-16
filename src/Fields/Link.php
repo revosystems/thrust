@@ -6,7 +6,7 @@ use Illuminate\View\ComponentAttributeBag;
 
 class Link extends Field
 {
-    public $showInEdit = false;
+    public bool $showInEdit = false;
     protected $link    = '';
     protected $route;
     protected $classes      = '';
@@ -14,7 +14,7 @@ class Link extends Field
     protected $displayCount = false;
     protected $displayCallback;
     protected $attributes = [];
-    public $importable = false;
+    public bool $importable = false;
 
     public function link($link)
     {

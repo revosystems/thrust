@@ -11,30 +11,30 @@ abstract class Field
 {
     use Visibility;
 
-    public $field;
-    public $sortable = false;
-    protected $title;
+    public string $field;
+    public bool $sortable = false;
+    protected ?string $title;
     public $validationRules;
 
-    public $showInIndex  = true;
-    public $showInEdit   = true;
-    public $showInSearch = false;
+    public bool $showInIndex  = true;
+    public bool $showInEdit   = true;
+    public bool $showInSearch = false;
     public $policyAction = null;
 
-    public $withDesc    = false;
+    public bool $withDesc    = false;
     public $description = false;
-    public $tooltip     = null;
+    public ?string $tooltip     = null;
 
-    public $withoutIndexHeader  = false;
-    public $with                = [];
-    public $rowClass            = '';
-    public $displayFrom         = null;
+    public bool $withoutIndexHeader  = false;
+    public array $with                = [];
+    public string $rowClass            = '';
+    public ?string $displayFrom         = null;
 
-    public $excludeOnMultiple = false;
+    public bool $excludeOnMultiple = false;
 
-    public $deleteConfirmationMessage = 'Are you sure';
-    public $importable = true;
-    public $learnMoreUrl = null;
+    public ?string $deleteConfirmationMessage = 'Are you sure';
+    public bool $importable = true;
+    public ?string $learnMoreUrl = null;
 
     abstract public function displayInIndex($object);
 

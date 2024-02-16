@@ -4,9 +4,9 @@ namespace BadChoice\Thrust\Fields;
 
 class Decimal extends Text
 {
-    protected $asInteger = false;
-    protected $nullable = false;
-    public $rowClass = 'text-right';
+    protected bool $asInteger = false;
+    protected bool $nullable = false;
+    public string $rowClass = 'text-right';
 
     public function getValue($object)
     {

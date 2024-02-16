@@ -7,13 +7,13 @@ use Illuminate\Support\Str;
 
 class HasMany extends Relationship
 {
-    public $showInEdit     = false;
+    public bool $showInEdit     = false;
     public $link           = null;
     public $resourceName   = null;
     public $icon           = null;
     public $withCount      = false;
     public $useTitle;
-    public $importable      = false;
+    public bool $importable      = false;
 
     public static function make($dbField, $title = null)
     {

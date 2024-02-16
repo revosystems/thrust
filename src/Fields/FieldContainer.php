@@ -7,6 +7,7 @@ abstract class FieldContainer
     public $fields;
     public $description;
     public $descriptionIcon;
+    public ?string $learnMoreUrl = null;
 
     public function fieldsFlattened()
     {
@@ -26,6 +27,11 @@ abstract class FieldContainer
     {
         $this->description = $desc;
         $this->descriptionIcon = $icon;
+        return $this;
+    }
+
+    public function learnMoreUrl($url) : self {
+        $this->learnMoreUrl = $url;
         return $this;
     }
 }

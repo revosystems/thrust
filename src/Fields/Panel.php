@@ -56,7 +56,8 @@ class Panel extends FieldContainer
             'fields' => collect($this->fields)->filter->showInEdit,
             'description' => $this->description,
             'descriptionIcon' => $this->descriptionIcon,
-            'sideBySide' => $this->sideBySide
+            'sideBySide' => $this->sideBySide,
+            'learnMoreUrl' => $this->learnMoreUrl,
         ]);
     }
 

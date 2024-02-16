@@ -6,10 +6,10 @@ use BadChoice\Thrust\Facades\Thrust;
 
 class Check extends Text
 {
-    protected $withLink = true;
+    protected bool $withLink = true;
     protected $withLinkPolicyAction = null;
-    protected $asSwitch = false;
-    public $rowClass    = 'w-10 text-center';
+    protected bool $asSwitch = false;
+    public string $rowClass    = 'w-10 text-center';
 
     public function withLink($withLink = true, $policyAction = null)
     {

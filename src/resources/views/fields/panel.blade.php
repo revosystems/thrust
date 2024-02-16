@@ -19,4 +19,10 @@
     @endif
     <x-thrust::fields.edit-fields :object="$object" :fields="$fields" :sideBySide="$sideBySide"/>
 
+    @if($learnMoreUrl)
+            <x-ui::learn-more href="{{$learnMoreUrl}}">
+                {{ __('thrust::messages.learnMore') }}
+            </x-ui::learn-more>
+    @endif
+
 </div>

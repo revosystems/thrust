@@ -6,11 +6,11 @@ use BadChoice\Thrust\Facades\Thrust;
 
 class Edit extends Field {
 
-    public $showInEdit          = false;
-    public $withoutIndexHeader  = true;
-    public $rowClass            = 'w-10 text-center';
+    public bool $showInEdit          = false;
+    public bool $withoutIndexHeader  = true;
+    public string $rowClass            = 'w-10 text-center';
     public $policyAction        = 'update';
-    public $importable          = false;
+    public bool $importable          = false;
 
     public function displayInIndex($object)
     {
