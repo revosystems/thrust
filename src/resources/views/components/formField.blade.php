@@ -20,6 +20,13 @@
                 @endif
             </div>
         </div>
+        @if(isset($learnMoreUrl) && $learnMoreUrl)
+            <div class="my-1">
+                <x-ui::learn-more href="{{$learnMoreUrl}}">
+                    {{ __('thrust::messages.learnMore') }}
+                </x-ui::learn-more>
+            </div>
+        @endif
         <div class="">
             {{ $slot }}
         </div>

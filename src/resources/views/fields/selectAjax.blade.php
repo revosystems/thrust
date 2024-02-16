@@ -1,4 +1,4 @@
-@component('thrust::components.formField', ["field" => $field, "title" => $title, "description" => $description ?? null, "inline" => $inline])
+<x-thrust::formField :field="$field" :title="$title" :description="$description"  :inline="$inline" :learnMoreUrl="$learnMoreUrl">
     <div class="flex flex-row items-center">
         <select id="{{$field}}" name="{{$field}}">
             <option value="{{$value}}" selected>{{$name}}</option>
@@ -16,4 +16,4 @@
             }).show('#{{$field}}');
         </script>
     @endpush
-@endcomponent
+</x-thrust::formField>

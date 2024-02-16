@@ -35,7 +35,7 @@ class Check extends Text
             'field'        => $this->field,
             'withLinks'    => $this->shouldShowLinks($resource, $object),
             'asSwitch'     => $this->asSwitch,
-            'description'  => $this->getDescription()
+            'description'  => $this->getDescription(),
         ])->render();
     }
 
@@ -47,6 +47,7 @@ class Check extends Text
             'value'  => $this->getValue($object),
             'inline' => $inline,
             'description' => $this->getDescription(),
+            'learnMoreUrl' => $this->learnMoreUrl,
         ])->render();
     }
 

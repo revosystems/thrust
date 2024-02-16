@@ -62,7 +62,8 @@ class BelongsTo extends Relationship
                 'inline'        => $inline,
                 'description'   => $this->getDescription(),
                 'inlineCreation' => $this->inlineCreation,
-                'inlineCreationData' => $this->inlineCreationData($object)
+                'inlineCreationData' => $this->inlineCreationData($object),
+                'learnMoreUrl' => $this->learnMoreUrl,
             ])->render();
         }
         return view('thrust::fields.select', [
@@ -74,7 +75,8 @@ class BelongsTo extends Relationship
             'inline'        => $inline,
             'description'   => $this->getDescription(),
             'inlineCreation' => $this->inlineCreation,
-            'inlineCreationData' => $this->inlineCreationData($object)
+            'inlineCreationData' => $this->inlineCreationData($object),
+            'learnMoreUrl' => $this->learnMoreUrl,
         ])->render();
     }
 

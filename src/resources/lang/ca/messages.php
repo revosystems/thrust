@@ -28,5 +28,6 @@ return [
     'rowsToImport'           => 'Columnes a importar',
     'next'                   => 'Següent',
     'importFailed'           => 'Ha fallat l\'importació',
-    'retryImport'            => 'Tornar a importar'
+    'retryImport'            => 'Tornar a importar',
+    'learnMore'              => 'Saber-ne més',
 ];

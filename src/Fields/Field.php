@@ -34,6 +34,7 @@ abstract class Field
 
     public $deleteConfirmationMessage = 'Are you sure';
     public $importable = true;
+    public $learnMoreUrl = null;
 
     abstract public function displayInIndex($object);
 
@@ -167,6 +168,11 @@ abstract class Field
     public function hideInIndex()
     {
         $this->showInIndex = false;
+        return $this;
+    }
+
+    public function learnMoreUrl($url) : self {
+        $this->learnMoreUrl = $url;
         return $this;
     }
 

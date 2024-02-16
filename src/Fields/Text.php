@@ -46,6 +46,7 @@ class Text extends Field
             'value'           => htmlspecialchars_decode($this->getValue($object)),
             'attributes'      => $this->getComponentBagAttributes($object),
             'description'     => $this->getDescription(),
+            'learnMoreUrl'    => $this->learnMoreUrl,
         ])->render();
     }
 
