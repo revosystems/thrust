@@ -2,13 +2,14 @@
 
 namespace BadChoice\Thrust;
 
+use BadChoice\Thrust\Contracts\CustomBackRoute;
 use BadChoice\Thrust\Facades\Thrust;
 
 abstract class ChildResource extends Resource
 {
     public static $parentRelation;
     public static $parentChildsRelation;
-    protected $parentId;
+    public $parentId;
 
     public function __construct()
     {
@@ -54,19 +55,26 @@ abstract class ChildResource extends Resource
         return $object->{static::$parentRelation};
     }
 
-    public function getParentHasManyUrlParams($object)
-    {
-        $parent = $this->parent($object);
-        return $this::$parentChildsRelation && $parent ? [Thrust::resourceNameFromModel($parent), $parent->id, static::$parentChildsRelation] : null; 
+    public function getParentUrl($parent){
+        if ($this instanceof CustomBackRoute){
+            return [$this->backRouteTitle() => $this->backRoute()];
+        }
+        return route('thrust.hasMany', [
+            Thrust::resourceNameFromModel($parent),
+            $parent->id,
+            Thrust::resourceNameFromModel($this)
+        ]);
     }
 
-    public function breadcrumbs(mixed $object): ?string
+    public function breadcrumbs(mixed $object): array
     {
         $parent = $this->parent($object);
-        if(! $parent) {
-            return null;
-        }
+        if (!$parent) { return []; }
         $parentResource = Thrust::make(Thrust::resourceNameFromModel($parent));
-        return implode(' / ', array_filter([$parentResource->breadcrumbs($parent), $parent->{$parentResource->nameField}]));
+        return [
+            ...$parentResource->breadcrumbs($parent),
+            $parent->{$parentResource->nameField} => $this->getParentUrl($parent),
+//            $this->getTitle() => ''
+        ];
     }
 }

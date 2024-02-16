@@ -17,16 +17,12 @@ class ThrustHasManyController extends Controller
         $childResource      = Thrust::make($hasManyField->resourceName)->parentId($id);
         app(ResourceGate::class)->check($resource, 'index');
 
-        $backHasManyURLParams = $resource instanceof ChildResource ? $resource->getParentHasManyUrlParams($object) : null;
-
         return view('thrust::index', [
             'resourceName'            => $hasManyField->resourceName,
             'searchable'              => count($resource::$search) > 0,
             'resource'                => $childResource,
             'actions'                 => collect($childResource->actions()),
             'parent_id'               => $id,
-            'isChild'                 => $resource instanceof ChildResource && $backHasManyURLParams,
-            'hasManyBackUrlParams'    => $backHasManyURLParams,
             'description'             => $childResource->getDescription(),
 //            "object"                  => $object,
 //            "title"                   => $object->{$resource->nameField},

@@ -437,9 +437,9 @@ abstract class Resource
         return $this->overlook;
     }
 
-    public function breadcrumbs(mixed $object): ?string
+    public function breadcrumbs(mixed $object): array
     {
-        return null;
+        return [$this->getTitle() => route('thrust.index', Thrust::resourceNameFromModel($this))];
     }
 
     /**
