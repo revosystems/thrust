@@ -69,4 +69,6 @@
 
 @if(!$fullPage)
     @stack('edit-scripts')
+@else
+    <div class="pb-8"></div>
 @endif

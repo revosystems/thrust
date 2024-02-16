@@ -17,6 +17,6 @@
             </div>
         </div>
     @endif
-    <x-thrust::fields.edit-fields :object="$object" :fields="$fields" />
+    <x-thrust::fields.edit-fields :object="$object" :fields="$fields" :sideBySide="$sideBySide"/>
 
 </div>

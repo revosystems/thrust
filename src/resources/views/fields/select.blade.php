@@ -1,4 +1,4 @@
-<x-thrust::formField :field="$field" :title="$title" :description="$description" :inline="$inline" :learnMoreUrl="$learnMoreUrl">
+<x-thrust::formField :field="$field" :title="$title" :description="$description" :aside="$showAside" :inline="$inline" :learnMoreUrl="$learnMoreUrl">
     <div class="flex flex-col">
         <div class="flex items-center space-x-2">
             <x-ui::forms.select id="{{$field}}" name="{{$field}}" class="w-full">

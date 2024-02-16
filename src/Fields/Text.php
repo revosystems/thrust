@@ -10,6 +10,7 @@ class Text extends Field
     protected $editableHint           = false;
     protected $attributes             = [];
     protected $shouldAllowScripts     = false;
+    protected $showAside              = null;
 
     public function editableHint($editableHint = true)
     {
@@ -42,6 +43,7 @@ class Text extends Field
             'inline'          => $inline,
             'title'           => $this->getTitle(),
             'type'            => $this->getFieldType(),
+            'showAside'       => $this->showAside ?? $this->shouldShowAside(),
             'field'            => $this->field,
             'value'           => htmlspecialchars_decode($this->getValue($object)),
             'attributes'      => $this->getComponentBagAttributes($object),
@@ -60,6 +62,15 @@ class Text extends Field
     protected function getFieldType()
     {
         return 'text';
+    }
+
+    public function showAside(bool $aside) : self{
+        $this->showAside = $aside;
+        return $this;
+    }
+
+    protected function shouldShowAside() : bool {
+        return false;
     }
 
     public function attributes(array $attributes)

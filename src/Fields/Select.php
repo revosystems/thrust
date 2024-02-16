@@ -11,6 +11,7 @@ class Select extends Field
     protected bool $searchable       = false;
     protected bool $forceIntValue    = false;
     protected $attributes       = '';
+    protected $showAside = false;
 
     public function options(array|Collection $options, bool $allowNull = false)
     {
@@ -47,6 +48,12 @@ class Select extends Field
         return $this;
     }
 
+    public function showAside(bool $aside = true) :self
+    {
+        $this->showAside = $aside;
+        return $this;
+    }
+
     public function displayInIndex($object)
     {
         if ($this->hasCategories()){
@@ -64,11 +71,13 @@ class Select extends Field
             'field'       => $this->field,
             'searchable'  => $this->searchable,
 //            'value'       => intval($this->getValue($object)),
+            'showAside'     => $this->showAside,
             'value'       => $this->getValue($object),
             'options'     => $this->getOptions(),
             'description' => $this->getDescription(),
             'fieldAttributes'  => $this->getFieldAttributes(),
             'hasCategories' => $this->hasCategories(),
+            'learnMoreUrl'    => $this->learnMoreUrl,
         ])->render();
     }
 

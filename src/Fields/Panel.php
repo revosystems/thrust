@@ -18,6 +18,7 @@ class Panel extends FieldContainer
     public $policyAction = null;
 
     public $excludeOnMultiple = false;
+    protected $sideBySide = false;
 
     public static function make($fields, $title = null)
     {
@@ -39,6 +40,12 @@ class Panel extends FieldContainer
         return $this;
     }
 
+    public function sideBySide(bool $sideBySide = true) : self
+    {
+        $this->sideBySide = $sideBySide;
+        return $this;
+    }
+
     public function displayInEdit($object, $inline = false)
     {
         return view('thrust::fields.panel', [
@@ -48,7 +55,8 @@ class Panel extends FieldContainer
             'title' => $this->title,
             'fields' => collect($this->fields)->filter->showInEdit,
             'description' => $this->description,
-            'descriptionIcon' => $this->descriptionIcon
+            'descriptionIcon' => $this->descriptionIcon,
+            'sideBySide' => $this->sideBySide
         ]);
     }
 

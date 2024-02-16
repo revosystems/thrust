@@ -45,6 +45,11 @@ class Decimal extends Text
         return 'number';
     }
 
+    protected function shouldShowAside(): bool
+    {
+        return true;
+    }
+
     protected function getFieldAttributes()
     {
         return $this->attributes . ' step=any';

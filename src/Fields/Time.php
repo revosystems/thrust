@@ -17,6 +17,11 @@ class Time extends Text
         return 'time';
     }
 
+    protected function shouldShowAside(): bool
+    {
+        return true;
+    }
+
     protected function getFieldAttributes()
     {
         return $this->withSeconds ? ' step=1 ' : '';

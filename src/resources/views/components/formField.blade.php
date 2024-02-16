@@ -6,27 +6,27 @@
     <div id="{{$field}}_div"
         @class([
             'w-full flex py-4',
-            'flex-col' => !isset($aside),
-            'flex-row items-center space-x-4' => isset($aside)
+            'flex-col' => !(isset($aside) && $aside),
+            'flex-col sm:flex-row sm:items-center sm:space-x-4' => isset($aside) && $aside
         ])
         >
-        <div class="field flex flex-col grow w-full">
+        <div class="field flex flex-col w-full">
             <div class="font-semibold">
                 {{ $title }}
             </div>
-            <div class="flex flex-col grow">
+            <div class="flex flex-col ">
                 @if (isset($description))
                     <div class="text-gray-400 mt-1 mb-2">{!! $description !!}</div>
                 @endif
             </div>
+            @if(isset($learnMoreUrl) && $learnMoreUrl)
+                <div class="my-1">
+                    <x-ui::learn-more href="{{$learnMoreUrl}}">
+                        {{ __('thrust::messages.learnMore') }}
+                    </x-ui::learn-more>
+                </div>
+            @endif
         </div>
-        @if(isset($learnMoreUrl) && $learnMoreUrl)
-            <div class="my-1">
-                <x-ui::learn-more href="{{$learnMoreUrl}}">
-                    {{ __('thrust::messages.learnMore') }}
-                </x-ui::learn-more>
-            </div>
-        @endif
         <div class="">
             {{ $slot }}
         </div>
