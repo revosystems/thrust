@@ -21,7 +21,7 @@
             </div>
             @if(isset($learnMoreUrl) && $learnMoreUrl)
                 <div class="my-1">
-                    <x-ui::learn-more href="{{$learnMoreUrl}}">
+                    <x-ui::learn-more href="{{$learnMoreUrl}}" :withIcon="true">
                         {{ __('thrust::messages.learnMore') }}
                     </x-ui::learn-more>
                 </div>
