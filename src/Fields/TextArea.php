@@ -9,7 +9,7 @@ class TextArea extends Field
     protected $attributes         = [];
     protected $shouldAllowScripts = false;
 
-    public $showInIndex = false;
+    public bool $showInIndex = false;
 
     public function displayInIndex($object)
     {

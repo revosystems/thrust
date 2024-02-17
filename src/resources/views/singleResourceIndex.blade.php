@@ -2,7 +2,7 @@
 @section('content')
 {{--    <x-thrust::searchSingle />--}}
     <div class="flex justify-center bg-white pt-4 px-4 sm:px-0">
-        <div class="max-w-xl">
+        <div class="w-full max-w-xl">
         {!! ( new BadChoice\Thrust\Html\Edit($resource, $resourceName))->show($object, true)  !!}
         </div>
     </div>

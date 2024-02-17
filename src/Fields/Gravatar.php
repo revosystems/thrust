@@ -4,8 +4,8 @@ namespace BadChoice\Thrust\Fields;
 
 class Gravatar extends Field
 {
-    public $field      = 'email';
-    public $showInEdit = false;
+    public string $field      = 'email';
+    public bool $showInEdit = false;
     protected $default = 'mm';
 
     public function displayInIndex($object)

@@ -63,6 +63,7 @@ class BelongsTo extends Relationship
                 'description'   => $this->getDescription(),
                 'inlineCreation' => $this->inlineCreation,
                 'inlineCreationData' => $this->inlineCreationData($object),
+                'showAside'     => false,
                 'learnMoreUrl' => $this->learnMoreUrl,
             ])->render();
         }
@@ -76,6 +77,7 @@ class BelongsTo extends Relationship
             'description'   => $this->getDescription(),
             'inlineCreation' => $this->inlineCreation,
             'inlineCreationData' => $this->inlineCreationData($object),
+            'showAside'     => false,
             'learnMoreUrl' => $this->learnMoreUrl,
         ])->render();
     }
