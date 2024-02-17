@@ -4,7 +4,7 @@ namespace BadChoice\Thrust\Fields;
 
 class Password extends Text
 {
-    public $showInIndex = false;
+    public bool $showInIndex = false;
 
     public function displayInIndex($object)
     {
