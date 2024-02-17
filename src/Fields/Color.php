@@ -30,6 +30,8 @@ class Color extends Text
             'description' => $this->getDescription(),
             'title'       => $this->getTitle(),
             'inline'      => $inline,
+            'showAside'   => false,
+            'learnMoreUrl' => $this->learnMoreUrl
         ])->render();
     }
 

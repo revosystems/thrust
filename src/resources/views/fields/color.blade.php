@@ -1,8 +1,10 @@
-@component('thrust::components.formField' , ["field" => $field, "title" => $title, "description" => $description, "inline" => $inline])
+<x-thrust::formField :field="$field" :title="$title" :description="$description" :aside="$showAside" :inline="$inline" :learnMoreUrl="$learnMoreUrl">
     @php $id = str_replace("]","-",str_replace("[", "", $field))  @endphp
-    <input type="color" id="colorpicker-{{$id}}" value="{{$value}}" name="{{$field}}" placeholder="{{$title}}">
-    <input type="text" id="{{$id}}" value="{{$value}}" name="{{$field}}" placeholder="{{$title}}">
 
+    <div class="flex space-x-2 items-center">
+        <input type="color" id="colorpicker-{{$id}}" value="{{$value}}" name="{{$field}}" placeholder="{{$title}}">
+        <x-ui::forms.text-input id="{{$id}}" value="{{$value}}" name="{{$field}}" placeholder="{{$title}}" />
+    </div>
     @push('edit-scripts')
         <script>
             $('#colorpicker-{{$id}}').on('change', function() {
@@ -10,5 +12,4 @@
             );
         </script>
     @endpush
-
-@endcomponent
+</x-thrust::formField>

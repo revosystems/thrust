@@ -17,7 +17,7 @@
 
 <script>
     $('.searchable').select2({
-        width: '300px',
+        //width: '300px',
         dropdownAutoWidth : true,
         dropdownParent: $('{{config('thrust.popupId', '#popup')}}')
     });

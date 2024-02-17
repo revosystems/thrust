@@ -52,13 +52,13 @@
     @endif
     <script>
         $('.searchable').select2({
-            width: '300px',
+            //width: '300px',
             dropdownAutoWidth : true,
             @if (! $fullPage) dropdownParent: $('{{config('thrust.popupId', '#popup')}}') @endif
         });
         function initSelect2(){
             $('.searchable').select2({
-                width: '300px',
+                //width: '300px',
                 dropdownAutoWidth : true,
                 @if (! $fullPage) dropdownParent: $('{{config('thrust.popupId', '#popup')}}') @endif    
             });

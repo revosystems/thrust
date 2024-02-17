@@ -49,7 +49,7 @@
     // $('#popup > select > .searchable').select2({ width: '325', dropdownAutoWidth : true });
     @if ($searchable && !$ajaxSearch)
     $('.searchable').select2({
-        width: '300px',
+        //width: '300px',
         dropdownAutoWidth : true,
         dropdownParent: $('{{config('thrust.popupId', '#popup')}}'),
     });

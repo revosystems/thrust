@@ -54,7 +54,7 @@
 
 function RVAjaxSelect2(url, options) {
     this.options = {
-        width: '300px',
+        //width: '300px',
         dropdownAutoWidth: true,
         ajax: {
             url: url,

@@ -28,6 +28,8 @@ class MultipleSelect extends Select
             'options'     => $this->getOptions(),
             'description' => $this->getDescription(),
             'clearable'   => $this->clearable,
+            'showAside'   => false,
+            'learnMoreUrl'=> $this->learnMoreUrl,
         ])->render();
     }
 

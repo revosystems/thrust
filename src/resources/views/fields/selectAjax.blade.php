@@ -1,6 +1,6 @@
 <x-thrust::formField :field="$field" :title="$title" :description="$description"  :inline="$inline" :learnMoreUrl="$learnMoreUrl">
     <div class="flex flex-row items-center">
-        <select id="{{$field}}" name="{{$field}}">
+        <select id="{{$field}}" name="{{$field}}" class="">
             <option value="{{$value}}" selected>{{$name}}</option>
         </select>
         @if(isset($inlineCreation) && $inlineCreation)
