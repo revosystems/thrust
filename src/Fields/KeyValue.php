@@ -4,20 +4,20 @@ namespace BadChoice\Thrust\Fields;
 
 class KeyValue extends Field
 {
-    public $showInEdit   = false;
+    public bool $showInEdit   = false;
     public $keyOptions   = null;
     public $valueOptions = null;
-    public $searchable   = false;
-    public $multiple     = false;
-    public $fixed        = false;
+    public bool $searchable   = false;
+    public bool $multiple     = false;
+    public bool $fixed        = false;
 
-    public function keyOptions($keyOptions)
+    public function keyOptions($keyOptions) : self
     {
         $this->keyOptions = $keyOptions;
         return $this;
     }
 
-    public function valueOptions($valueOptions)
+    public function valueOptions($valueOptions) : self
     {
         $this->valueOptions = $valueOptions;
         return $this;
@@ -43,19 +43,19 @@ class KeyValue extends Field
         ])->render();
     }
 
-    public function multiple($multiple = true)
+    public function multiple(bool $multiple = true) : self
     {
         $this->multiple = $multiple;
         return $this;
     }
 
-    public function searchable($searchable = true)
+    public function searchable(bool $searchable = true) : self
     {
         $this->searchable = $searchable;
         return $this;
     }
 
-    public function fixedEntries($fixed = true)
+    public function fixedEntries(bool $fixed = true) : self
     {
         $this->fixed = $fixed;
         return $this;

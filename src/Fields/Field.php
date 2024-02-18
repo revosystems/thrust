@@ -11,7 +11,7 @@ abstract class Field
 {
     use Visibility;
 
-    public string $field;
+    public ?string $field;
     public bool $sortable = false;
     protected ?string $title;
     public $validationRules;
