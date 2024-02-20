@@ -76,7 +76,7 @@ class Image extends File implements Prunable
         return view('thrust::fields.image', [
             'title'         => $this->getTitle(),
             'path'          => $this->displayPath($object),
-            'gravatar'      => $this->gravatarField ? Gravatar::make($this->gravatarField)->getImageTag($object) : null,
+            'gravatar'      => $this->gravatarField ? Gravatar::make($this->gravatarField)->getImageTag($object->{$this->gravatarField}) : null,
             'classes'       => $this->editClasses,
             'exists'        => $this->exists($object),
             'style'         => $inline ? $this->indexStyle : $this->editStyle,
