@@ -35,7 +35,7 @@
                     {!! $field->displayInEdit(null, true)  !!}
                 @endif
             @endforeach
-            <x-ui::secondary-button class="secondary">@icon(plus) {{__('thrust::messages.add') }} </x-ui::secondary-button>
+            <x-ui::secondary-button type="submit">@icon(plus) {{__('thrust::messages.add') }} </x-ui::secondary-button>
         </form>
     </div>
 @endif
