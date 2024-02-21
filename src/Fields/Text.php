@@ -11,6 +11,7 @@ class Text extends Field
     protected $attributes             = [];
     protected $shouldAllowScripts     = false;
     protected $showAside              = null;
+    protected ?string $icon           = null;
 
     public function editableHint($editableHint = true)
     {
@@ -21,6 +22,12 @@ class Text extends Field
     public function getIndexClass()
     {
         return $this->editableHint ? 'editableHint' : '';
+    }
+
+    public function icon(?string $icon) : self
+    {
+        $this->icon = $icon;
+        return $this;
     }
 
     public function displayWith($callback)
@@ -48,13 +55,14 @@ class Text extends Field
             'value'           => htmlspecialchars_decode($this->getValue($object)),
             'attributes'      => $this->getComponentBagAttributes($object),
             'description'     => $this->getDescription(),
+            'icon'            => $this->icon,
             'learnMoreUrl'    => $this->learnMoreUrl,
         ])->render();
     }
 
     protected function getComponentBagAttributes($object) : ComponentAttributeBag {
         return new ComponentAttributeBag([
-            ...$this->getHtmlValidation($object, 'text'),
+            ...$this->getHtmlValidation($object, $this->getFieldType()),
             ...$this->attributes
         ]);
     }
