@@ -43,10 +43,18 @@
                 @endif
             @endforeach
             @if (app(BadChoice\Thrust\ResourceGate::class)->can($pivotResourceName, 'delete', $row->pivot))
-                <x-ui::table.cell class="w-10"> <a class="delete-resource" data-delete="confirm resource" confirm-message="{{ __('admin.confirmDelete') }}" href="{{route('thrust.belongsToMany.delete', [$resourceName, $object->id, $belongsToManyField->field, $row->pivot->id])}}"></a></x-ui::table.cell>
+                <x-ui::table.cell class="w-10">
+                    <a class="delete-resource" data-delete="confirm resource" confirm-message="{{ __('admin.confirmDelete') }}" href="{{route('thrust.belongsToMany.delete', [$resourceName, $object->id, $belongsToManyField->field, $row->pivot->id])}}">
+                        <x-ui::tertiary-button>@icon(trash)</x-ui::tertiary-button>
+                    </a>
+                </x-ui::table.cell>
             @endif
             @if (app(BadChoice\Thrust\ResourceGate::class)->can($pivotResourceName, 'edit', $row->pivot) && $belongsToManyField->canEdit())
-                <x-ui::table.cell class="w-10"> <a class='edit thrust-edit' id="edit_{{$row->pivot->id}}"></a></x-ui::table.cell>
+                <x-ui::table.cell class="w-10">
+                    <a class='edit thrust-edit' id="edit_{{$row->pivot->id}}">
+                        <x-ui::tertiary-button>@icon(pencil)</x-ui::tertiary-button>
+                    </a>
+                </x-ui::table.cell>
             @endif
         </x-ui::table.row>
     @endforeach

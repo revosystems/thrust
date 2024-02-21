@@ -14,7 +14,7 @@
         </div>
     @endif
 </div>
-<div id="popup-all">
+<div id="popup-all" class="mt-4">
     @include('thrust::belongsToManyTable')
 </div>
 <div id="popup-results"></div>
@@ -23,19 +23,25 @@
     <div class="mt4">
         <form id='belongsToManyForm' action="{{route('thrust.belongsToMany.store', [$resourceName, $object->id, $belongsToManyField->field]) }}" method="POST">
             {{ csrf_field() }}
-            <select id="id" name="id" @if($belongsToManyField->searchable) class="searchable" @endif >
-                @if (!$ajaxSearch)
-                    @foreach($belongsToManyField->getOptions($object) as $possible)
-                        <option value='{{$possible->id}}'> {{ $possible->name }} </option>
-                    @endforeach
-                @endif
-            </select>
-            @foreach($belongsToManyField->pivotFields as $field)
-                @if($field->showInEdit && $resource->can($field->policyAction))
-                    {!! $field->displayInEdit(null, true)  !!}
-                @endif
-            @endforeach
-            <x-ui::secondary-button type="submit">@icon(plus) {{__('thrust::messages.add') }} </x-ui::secondary-button>
+            <div class="flex items-center space-x-2">
+                <select id="id" name="id" @if($belongsToManyField->searchable) class="searchable" @endif >
+                    @if (!$ajaxSearch)
+                        @foreach($belongsToManyField->getOptions($object) as $possible)
+                            <option value='{{$possible->id}}'> {{ $possible->name }} </option>
+                        @endforeach
+                    @endif
+                </select>
+                @foreach($belongsToManyField->pivotFields as $field)
+                    @if($field->showInEdit && $resource->can($field->policyAction))
+                        {!! $field->displayInEdit(null, true)  !!}
+                    @endif
+                @endforeach
+                <x-ui::secondary-button type="submit">
+                    <div class="flex items-center space-x-2">
+                    <span>@icon(plus)</span><span class="hidden sm:block">{{__('thrust::messages.add') }}</span>
+                    </div>
+                </x-ui::secondary-button>
+            </div>
         </form>
     </div>
 @endif
