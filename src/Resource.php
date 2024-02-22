@@ -239,7 +239,7 @@ abstract class Resource
         }
 
         if (static::$sortable) {
-            $object->{static::$sortField} = $this->count();
+            $object->{static::$sortField} = $this->getBaseQuery()->withTrashed()->count();
         }
         return $object;
     }
