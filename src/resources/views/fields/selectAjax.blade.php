@@ -1,5 +1,5 @@
 @component('thrust::components.formField', ["field" => $field, "title" => $title, "description" => $description ?? null, "inline" => $inline])
-    <select id="{{$field}}" name="{{$field}}">
+    <select id="{{$field}}" @if(!$allowNull) required @endif name="{{$field}}">
         <option value="{{$value}}" selected>{{$name}}</option>
     </select>
     @if(isset($inlineCreation) && $inlineCreation)
