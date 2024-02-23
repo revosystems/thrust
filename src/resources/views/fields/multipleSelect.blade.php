@@ -1,10 +1,11 @@
 <x-thrust::formField :field="$field" :title="$title" :description="$description" :aside="$showAside" :inline="$inline" :learnMoreUrl="$learnMoreUrl">
-    <input hidden name="{{$field}}" value="">
-    <select id="{{$field}}" name="{{$field}}[]" @if($searchable) class="searchable w-full" @endif multiple>
+
+    <x-ui::forms.multiple-select id="{{$field}}" name="{{$field}}[]" :searchable="$searchable" class="w-full">
         @foreach($options as $key => $optionValue)
             <option @if($value && in_array($key, (array)$value)) selected @endif value="{{$key}}">{{$optionValue}}</option>
         @endforeach
-    </select>
+    </x-ui::forms.multiple-select>
+
     @if($clearable)
         <x-ui::secondary-button id="{{$field}}_clear_selection" name="clear_selection">{{__('thrust::messages.clearSelection')}}</x-ui::secondary-button>
         <script>
@@ -14,4 +15,5 @@
         });
         </script>
     @endif
+
 </x-thrust::formField>
