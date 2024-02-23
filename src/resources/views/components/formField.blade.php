@@ -7,10 +7,13 @@
         @class([
             'w-full flex py-4',
             'flex-col' => !(isset($aside) && $aside),
-            'flex-col sm:flex-row sm:items-center sm:space-x-4' => isset($aside) && $aside
+            'flex-col sm:flex-row sm:items-center sm:space-x-4 sm:justify-between' => isset($aside) && $aside
         ])
         >
-        <div class="field flex flex-col w-full">
+        <div @class([
+            "field flex flex-col",
+            "w-full" => !(isset($aside) && $aside),
+        ])>
             <div class="font-semibold">
                 {{ $title }}
             </div>
