@@ -104,7 +104,7 @@ class ThrustBelongsToManyController extends Controller
     {
         $query = $object->{$relationship}()->with($belongsToManyField->with);
         return $belongsToManyField->sortable
-            ? $query->orderBy($belongsToManyField->sortField)
+            ? $query->orderBy('pivot_' . $belongsToManyField->sortField)
             : $query;
     }
 }
