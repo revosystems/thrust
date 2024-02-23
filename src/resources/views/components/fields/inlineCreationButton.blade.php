@@ -15,7 +15,8 @@
                 $.ajax({type: "POST", url: url,
                     data: form.serialize(), // serializes the form's elements.
                     success: function(data) {
-                        console.log(data)
+                        console.log("Thrust inline creation data:");
+                        console.log(data);
                         $('#inline-creation-{{$field}}').hide('fast');
                         const id = data['id'];
                         const value = data['{{$inlineCreationData['relationDisplayField']}}']

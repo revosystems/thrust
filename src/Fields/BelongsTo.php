@@ -67,7 +67,7 @@ class BelongsTo extends Relationship
                 'learnMoreUrl' => $this->learnMoreUrl,
             ])->render();
         }
-        return view('thrust::fields.select', [
+        return view('thrust::fields.belongsto-select', [
             'title'         => $this->getTitle(),
             'field'         => $this->databaseField($object),
             'searchable'    => $this->searchable,
