@@ -33,6 +33,11 @@ class MultipleSelect extends Select
         ])->render();
     }
 
+    public function mapAttributeFromRequest($value)
+    {
+        return array_filter($value);
+    }
+
     public function clearable(bool $clearable = true): self
     {
         $this->clearable = $clearable;
