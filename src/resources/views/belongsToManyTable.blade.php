@@ -3,7 +3,7 @@
     @if (! $belongsToManyField->hideName)
         <x-ui::table.row>
             @if ($sortable)
-                <x-ui::table.header-cell></x-ui::table.header-cell>
+                <x-ui::table.header-cell class="hidden sm:table-cell"></x-ui::table.header-cell>
             @endif
             <x-ui::table.header-cell>
                 {{ trans_choice(config('thrust.translationsPrefix') . Illuminate\Support\Str::singular($belongsToManyField->field), 1) }}
@@ -27,7 +27,9 @@
     @foreach ($children as $row)
         <x-ui::table.row id="sort_{{$row->pivot->id}}">
             @if ($sortable)
-                <x-ui::table.cell class="sort w-10 hidden sm:table-cell"></x-ui::table.cell>
+                <x-ui::table.cell class="sort w-10 hidden sm:table-cell text-gray-300 cursor-grab">
+                    @icon(grip-lines)
+                </x-ui::table.cell>
             @endif
             @if (! $belongsToManyField->hideName)
                 <x-ui::table.cell>

@@ -1,17 +1,14 @@
-<h2> {{$title}} </h2>
+<x-ui::breadcrums :data="[$title]" />
 
-<div class="flex justify-between items-center space-x-2">
+<div class="flex justify-between items-center space-x-2 mt-4">
     <x-ui::forms.search-text-input id='popup-searcher'
                                    :placeholder="__('thrust::messages.search')"
-                                   class="w-full"
-                                   autofocus />
+                                   class="w-full" />
     @if($sortable)
-        <div class="actions">
-            <x-ui::secondary-button onclick="saveChildOrder('{{$resourceName}}','{{$object->id}}', '{{$belongsToManyField->field}}')">
-                @icon(sort)
-                {{__('thrust::messages.saveOrder')}}
-            </x-ui::secondary-button>
-        </div>
+        <x-ui::secondary-button onclick="saveChildOrder('{{$resourceName}}','{{$object->id}}', '{{$belongsToManyField->field}}')">
+            <span class="text-gray-500">@icon(sort)</span>
+            {{__('thrust::messages.saveOrder')}}
+        </x-ui::secondary-button>
     @endif
 </div>
 <div id="popup-all" class="mt-4">
@@ -20,7 +17,7 @@
 <div id="popup-results"></div>
 
 @if (app(BadChoice\Thrust\ResourceGate::class)->can($pivotResourceName, 'create'))
-    <div class="mt4">
+    <div class="mt-4 pt-4 border-t">
         <form id='belongsToManyForm' action="{{route('thrust.belongsToMany.store', [$resourceName, $object->id, $belongsToManyField->field]) }}" method="POST">
             {{ csrf_field() }}
             <div class="flex items-center space-x-2">
@@ -55,7 +52,7 @@
     // $('#popup > select > .searchable').select2({ width: '325', dropdownAutoWidth : true });
     @if ($searchable && !$ajaxSearch)
     $('.searchable').select2({
-        //width: '300px',
+        width: '200px',
         dropdownAutoWidth : true,
         dropdownParent: $('{{config('thrust.popupId', '#popup')}}'),
     });
