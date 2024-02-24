@@ -30,7 +30,10 @@
                 </div>
             @endif
         </div>
-        <div class="">
+        <div @class([
+            "min-w-40",
+            "text-right" => (isset($aside) && $aside)
+        ])>
             {{ $slot }}
         </div>
     </div>

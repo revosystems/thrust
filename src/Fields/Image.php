@@ -82,7 +82,7 @@ class Image extends File implements Prunable
             'style'         => $inline ? $this->indexStyle : $this->editStyle,
             'resourceName'  => app(ResourceManager::class)->resourceNameFromModel($object),
             'id'            => $object->id,
-            'field'         => $this->field,
+            'field'          => $this->field,
             'inline'        => $inline,
             'description'   => $this->getDescription(),
             'withLink'      => ! $inline && $this->withLink

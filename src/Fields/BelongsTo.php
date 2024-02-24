@@ -50,7 +50,7 @@ class BelongsTo extends Relationship
     public function displayInEdit($object, $inline = false)
     {
         if ($this->ajaxSearch) {
-            return view('thrust::fields.selectAjax', [
+            return view($this->inlineCreation ? 'thrust::fields.selectAjax' : 'thrust::fields.selectAjaxDejavu', [
                 'resourceName'  => app(ResourceManager::class)->resourceNameFromModel(get_class($object)),
                 'title'         => $this->getTitle(),
                 'field'         => $this->databaseField($object),

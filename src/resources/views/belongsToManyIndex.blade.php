@@ -21,13 +21,22 @@
         <form id='belongsToManyForm' action="{{route('thrust.belongsToMany.store', [$resourceName, $object->id, $belongsToManyField->field]) }}" method="POST">
             {{ csrf_field() }}
             <div class="flex items-center space-x-2">
-                <select id="id" name="id" @if($belongsToManyField->searchable) class="searchable" @endif >
-                    @if (!$ajaxSearch)
+
+                @if ($ajaxSearch)
+                    <x-ui::forms.ajax-searchable-select
+                        id="id"
+                        name="id"
+                        :allowNull="false"
+                        :url="route('thrust.relationship.search', [$resourceName, $object->id, $belongsToManyField->field]).'allowDuplicates=true'"
+                    />
+                @else
+                    <x-ui::forms.searchable-select id="id" name="id">
                         @foreach($belongsToManyField->getOptions($object) as $possible)
                             <option value='{{$possible->id}}'> {{ $possible->name }} </option>
                         @endforeach
-                    @endif
-                </select>
+                    </x-ui::forms.searchable-select>
+                @endif
+
                 @foreach($belongsToManyField->pivotFields as $field)
                     @if($field->showInEdit && $resource->can($field->policyAction))
                         {!! $field->displayInEdit(null, true)  !!}
@@ -68,9 +77,9 @@
     });
 
     @if ($ajaxSearch)
-    new RVAjaxSelect2('{{ route('thrust.relationship.search', [$resourceName, $object->id, $belongsToManyField->field]) }}?allowNull=0&allowDuplicates={{$allowDuplicates}}',{
-        dropdownParent: $('{{config('thrust.popupId', '#popup')}}'),
-    }).show('#id');
+        new RVAjaxSelect2('{{ route('thrust.relationship.search', [$resourceName, $object->id, $belongsToManyField->field]) }}?allowNull=0&allowDuplicates={{$allowDuplicates}}',{
+            dropdownParent: $('{{config('thrust.popupId', '#popup')}}'),
+        }).show('#id');
     @endif
 
     popupUrl = "{{route('thrust.belongsToMany', [$resourceName, $object->id, $belongsToManyField->field]) }}";
