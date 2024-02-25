@@ -8,6 +8,7 @@ class BelongsTo extends Relationship
 {
     protected $allowNull = false;
     protected $inlineCreation = false;
+    protected ?string $icon = null;
 
     public function allowNull($allowNull = true) : self
     {
@@ -47,6 +48,11 @@ class BelongsTo extends Relationship
         return $possibleRelations;
     }
 
+    public function icon(?string $icon) : self {
+        $this->icon = $icon;
+        return $this;
+    }
+
     public function displayInEdit($object, $inline = false)
     {
         if ($this->ajaxSearch) {
@@ -56,6 +62,7 @@ class BelongsTo extends Relationship
                 'field'         => $this->databaseField($object),
                 'relationship'  => $this->field,
                 'value'         => $this->getValueId($object),
+                'icon'          => $this->icon,
                 'name'          => $this->getRelationName($object),
                 'id'            => $object->id,
                 'allowNull'     => $this->allowNull,

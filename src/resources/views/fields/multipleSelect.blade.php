@@ -1,6 +1,6 @@
 <x-thrust::formField :field="$field" :title="$title" :description="$description" :aside="$showAside" :inline="$inline" :learnMoreUrl="$learnMoreUrl">
 
-    <x-ui::forms.multiple-select id="{{$field}}" name="{{$field}}[]" :searchable="$searchable" class="w-full" :icon="$icon">
+    <x-ui::forms.multiple-select id="{{$field}}" name="{{$field}}[]" :searchable="$searchable" class="w-full" :icon="$icon ?? null">
         @foreach($options as $key => $optionValue)
             <option @if($value && in_array($key, (array)$value)) selected @endif value="{{$key}}">{{$optionValue}}</option>
         @endforeach
