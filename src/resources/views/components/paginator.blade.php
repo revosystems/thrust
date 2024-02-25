@@ -1,5 +1,5 @@
 @if ( method_exists($data, 'links')  && $data->lastPage() != 1)
-    <div class="my-2">
+    <div class="m-4">
         {{  $data->appends(Illuminate\Support\Arr::except(request()->query(),['page']))->links() }}
     </div>
     @if(isset($popupLinks))
