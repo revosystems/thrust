@@ -31,8 +31,7 @@
             @endif
         </div>
         <div @class([
-            "min-w-36",
-            "text-right" => (isset($aside) && $aside)
+            "min-w-36 text-right" => (isset($aside) && $aside)
         ])>
             {{ $slot }}
         </div>
