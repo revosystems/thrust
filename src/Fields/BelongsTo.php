@@ -76,7 +76,8 @@ class BelongsTo extends Relationship
         }
         return view($this->inlineCreation ? 'thrust::fields.belongsto-select' : 'thrust::fields.select', [
             'title'         => $this->getTitle(),
-            'field'         => $this->databaseField($object),
+            'icon'          => $this->icon,
+            'field'          => $this->databaseField($object),
             'searchable'    => $this->searchable,
             'value'         => $this->getValueId($object),
             'options'       => $this->getOptions($object),
