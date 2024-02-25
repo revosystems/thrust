@@ -9,6 +9,7 @@ class MultipleSelect extends Select
     protected bool $searchable = false;
     protected bool $isMultiple = true;
     protected bool $clearable  = false;
+    protected ?string $icon = null;
 
     public function displayInIndex($object): string
     {
@@ -17,12 +18,19 @@ class MultipleSelect extends Select
         })->implode(', ');
     }
 
+    public function icon(?string $icon) : self {
+        $this->icon = $icon;
+        return $this;
+    }
+
+
     public function displayInEdit($object, $inline = false)
     {
         return view('thrust::fields.multipleSelect', [
             'title'       => $this->getTitle(),
             'inline'      => $inline,
             'field'       => $this->field,
+            'icon'       => $this->icon,
             'searchable'  => $this->searchable,
             'value'       => $this->getValue($object),
             'options'     => $this->getOptions(),

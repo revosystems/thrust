@@ -12,6 +12,7 @@ class Select extends Field
     protected bool $forceIntValue    = false;
     protected $attributes       = '';
     protected $showAside = false;
+    protected ?string $icon = null;
 
     public function options(array|Collection $options, bool $allowNull = false)
     {
@@ -19,6 +20,11 @@ class Select extends Field
             ? $options
             : $options->toArray();
         $this->allowNull = $allowNull;
+        return $this;
+    }
+
+    public function icon(?string $icon) : self {
+        $this->icon = $icon;
         return $this;
     }
 
@@ -69,6 +75,7 @@ class Select extends Field
             'title'       => $this->getTitle(),
             'inline'      => $inline,
             'field'       => $this->field,
+            'icon'       => $this->icon,
             'searchable'  => $this->searchable,
 //            'value'       => intval($this->getValue($object)),
             'showAside'     => $this->showAside,
