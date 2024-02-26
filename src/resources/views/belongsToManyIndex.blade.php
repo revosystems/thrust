@@ -27,7 +27,7 @@
                         id="id"
                         name="id"
                         :allowNull="false"
-                        :url="route('thrust.relationship.search', [$resourceName, $object->id, $belongsToManyField->field]).'allowDuplicates=true'"
+                        :url="route('thrust.relationship.search', [$resourceName, $object->id, $belongsToManyField->field]).'?allowDuplicates=true'"
                     />
                 @else
                     <x-ui::forms.searchable-select id="id" name="id">
