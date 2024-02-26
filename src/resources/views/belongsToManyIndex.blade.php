@@ -58,14 +58,7 @@
     });
     
     addListeners();
-    // $('#popup > select > .searchable').select2({ width: '325', dropdownAutoWidth : true });
-    @if ($searchable && !$ajaxSearch)
-    $('.searchable').select2({
-        width: '200px',
-        dropdownAutoWidth : true,
-        dropdownParent: $('{{config('thrust.popupId', '#popup')}}'),
-    });
-    @endif
+
 
     $('#popup-searcher').searcher('/thrust/{{$resourceName}}/{{$object->id}}/belongsToMany/{{$belongsToManyField->field}}/search/', {
         'resultsDiv' : 'popup-results',

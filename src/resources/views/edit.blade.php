@@ -4,12 +4,12 @@
 	        <h2>{{ $title }}</h2>
         </div>
     @else
-        <div class="flex space-x-2 items-center text-lg pb-2">
+        <div class="flex space-x-1 items-center text-lg pb-2">
             @if($breadcrumbs)
                  <x-ui::breadcrums :data="$breadcrumbs" />
-                 <x-ui::icon class="text-gray-400">chevron-right</x-ui::icon>
+                 <x-ui::icon class="text-gray-400 text-sm">chevron-right</x-ui::icon>
             @endif
-            {{ $object->{$nameField} ?: __('thrust::messages.new') }}
+            <span>{{ $object->{$nameField} ?: __('thrust::messages.new') }}</span>
         </div>
     @endif
 
