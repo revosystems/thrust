@@ -20,7 +20,10 @@
                         $('#inline-creation-{{$field}}').hide('fast');
                         const id = data['id'];
                         const value = data['{{$inlineCreationData['relationDisplayField']}}']
-                        $('#{{$field}}').append("<option value='" + id + "' selected>" + value + "<option>")
+                        $('#{{$field}}').val(id)
+                        $('#{{$field}}').val(id)
+                        {{--$('#{{$field}}').text(value)--}}
+                        //$('#{{$field}}').append("<option value='" + id + "' selected>" + value + "<option>")
                     }
                 });
             })
