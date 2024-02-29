@@ -4,9 +4,9 @@ namespace BadChoice\Thrust\Fields;
 
 class Time extends Text
 {
-    protected $withSeconds;
+    protected bool $withSeconds;
     
-    public function withSeconds($withSeconds = true)
+    public function withSeconds(bool $withSeconds = true)
     {
         $this->withSeconds = $withSeconds;
         return $this;
@@ -22,8 +22,10 @@ class Time extends Text
         return true;
     }
 
-    protected function getFieldAttributes()
+    protected function getFieldAttributes() : array
     {
-        return $this->withSeconds ? ' step=1 ' : '';
+        return array_merge($this->attributes,
+            $this->withSeconds ? ['step' => 1] : []
+        );
     }
 }

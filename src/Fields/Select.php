@@ -10,7 +10,7 @@ class Select extends Field
     protected bool $allowNull        = false;
     protected bool $searchable       = false;
     protected bool $forceIntValue    = false;
-    protected $attributes       = '';
+    protected array $attributes      = [];
     protected $showAside = false;
     protected ?string $icon = null;
 
@@ -96,13 +96,13 @@ class Select extends Field
         return parent::getValue($object);
     }
 
-    public function attributes($attributes)
+    public function attributes(array $attributes) : self
     {
         $this->attributes = $attributes;
         return $this;
     }
 
-    protected function getFieldAttributes()
+    protected function getFieldAttributes() : array
     {
         return $this->attributes;
     }

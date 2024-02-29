@@ -63,7 +63,7 @@ class Text extends Field
     protected function getComponentBagAttributes($object) : ComponentAttributeBag {
         return new ComponentAttributeBag([
             ...$this->getHtmlValidation($object, $this->getFieldType()),
-            ...$this->attributes
+            ...$this->getFieldAttributes()
         ]);
     }
 
@@ -87,7 +87,7 @@ class Text extends Field
         return $this;
     }
 
-    protected function getFieldAttributes()
+    protected function getFieldAttributes() : array
     {
         return $this->attributes;
     }

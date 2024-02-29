@@ -50,8 +50,9 @@ class Decimal extends Text
         return true;
     }
 
-    protected function getFieldAttributes()
+    protected function getFieldAttributes() : array
     {
-        return $this->attributes . ' step=any';
+        return array_merge($this->attributes, ['step' => 'any']);
     }
+
 }
