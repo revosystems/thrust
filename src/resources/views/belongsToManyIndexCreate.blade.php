@@ -7,7 +7,7 @@
                 <x-ui::forms.ajax-searchable-select
                         id="id"
                         name="id"
-                        :allowNull="false"
+                        :required="true"
                         :url="route('thrust.relationship.search', [$resourceName, $object->id, $belongsToManyField->field]).'?allowDuplicates=true'"
                 />
             @else

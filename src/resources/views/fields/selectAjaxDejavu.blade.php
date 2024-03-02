@@ -3,7 +3,7 @@
             name="{{$field}}"
             id="{{$field}}"
             :icon="$icon ?? null"
-            :allowNull="$allowNull"
+            :required="!$allowNull"
             :url="route('thrust.relationship.search', [$resourceName, $id ?? 0, $relationship])"
             :selected="['id' => $value, 'name' => $name]"
     />
