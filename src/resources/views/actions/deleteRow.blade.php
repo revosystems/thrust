@@ -1,7 +1,7 @@
-<form action="{{$link}}" method="post" x-data @submit.prevent="if (confirm('{{$confirm}}')) $el.submit()">
-    {{ csrf_field() }}
-    {{ method_field('DELETE') }}
-    <x-ui::tertiary-button type="submit" x-ref="button">
+<form action="{{$link}}" method="post">
+    @csrf()
+    @method('DELETE')
+    <x-ui::tertiary-button type="submit" :async="true" x-ref="button" :confirm="$confirm">
         <div class="flex items-center space-x-2">
             @if($icon) <x-ui::icon>{{$icon}}</x-ui::icon>@endif
             @if($title)<div class="hidden sm:block">{{ $title }}</div>@endif
