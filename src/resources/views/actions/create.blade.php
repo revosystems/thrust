@@ -13,8 +13,8 @@
         @endforeach
     </div>
 
-    <x-ui::primary-button :async="true" type="submit">
-        {{ __("thrust::messages.perform") }}
+    <x-ui::primary-button type="submit" :async="true"> 
+        {{ __("thrust::messages.perform") }} 
     </x-ui::primary-button>
 </form>
 
