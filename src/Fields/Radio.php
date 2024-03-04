@@ -8,6 +8,7 @@ class Radio extends Field
 {
     protected array $options = [];
     protected array $images = [];
+    protected array $descriptions = [];
     protected bool $showAside = false;
 
     public function options(array|Collection $options)
@@ -21,6 +22,12 @@ class Radio extends Field
     public function images(array $images) : self
     {
         $this->images = $images;
+        return $this;
+    }
+
+    public function descriptions(array $descriptions) : self
+    {
+        $this->descriptions = $descriptions;
         return $this;
     }
 
@@ -44,6 +51,7 @@ class Radio extends Field
             'value'       => $this->getValue($object),
             'options'     => $this->options,
             'images'      => $this->images,
+            'descriptions' => $this->descriptions,
             'description' => $this->getDescription(),
             'showAside'   => $this->showAside,
             'learnMoreUrl'=> $this->learnMoreUrl,

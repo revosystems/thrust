@@ -1,17 +1,22 @@
 <x-thrust::formField :field="$field" :title="$title" :description="$description" :aside="$showAside" :inline="$inline" :learnMoreUrl="$learnMoreUrl">
-    <fieldset class="flex items-center space-x-4 min-w-60">
+    <fieldset class="flex items-center space-x-10 min-w-60">
         @foreach($options as $key => $optionValue)
-            <div class="flex flex-col space-y-2 items-center text-center">
+            <div class="flex flex-col space-y-4 items-start text-center">
+                <div>
                 @if($images[$key])
-                    <img src="{{url($images[$key])}}" class="h-12"/>
+                    <img src="{{url($images[$key])}}" class="h-18 w-18"/>
                 @endif
-                <div class="text-xs">{{ $optionValue }}</div>
-                <input
-                   type="radio"
-                   name="{{$field}}"
-                   @if($key == $value) checked @endif
-                   value="{{$key}}"
-                />
+                </div>
+
+                <div class="flex space-x-2">
+                    <input type="radio" name="{{$field}}" value="{{$key}}" @if($key == $value) checked @endif/>
+                    <div class="flex flex-col items-start">
+                        <div class="text-xs">{{ $optionValue }}</div>
+                        @if($optionDescription = $descriptions[$key])
+                            <div class="text-xs text-gray-400 text-left">{{ $optionDescription }}</div>
+                        @endif
+                    </div>
+                </div>
             </div>
         @endforeach
     </fieldset>
