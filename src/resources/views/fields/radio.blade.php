@@ -3,9 +3,9 @@
         @foreach($options as $key => $optionValue)
             <div class="flex flex-col space-y-4 items-start text-center">
                 <div>
-                @if($images[$key])
-                    <img src="{{url($images[$key])}}" class="h-18 w-18"/>
-                @endif
+                    @if($images[$key])
+                        <img src="{{url($images[$key])}}" class="h-18 rounded shadow-sm"  />
+                    @endif
                 </div>
 
                 <div class="flex space-x-2">
