@@ -19,7 +19,7 @@ function showOrHideFormVisibility(id, visibility, animated, type) {
 
     var element = $("#" + id);
     if (!id.includes('panel')) {
-        element = element.parent().parent();
+        element = $("#" + id + "_div")//element.parent().parent();
     }
 
     if (visibility["values"].some(v => v == $("#" + visibility["field"]).val())) {
