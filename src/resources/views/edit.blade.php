@@ -63,7 +63,10 @@
                 @if (! $fullPage) dropdownParent: $('{{config('thrust.popupId', '#popup')}}') @endif
             });
         }
-        setupVisibility({!! json_encode($hideVisibility)  !!}, {!! json_encode($showVisibility)  !!});
+        setTimeout(function(){  //Since it is called before alpine, we need to give it a $nextTick (delay)
+            setupVisibility({!! json_encode($hideVisibility)  !!}, {!! json_encode($showVisibility)  !!});
+        }, 10)
+
     </script>
 @endpush
 
