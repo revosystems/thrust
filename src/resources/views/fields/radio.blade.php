@@ -4,7 +4,7 @@
             <div class="flex flex-col space-y-4 items-start text-center">
                 <div>
                     @if($images[$key])
-                        <img src="{{url($images[$key])}}" class="h-18 rounded shadow-sm"  />
+                        <img src="{{url($images[$key])}}" class="h-20 rounded shadow-sm"  />
                     @endif
                 </div>
 
