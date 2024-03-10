@@ -4,7 +4,7 @@
         <x-ui::table.header>
             <x-ui::table.row>
             <x-ui::table.header-cell class="hidden sm:table-cell w-8 pl-4 text-center">
-                <input type="checkbox" onclick="toggleSelectAll(this)">
+                <x-ui::forms.check onclick="toggleSelectAll(this)" />
             </x-ui::table.header-cell>
             @if ($sortable)
                 <x-ui::table.header-cell class="hidden w-8 text-center sm:table-cell" />
@@ -21,7 +21,7 @@
             @foreach ($rows as $row)
                 <x-ui::table.row id="sort_{{$row->id}}" >
                     <x-ui::table.cell class="pl-4 w-8 text-center hidden sm:table-cell">
-                        <input class='actionCheckbox' type="checkbox" name="selected[{{$row->id}}]" meta:id="{{$row->id}}">
+                        <x-ui::forms.check class='actionCheckbox' name="selected[{{$row->id}}]" meta:id="{{$row->id}}" />
                     </x-ui::table.cell>
                     @if ($sortable)
                         <x-ui::table.cell class="sort w-8 text-center hidden sm:table-cell text-gray-300 cursor-grab">
