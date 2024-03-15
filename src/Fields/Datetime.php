@@ -18,8 +18,8 @@ class Datetime extends Text
 
     public function getValue($object)
     {
-        if (! $this->timezone) return parent::getValue($object);
+        if (! isset($this->timezone)) return parent::getValue($object);
         //return Carbon::parse(data_get($object, $this->field))->timezone($this->timezone)->toDateTimeString();
-        return Carbon::parse(data_get($object, $this->field))->timezone($this->timezone)->isoFormat('L HH:mm');
+        return Carbon::parse(data_get($object, $this->field))->timezone($this->timezone)->toDateTimeString();
     }
 }
