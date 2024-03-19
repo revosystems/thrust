@@ -8,7 +8,7 @@
     @endif
 
     @if (isset($object->id) )
-        <form action="{{route('thrust.update', [$resourceName, $object->id] )}}" id='thrust-form-{{$object->id}}' method="POST">
+        <form action="{{route('thrust.update', [$resourceName, $object->id] )}}" id='thrust-form-{{$object->id}}' method="POST" enctype="multipart/form-data">
         {{ method_field('PUT') }}
     @else
         <form action="{{route($multiple ? 'thrust.store.multiple' : 'thrust.store', [$resourceName] )}}" method="POST">
