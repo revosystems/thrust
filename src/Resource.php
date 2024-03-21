@@ -413,7 +413,7 @@ abstract class Resource
     protected function getPagination()
     {
         if (request('search')) {
-            return 2;
+            return 200;
         }
         return min(100, request('pagination') ?? $this->pagination);
     }
