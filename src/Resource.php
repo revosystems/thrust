@@ -401,18 +401,19 @@ abstract class Resource
     protected function editAndDeleteFields()
     {
         return [Edit::make('edit'), Fields\Delete::make('delete')];
+
     }
 
     protected function fetchRows()
     {
-        $this->alreadyFetchedRows = $this->query()->paginate($this->getPagination());
+        $this->alreadyFetchedRows = $this->query()->paginate($this->getPagination())->withQueryString();
         return $this->alreadyFetchedRows;
     }
 
     protected function getPagination()
     {
         if (request('search')) {
-            return 200;
+            return 2;
         }
         return min(100, request('pagination') ?? $this->pagination);
     }

@@ -1,6 +1,7 @@
 @if ( method_exists($data, 'links')  && $data->lastPage() != 1)
     <div class="m-4">
-        {{  $data->appends(Illuminate\Support\Arr::except(request()->query(),['page']))->links() }}
+        @php($data->withPath(Thrust::resourceNameFromModel($resource)))
+        {{ $data->links() }}
     </div>
     @if(isset($popupLinks))
         <script>
