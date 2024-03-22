@@ -1,13 +1,20 @@
 <div class="flex flex-col divide-y mt-4 gap-2">
     @foreach($found as $data)
         <div class="py-2">
-            <div class="font-semibold text-lg">
-                <a href="{{route('thrust.index', $data['resource']->name())}}">
+            <div class="font-semibold text-lg mb-2">
+                @if($data['resource'] instanceof \BadChoice\Thrust\ChildResource)
                     {{ $data['resource']->getTitle() }}
-                </a>
+                @else
+                    <a href="{{route('thrust.index', $data['resource']->name())}}">
+                        <div class="flex items-center justify-between">
+                            <div>{{ $data['resource']->getTitle() }}</div>
+                            <div class="text-sm text-gray-400">@icon(arrow-right)</div>
+                        </div>
+                    </a>
+                @endif
             </div>
             @foreach($data['fields'] as $field)
-                <div class="text-gray-400">
+                <div class="text-gray-400 py-1">
                     @icon(caret-right){{ $field->getTitle() }}
                 </div>
             @endforeach

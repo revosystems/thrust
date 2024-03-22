@@ -1,11 +1,14 @@
-<x-ui::command-modal focusable>
+<x-ui::command-modal focusable class="max-w-2xl">
     <x-slot name="trigger">
         {{ $slot }}
     </x-slot>
     <div x-data="{
             searchText:'',
             loading: false,
-
+            open(){
+                $data.show = true
+                $nextTick(() => { $refs.search.focus() })
+            },
             ajaxSearch(){
                     if (this.searchText.length >= {{ config('thrust.minSearchChars') }}) {
                     this.loading = true
@@ -25,9 +28,12 @@
                 $refs.results.innerHTML = data
                 addListeners()
             },
-        }">
+        }"
+         @keydown.window.prevent.ctrl.k="open()"
+    >
         <div class="relative">
             <x-ui::forms.search-text-input
+                    x-ref="search"
                     placeholder="{{__('thrust::messages.search')}}"
                     autofocus
                     focusable
@@ -39,10 +45,10 @@
                 <x-ui::spinner></x-ui::spinner>
             </div>
         </div>
-        <div x-ref="results" class="min-w-lg">
-            <div class="py-4 text-gray-400 flex justify-center items-center">
-                <span>@icon(search) Search something interesting</span>
-            </div>
+        <div x-ref="results" class="lg:min-w-lg xl:min-w-xl max-h-[90%] overflow-scroll">
+{{--            <div class="py-4 text-gray-400 flex justify-center items-center">--}}
+{{--                <span>@icon(search) Search something interesting</span>--}}
+{{--            </div>--}}
         </div>
     </div>
 </x-ui::command-modal>

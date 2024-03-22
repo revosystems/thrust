@@ -13,7 +13,7 @@ class ThrustGlobalSearchController extends Controller
 
     public function index(){
 
-        $this->search = strtolower(request('search'));
+        $this->search = withoutDiacritic(mb_strtolower(request('search')));
         $found = collect(Thrust::resources())->mapWithKeys(function($class){
             $resource = (new $class());
             if (!$resource::$allowsGlobalSearch) { return []; }
@@ -21,7 +21,7 @@ class ThrustGlobalSearchController extends Controller
         })->filter(function($data){
             return count($data['fields']) > 0 ||
                 count($data['models']) > 0 ||
-                Str::contains(strtolower($data['resource']->getTitle()), $this->search);
+                Str::contains(withoutDiacritic(mb_strtolower($data['resource']->getTitle())), $this->search);
         });
 
         return view('thrust::globalSearch.index', [
@@ -42,7 +42,7 @@ class ThrustGlobalSearchController extends Controller
         return collect($resource->fieldsFlattened())->filter(function($field) use($resource){
             try {
 //                dd($this->search, $field->getTitle());
-                return Str::contains(strtolower($field->getTitle()), $this->search);
+                return Str::contains(withoutDiacritic(mb_strtolower($field->getTitle())), $this->search);
             } catch(\Exception $e) {
                 dd($e, $field, $resource);
                 return false;
@@ -54,4 +54,5 @@ class ThrustGlobalSearchController extends Controller
         if (count($resource::$search) == 0) { return collect(); }
         return $resource->query()->get();
     }
+
 }
