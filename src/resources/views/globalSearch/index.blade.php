@@ -4,6 +4,13 @@
             <div class="font-semibold text-lg mb-2">
                 @if($data['resource'] instanceof \BadChoice\Thrust\ChildResource)
                     {{ $data['resource']->getTitle() }}
+                @elseif(isset($data['link']))
+                    <a href="{{$data['link']}}">
+                        <div class="flex items-center justify-between">
+                            <div>{{$data['title']}}</div>
+                            <div class="text-sm text-gray-400">@icon(arrow-right)</div>
+                        </div>
+                    </a>
                 @else
                     <a href="{{route('thrust.index', $data['resource']->name())}}">
                         <div class="flex items-center justify-between">
