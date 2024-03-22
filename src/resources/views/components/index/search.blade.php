@@ -27,7 +27,7 @@
     <x-ui::forms.search-text-input
             x-ref="searcher"
             placeholder="{{__('thrust::messages.search')}}"
-            autofocus
+            focusable="true"
             class="grow"
             x-model="searchText"
             x-on:input.debounce="ajaxSearch"

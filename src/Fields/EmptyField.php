@@ -18,4 +18,9 @@ class EmptyField extends Field
     {
         return '';
     }
+
+    public function getTitle($forHeader = false)
+    {
+        return '';
+    }
 }

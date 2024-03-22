@@ -51,6 +51,11 @@ abstract class Resource
      */
     public static $search = [];
 
+    /**
+     * @var bool Defines if the resource can be globaly searched
+     */
+    public static $allowsGlobalSearch = true;
+
 
     /**
     * You can make that search is performed to another resource and the result is displayed in the same page
@@ -117,10 +122,10 @@ abstract class Resource
     public function getFields(?bool $inline = false)
     {
         return array_merge(
-            $this->fields(),
+            ($this->fields() ?? []),
             $inline
                 ? []
-                : $this->editAndDeleteFields()
+                : ($this->editAndDeleteFields() ?? [])
         );
     }
 
