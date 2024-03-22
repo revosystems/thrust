@@ -18,6 +18,10 @@ class ThrustGlobalSearchController extends Controller
             $resource = (new $class());
             if (!$resource::$allowsGlobalSearch) { return []; }
             return [$class => $this->matchingResource($resource)];
+        })->filter(function($data){
+            return count($data['fields']) > 0 ||
+                count($data['models']) > 0 ||
+                Str::contains(strtolower($data['resource']->getTitle()), $this->search);
         });
 
         return view('thrust::globalSearch.index', [
@@ -38,7 +42,7 @@ class ThrustGlobalSearchController extends Controller
         return collect($resource->fieldsFlattened())->filter(function($field) use($resource){
             try {
 //                dd($this->search, $field->getTitle());
-                return Str::contains($this->search, strtolower($field->getTitle()));
+                return Str::contains(strtolower($field->getTitle()), $this->search);
             } catch(\Exception $e) {
                 dd($e, $field, $resource);
                 return false;
