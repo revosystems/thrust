@@ -46,8 +46,12 @@ class GlobalSearch
 
     protected function matchingModels($resource) : \Illuminate\Support\Collection  {
         if (count($resource::$search) == 0) { return collect(); }
-        return $resource->query()->with([])->limit(10)->get()->filter(function($model) use($resource) {
-            return $resource->canEdit($model);
-        });
+        try {
+            return $resource->query()->with([])->limit(10)->get()->filter(function ($model) use ($resource) {
+                return $resource->canEdit($model);
+            });
+        } catch (\Exception $e){
+            return collect();
+        }
     }
 }
