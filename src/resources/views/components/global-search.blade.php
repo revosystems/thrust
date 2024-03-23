@@ -1,4 +1,4 @@
-<x-ui::command-modal focusable class="max-w-2xl">
+<x-ui::command-modal focusable class="sm:w-[600px] sm:max-h-[600px]">
     <x-slot name="trigger">
         {{ $slot }}
     </x-slot>
@@ -37,7 +37,7 @@
                     placeholder="{{__('thrust::messages.search')}}"
                     autofocus
                     focusable
-                    class="grow min-w-96"
+                    class="grow"
                     x-model="searchText"
                     x-on:input.debounce="ajaxSearch"
             />

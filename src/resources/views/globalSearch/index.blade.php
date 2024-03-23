@@ -1,5 +1,5 @@
 <div class="flex flex-col divide-y mt-4 gap-2">
-    @foreach($found as $data)
+    @forelse($found as $data)
         <div class="py-2">
             <div class="font-semibold text-lg mb-2">
                 @if($data['resource'] instanceof \BadChoice\Thrust\ChildResource)
@@ -33,5 +33,14 @@
                 </div>
             @endforeach
         </div>
-    @endforeach
+    @empty
+        <div class="py-4">
+            <span class="text-gray-400">
+                @icon(search) {{ __('thrust::messages.globalSearchNoResultsFor') }}
+            </span>
+            <span>
+                `{{ request('search') }}`
+            </span>
+        </div>
+    @endforelse
 </div>

@@ -30,4 +30,5 @@ return [
     'importFailed'           => 'Ha fallado la importación',
     'retryImport'            => 'Volver a importar',
     'learnMore'              => 'Saber más',
+    'globalSearchNoResultsFor' => 'Sin resultados para',
 ];

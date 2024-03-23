@@ -30,4 +30,5 @@ return [
     'importFailed'           => 'Import failed',
     'retryImport'            => 'Import again',
     'learnMore'              => 'Learn more',
+    'globalSearchNoResultsFor' => 'No results for',
 ];
