@@ -6,9 +6,10 @@ $(document).ready(function(){
     setupFormLoadingImage();
 
     $('#popup').popup({
-        scrolllock:true,
-        blur:true,
+        scrolllock: true,
+        blur: false,
         transition:'all 0.3s',
+        keepfocus : true,
     });
 
     $(".sortable").sortable({
