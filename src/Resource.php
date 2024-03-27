@@ -152,6 +152,14 @@ abstract class Resource
         return app(ResourceManager::class)->resourceNameFromModel(static::$model);
     }
 
+    public function indexUrl() : string {
+        return route('thrust.index', lcFirst(class_basename($this)));
+    }
+
+    public function editUrl($object) : string {
+        return route('thrust.edit', [lcFirst(class_basename($this)), $object->id]);
+    }
+
     public function find($id)
     {
         return (static::$model)::find($id);

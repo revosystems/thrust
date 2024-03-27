@@ -5,14 +5,14 @@
                 @if($data['resource'] instanceof \BadChoice\Thrust\ChildResource)
                     {{ $data['resource']->getTitle() }}
                 @elseif(isset($data['link']))
-                    <a href="{{$data['link']}}">
+                    <a href="{{$data['link']}}" class="cursor-pointer">
                         <div class="flex items-center justify-between">
                             <div>{{$data['title']}}</div>
                             <div class="text-sm text-gray-400">@icon(arrow-right)</div>
                         </div>
                     </a>
                 @else
-                    <a href="{{route('thrust.index', $data['resource']->name())}}">
+                    <a href="{{ $data['resource']->indexUrl() }}" class="cursor-pointer">
                         <div class="flex items-center justify-between">
                             <div>{{ $data['resource']->getTitle() }}</div>
                             <div class="text-sm text-gray-400">@icon(arrow-right)</div>
@@ -20,24 +20,28 @@
                     </a>
                 @endif
             </div>
+
             @foreach($data['fields'] as $field)
-                @if($data['resource']::$singleResource)
-                    <a href="{{route('thrust.index', $data['resource']->name())}}?#{{ $field->field }}_div">
-                        @icon(caret-right){{ $field->getTitle() }}
-                    </a>
-                @else
-                <div class="text-gray-400 py-1">
-                    @icon(caret-right){{ $field->getTitle() }}
+                <div class="py-1">
+                    @if($data['resource']::$singleResource)
+                        <a class="cursor-pointer" href="{{ $data['resource']->indexUrl() }}?#{{ $field->field }}_div">
+                            @icon(caret-right){{ $field->getTitle() }}
+                        </a>
+                    @else
+                        <span class="text-gray-400">
+                            @icon(caret-right){{ $field->getTitle() }}
+                        </span>
+                   @endif
                 </div>
-                @endif
             @endforeach
             @foreach($data['models'] as $model)
                 <div class="text-gray-700">
-                    <x-ui::a href="{{route('thrust.edit', [$data['resource']->name(), $model->id])}}" class="showPopup">
+                    <x-ui::a href="{{ $data['resource']->editUrl($model) }}" class="showPopup">
                         {{ $model->name ?? "something" }}
                     </x-ui::a>
                 </div>
             @endforeach
+
         </div>
     @empty
         <div class="py-4">
