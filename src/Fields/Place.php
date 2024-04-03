@@ -6,8 +6,6 @@
 
 namespace BadChoice\Thrust\Fields;
 
-use Illuminate\View\ComponentAttributeBag;
-
 class Place extends Text
 {
     protected $type      = '';
@@ -63,22 +61,16 @@ class Place extends Text
     public function displayInEdit($object, $inline = false)
     {
         return view('thrust::fields.place', [
-            'inline'            => $inline,
             'field'             => $this->field,
             'title'             => $this->getTitle(),
             'value'             => $this->getValue($object),
             'type'              => $this->type,
             'relatedFields'     => $this->relatedFields,
-            'attributes'      => $this->getComponentBagAttributes($object),
-            'description'     => $this->getDescription(),
+            'description'       => $this->description,
+            'inline'            => false,
+            'attributes'        => $this->getComponentBagAttributes($object),
+            'validationRules'   => $this->getHtmlValidation($object, $this->getFieldType()),
         ])->render();
-    }
-
-    protected function getComponentBagAttributes($object) : ComponentAttributeBag {
-        return new ComponentAttributeBag([
-            ...$this->getHtmlValidation($object, 'text'),
-            ...$this->attributes
-        ]);
     }
 
     public function getValue($object)

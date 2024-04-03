@@ -1,4 +1,4 @@
-<x-ui::command-modal focusable class="sm:w-[600px] sm:max-h-[600px]">
+<x-ui::command-modal focusable class="w-full sm:w-[600px] sm:max-h-[600px]">
     <x-slot name="trigger">
         {{ $slot }}
     </x-slot>
