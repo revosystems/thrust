@@ -5,7 +5,10 @@ namespace BadChoice\Thrust\Fields;
 class TextLanguage extends Text
 {
     protected $displayInIndexCallback = null;
+
+    protected $relationship = 'translations';
     protected $languages;
+
     public bool $showInIndex = false;
     public bool $showInEdit  = true;
     public bool $isTextArea  = false;
@@ -24,7 +27,7 @@ class TextLanguage extends Text
             'languages'       => $this->languages,
             'title'           => $this->getTitle(),
             'type'            => $this->getFieldType(),
-            'field'            => $this->field,
+            'field'            => 'translation_'.$this->field,
             'value'           => $this->getValue($object),
             'validationRules' => $this->getHtmlValidation($object, $this->getFieldType()),
             'attributes'      => $this->getComponentBagAttributes($object),
@@ -44,15 +47,15 @@ class TextLanguage extends Text
         return $this;
     }
 
-    public function mapAttributeFromRequest($value)
-    {
-        //dd($value);
+    public function withRelationship(string $relationship) : self {
+        $this->relationship = $relationship;
+        return $this;
     }
-
+    
 
     public function getValue($object)
     {
-        return $object->translations($this->field)->get()->filter()->mapWithKeys(function ($translation) {
+        return $object->{$this->relationship}($this->field)->get()->filter()->mapWithKeys(function ($translation) {
             return [$translation->language => $translation->text];
         });
     }
@@ -60,8 +63,8 @@ class TextLanguage extends Text
 
     public function update($object, &$newData)
     {
-        collect($newData[$this->field])->each(function($translation, $language) use($object) {
-            $object->translations($this->field)->updateOrCreate([
+        collect($newData['translation_'.$this->field])->each(function($translation, $language) use($object) {
+            $object->{$this->relationship}($this->field)->updateOrCreate([
                 'language' => $language,
                 'field' => $this->field,
             ],[
@@ -69,7 +72,7 @@ class TextLanguage extends Text
             ]);
         });
 
-        unset($newData[$this->field]);
+        unset($newData['translation_'.$this->field]);
     }
 
 }
