@@ -5,6 +5,7 @@
             :name="$field"
             :icon="$icon"
             :values="$value"
+            :languages="$languages"
             placeholder="{{$title}}" {{$attributes}}
             class="w-full"
             {{ $attributes }}

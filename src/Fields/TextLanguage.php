@@ -17,6 +17,9 @@ class TextLanguage extends Text
 
     public function languages($languages){
         $this->languages = $languages;
+        if ($this->languages == null || array_count($this->languages) == 0){
+            $this->hideInIndex()->hideInEdit();
+        }
         return $this;
     }
 
