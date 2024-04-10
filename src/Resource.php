@@ -89,6 +89,11 @@ abstract class Resource
      */
     public static $importable = false;
 
+    /** 
+     * @var array in case the resource has fields that togheter are like a primary key (for example a morphable_id morphable_type) we want in the import for it to be treated as an id. Add those fields in this variable
+     */
+    public static $compoundKeyFields = null;
+
 
     /**
      * @var bool define if the resource is sortable and can be arranged in the index view
@@ -184,6 +189,11 @@ abstract class Resource
         if ($data->has('id')) {
             return static::$model::updateOrCreate($data->only('id')->all(), $data->except('id')->all());
         }
+
+        if (static::$compoundKeyFields && $data->has(static::$compoundKeyFields)) {
+            return static::$model::updateOrCreate($data->only(static::$compoundKeyFields)->all(), $data->except(static::$compoundKeyFields)->all());
+        }
+        
         return static::$model::create($data->all());
     }
 

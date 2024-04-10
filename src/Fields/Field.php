@@ -78,6 +78,13 @@ abstract class Field
         return $this;
     }
 
+    public function importable($importable) : self
+    {
+        $this->importable = $importable;
+        return $this;
+
+    }
+
     public function sortable($sortable = true)
     {
         $this->sortable = $sortable;
