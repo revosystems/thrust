@@ -6,7 +6,7 @@
             :icon="$icon"
             :values="$value"
             :languages="$languages"
-            placeholder="{{$title}}" {{$attributes}}
+            placeholder="{{$title}}"
             class="w-full"
             {{ $attributes }}
     />

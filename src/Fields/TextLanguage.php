@@ -17,7 +17,7 @@ class TextLanguage extends Text
 
     public function languages($languages){
         $this->languages = $languages;
-        if ($this->languages == null || array_count($this->languages) == 0){
+        if ($this->languages == null || count($this->languages) == 0){
             $this->hideInIndex()->hideInEdit();
         }
         return $this;
@@ -67,10 +67,14 @@ class TextLanguage extends Text
     public function update($object, &$newData)
     {
         collect($newData['translation_'.$this->field])->each(function($translation, $language) use($object) {
-            $object->{$this->relationship}($this->field)->updateOrCreate([
+            $compoundKey = [
                 'language' => $language,
                 'field' => $this->field,
-            ],[
+            ];
+            if (!$translation) {
+                return $object->{$this->relationship}($this->field)->where($compoundKey)->first()?->delete();
+            }
+            $object->{$this->relationship}($this->field)->updateOrCreate($compoundKey,[
                 'text' => $translation
             ]);
         });
