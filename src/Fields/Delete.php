@@ -12,6 +12,11 @@ class Delete extends Field {
     public $policyAction             = 'delete';
     public bool $importable          = false;
 
+    public function getRowCss(): string
+    {
+        return '!py-0 !px-0';
+    }
+    
     public function displayInIndex($object)
     {
         return $this->renderDeleteWithConfirm($object);
