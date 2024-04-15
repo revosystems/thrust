@@ -21,8 +21,8 @@
                         const id = data['id'];
                         const value = data['{{$inlineCreationData['relationDisplayField']}}']
 
-                        document.getElementById('super_group_id').value = id
-                        document.getElementById('super_group_id_div').querySelector('div .truncate').innerHTML = value
+                        document.getElementById('{{$field}}').value = id
+                        document.getElementById('{{$field}}_div').querySelector('div .truncate').innerHTML = value
                     }
                 });
             })
