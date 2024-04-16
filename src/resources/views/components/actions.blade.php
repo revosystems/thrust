@@ -5,10 +5,10 @@
             <x-slot name="trigger">
             <x-ui::secondary-button>
                 <div class="flex items-center space-x-2">
-                    <i id='actions-loading' class="fa fa-circle-o-notch fa-spin fa-fw" style="display:none"></i>
                     <div class="sm:hidden">
                         <x-ui::icon>ellipsis</x-ui::icon>
                     </div>
+                    <i id='actions-loading' class="fa fa-circle-o-notch fa-spin fa-fw hidden"></i>
                     <div class="hidden sm:block">
                         {{ __("thrust::messages.actions") }} @icon(caret-down)
                     </div>

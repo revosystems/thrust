@@ -8,15 +8,10 @@ class Edit extends Field {
 
     public bool $showInEdit          = false;
     public bool $withoutIndexHeader  = true;
-    public string $rowClass            = 'w-10 text-center';
-    public $policyAction        = 'update';
+    public string $rowClass          = '!py-0 !px-0 w-8 sm:w-10 text-center';
+    public $policyAction             = 'update';
     public bool $importable          = false;
 
-    public function getRowCss(): string
-    {
-        return '!py-0 !px-0';
-    }
-    
     public function displayInIndex($object)
     {
         return view('thrust::actions.row',[

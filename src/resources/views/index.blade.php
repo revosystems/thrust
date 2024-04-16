@@ -4,7 +4,7 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center">
                 @component(config('thrust.sidebar-collapsed-button'))@endcomponent
-                <x-ui::breadcrums :data="$resource->breadcrumbs($parent_id ?? null)" :count="$resource->rows()->total()" />
+                <x-ui::breadcrums :data="$resource->breadcrumbs($parent_id ?? null)" :count="$resource->rows()->total()" class="text-sm sm:text-lg"/>
             </div>
             <x-thrust::main-actions :resource="$resource" :resourceName="$resourceName" :parentId="$parent_id ?? null"/>
         </div>
