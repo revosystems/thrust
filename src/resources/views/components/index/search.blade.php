@@ -32,7 +32,7 @@
             x-model="searchText"
             x-on:input.debounce="ajaxSearch"
     />
-    <div class="absolute top-2 right-8" x-show="loading">
+    <div class="absolute top-2 right-8" x-show="loading" x-cloak>
         <x-ui::spinner></x-ui::spinner>
     </div>
 </div>
