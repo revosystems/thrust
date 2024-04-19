@@ -52,7 +52,7 @@ abstract class ChildResource extends Resource
         if (is_numeric($object)) {
             return  (new static::$model)->{static::$parentRelation}()->getRelated()->query()->find($object);
         }
-        return $object->{static::$parentRelation};
+        return $object?->{static::$parentRelation};
     }
 
     public function getParentUrl($parent){
