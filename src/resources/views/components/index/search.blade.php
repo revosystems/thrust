@@ -21,6 +21,7 @@
         document.getElementById('all').style.display = 'none'
         document.getElementById('results').style.display = 'block'
         document.getElementById('results').innerHTML = data
+        addListeners()
     },
 }" x-init="ajaxSearch">
 
