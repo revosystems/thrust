@@ -6,7 +6,8 @@ use Illuminate\Support\Collection;
 
 class Select extends Field
 {
-    protected $options          = [];
+    protected $options               = [];
+    protected $descriptions          = [];
     protected bool $allowNull        = false;
     protected bool $searchable       = false;
     protected bool $forceIntValue    = false;
@@ -20,6 +21,14 @@ class Select extends Field
             ? $options
             : $options->toArray();
         $this->allowNull = $allowNull;
+        return $this;
+    }
+
+    public function optionDescriptions(array|Collection $descriptions) : self
+    {
+        $this->descriptions = is_array($descriptions)
+            ? $descriptions
+            : $descriptions->all();
         return $this;
     }
 
@@ -81,6 +90,7 @@ class Select extends Field
             'showAside'     => $this->showAside,
             'value'       => $this->getValue($object),
             'options'     => $this->getOptions(),
+            'descriptions' => $this->descriptions,
             'description' => $this->getDescription(),
             'fieldAttributes'  => $this->getFieldAttributes(),
             'hasCategories' => $this->hasCategories(),
