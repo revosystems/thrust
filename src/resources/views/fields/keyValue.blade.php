@@ -73,8 +73,10 @@
     @push('edit-scripts')
         <script>
             function keyValueRemove(element){
-                $(element).parent().parent().find('div').remove();
-                $(element).parent().parent().hide();
+                setTimeout(function(){
+                    $(element).parent().parent().find('div').detach();
+                    $(element).parent().parent().hide();
+                }, 100)
             }
 
             function keyValueAdd(fieldName){
