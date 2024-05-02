@@ -2,6 +2,13 @@
     https://www.webdew.com/blog/google-places-autocomplete-implementation
 --}}
 <x-thrust::formField :field="$field" :title="$title" :description="$description"  :inline="$inline">
+
+    <style>
+        .pac-container {
+            z-index: 1000000 !important;
+        }
+    </style>
+
     <div class="places">
         <x-ui::forms.text-input icon="location-dot" type="text" name="{{$field}}" id="{{$field}}" placeholder="{{$title}}" value="{{$value}}"  {{ $attributes->merge(['class' => 'w-full']) }}  autocomplete="off"/>
     </div>
