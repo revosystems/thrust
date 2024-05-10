@@ -1,5 +1,5 @@
     @if ($fullPage)
-        <div class="flex items-center mb-4 w-xl">
+        <div class="flex items-center mb-4 w-xl text-sm md:text-lg">
             @component(config('thrust.sidebar-collapsed-button'))@endcomponent
 	        <h2>{{ $title }}</h2>
         </div>
