@@ -11,28 +11,30 @@ abstract class Field
 {
     use Visibility;
 
-    public $field;
-    public $sortable = false;
-    protected $title;
+    public ?string $field;
+    public bool $sortable = false;
+    protected ?string $title;
     public $validationRules;
 
-    public $showInIndex  = true;
-    public $showInEdit   = true;
-    public $showInSearch = false;
+    public bool $showInIndex  = true;
+    public bool $showInEdit   = true;
+    public bool $showInSearch = false;
     public $policyAction = null;
 
-    public $withDesc    = false;
+    public bool $withDesc    = false;
     public $description = false;
-    public $tooltip     = null;
+    public ?string $tooltip     = null;
 
-    public $withoutIndexHeader  = false;
-    public $with                = [];
-    public $rowClass            = '';
+    public bool $withoutIndexHeader  = false;
+    public array $with                = [];
+    public string $rowClass            = '';
+    public ?string $displayFrom         = null;
 
-    public $excludeOnMultiple = false;
+    public bool $excludeOnMultiple = false;
 
-    public $deleteConfirmationMessage = 'Are you sure';
-    public $importable = true;
+    public ?string $deleteConfirmationMessage = 'Are you sure';
+    public bool $importable = true;
+    public ?string $learnMoreUrl = null;
 
     abstract public function displayInIndex($object);
 
@@ -52,16 +54,36 @@ abstract class Field
         return $this;
     }
 
+    public function displayFrom(string $size) : self
+    {
+        $this->displayFrom = $size;
+        return $this;
+    }
+
     public function rowClass($class)
     {
         $this->rowClass = $class;
         return $this;
     }
 
+    public function getRowCss() : string {
+        if ($this->displayFrom) {
+            return "hidden {$this->displayFrom}:table-cell " . $this->rowClass;
+        }
+        return $this->rowClass;
+    }
+
     public function withoutIndexHeader($withoutIndexHeader = true)
     {
         $this->withoutIndexHeader = $withoutIndexHeader;
         return $this;
+    }
+
+    public function importable($importable) : self
+    {
+        $this->importable = $importable;
+        return $this;
+
     }
 
     public function sortable($sortable = true)
@@ -153,6 +175,11 @@ abstract class Field
     public function hideInIndex()
     {
         $this->showInIndex = false;
+        return $this;
+    }
+
+    public function learnMoreUrl($url) : self {
+        $this->learnMoreUrl = $url;
         return $this;
     }
 

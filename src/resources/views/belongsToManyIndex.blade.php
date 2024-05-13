@@ -1,53 +1,32 @@
-<h2> {{$title}} </h2>
+<x-ui::breadcrums :data="[$title]" />
 
-@include('thrust::components.searchPopup')
-
-@if($sortable)
-    <div class="actions">
-        <button class="secondary" onclick="saveChildOrder('{{$resourceName}}','{{$object->id}}', '{{$belongsToManyField->field}}')">@icon(sort) {{__('thrust::messages.saveOrder')}}</button>
-    </div>
-@endif
-<div id="popup-all">
+<div class="flex justify-between items-center space-x-2 mt-4">
+    <x-ui::forms.search-text-input id='popup-searcher'
+                                   :placeholder="__('thrust::messages.search')"
+                                   class="w-full" />
+    @if($sortable)
+        <x-ui::secondary-button onclick="saveChildOrder('{{$resourceName}}','{{$object->id}}', '{{$belongsToManyField->field}}')">
+            <span class="text-gray-500">@icon(sort)</span>
+            {{__('thrust::messages.saveOrder')}}
+        </x-ui::secondary-button>
+    @endif
+</div>
+<div id="popup-all" class="mt-4">
     @include('thrust::belongsToManyTable')
 </div>
 <div id="popup-results"></div>
 
-@if (app(BadChoice\Thrust\ResourceGate::class)->can($pivotResourceName, 'create'))
-    <div class="mt4">
-        <form id='belongsToManyForm' action="{{route('thrust.belongsToMany.store', [$resourceName, $object->id, $belongsToManyField->field]) }}" method="POST">
-            {{ csrf_field() }}
-            <select id="id" name="id" @if($belongsToManyField->searchable) class="searchable" @endif >
-                @if (!$ajaxSearch)
-                    @foreach($belongsToManyField->getOptions($object) as $possible)
-                        <option value='{{$possible->id}}'> {{ $possible->name }} </option>
-                    @endforeach
-                @endif
-            </select>
-            @foreach($belongsToManyField->pivotFields as $field)
-                @if($field->showInEdit && $resource->can($field->policyAction)))
-                    {!! $field->displayInEdit(null, true)  !!}
-                @endif
-            @endforeach
-            <button class="secondary">{{__('thrust::messages.add') }} </button>
-        </form>
-    </div>
-@endif
+@includeWhen(app(BadChoice\Thrust\ResourceGate::class)->can($pivotResourceName, 'create'),
+    'thrust::belongsToManyIndexCreate'
+)
 
 <script>
+
+    addListeners();
 
     $("{{config('thrust.popupId', '#popup')}} .thrust-toggle").each(function(index, el){
         $(el).addClass('ajax-get');
     });
-    
-    addListeners();
-    // $('#popup > select > .searchable').select2({ width: '325', dropdownAutoWidth : true });
-    @if ($searchable && !$ajaxSearch)
-    $('.searchable').select2({
-        width: '300px',
-        dropdownAutoWidth : true,
-        dropdownParent: $('{{config('thrust.popupId', '#popup')}}'),
-    });
-    @endif
 
     $('#popup-searcher').searcher('/thrust/{{$resourceName}}/{{$object->id}}/belongsToMany/{{$belongsToManyField->field}}/search/', {
         'resultsDiv' : 'popup-results',
@@ -58,19 +37,8 @@
         }
     });
 
-    @if ($ajaxSearch)
-    new RVAjaxSelect2('{{ route('thrust.relationship.search', [$resourceName, $object->id, $belongsToManyField->field]) }}?allowNull=0&allowDuplicates={{$allowDuplicates}}',{
-        dropdownParent: $('{{config('thrust.popupId', '#popup')}}'),
-    }).show('#id');
-    @endif
-
     popupUrl = "{{route('thrust.belongsToMany', [$resourceName, $object->id, $belongsToManyField->field]) }}";
-    $('#belongsToManyForm').on('submit', function(e){
-        e.preventDefault();
-        $.post($(this).attr('action'), $(this).serialize()).done(function(){
-            loadPopup(popupUrl)
-        });
-    });
+
 
     $("{{config('thrust.popupId', '#popup')}} .delete-resource").each(function(index, el){
         $(el).attr({

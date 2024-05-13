@@ -1,6 +1,3 @@
-<button class="button-with-loading" @if($updateConfirmationMessage) onclick="return confirm(`{{$updateConfirmationMessage}}`)" @endif>
-        <span class="loadingImage">
-            <i class="fa fa-circle-o-notch fa-spin"></i>
-        </span>
+<x-ui::primary-button type="submit" :async="true" :confirm="$updateConfirmationMessage">
     {{ __("thrust::messages.save") }}
-</button>
+</x-ui::primary-button>

@@ -2,12 +2,16 @@
 
 namespace BadChoice\Thrust\Fields;
 
+use Illuminate\View\ComponentAttributeBag;
+
 class Text extends Field
 {
     protected $displayInIndexCallback = null;
     protected $editableHint           = false;
-    protected $attributes             = '';
+    protected $attributes             = [];
     protected $shouldAllowScripts     = false;
+    protected $showAside              = null;
+    protected ?string $icon           = null;
 
     public function editableHint($editableHint = true)
     {
@@ -18,6 +22,12 @@ class Text extends Field
     public function getIndexClass()
     {
         return $this->editableHint ? 'editableHint' : '';
+    }
+
+    public function icon(?string $icon) : self
+    {
+        $this->icon = $icon;
+        return $this;
     }
 
     public function displayWith($callback)
@@ -40,12 +50,21 @@ class Text extends Field
             'inline'          => $inline,
             'title'           => $this->getTitle(),
             'type'            => $this->getFieldType(),
-            'field'           => $this->field,
+            'showAside'       => $this->showAside ?? $this->shouldShowAside(),
+            'field'            => $this->field,
             'value'           => htmlspecialchars_decode($this->getValue($object)),
-            'validationRules' => $this->getHtmlValidation($object, $this->getFieldType()),
-            'attributes'      => $this->getFieldAttributes(),
+            'attributes'      => $this->getComponentBagAttributes($object),
             'description'     => $this->getDescription(),
+            'icon'            => $this->icon,
+            'learnMoreUrl'    => $this->learnMoreUrl,
         ])->render();
+    }
+
+    protected function getComponentBagAttributes($object) : ComponentAttributeBag {
+        return new ComponentAttributeBag([
+            ...$this->getHtmlValidation($object, $this->getFieldType()),
+            ...$this->getFieldAttributes()
+        ]);
     }
 
     protected function getFieldType()
@@ -53,13 +72,22 @@ class Text extends Field
         return 'text';
     }
 
-    public function attributes($attributes)
+    public function showAside(bool $aside) : self{
+        $this->showAside = $aside;
+        return $this;
+    }
+
+    protected function shouldShowAside() : bool {
+        return false;
+    }
+
+    public function attributes(array $attributes)
     {
         $this->attributes = $attributes;
         return $this;
     }
 
-    protected function getFieldAttributes()
+    protected function getFieldAttributes() : array
     {
         return $this->attributes;
     }
@@ -69,7 +97,12 @@ class Text extends Field
         if (! $object) {
             return null;
         }
-        return htmlspecialchars(parent::getValue($object));
+
+        $value = parent::getValue($object);
+        
+        return $value === null
+            ? null
+            : htmlspecialchars($value);
     }
 
     public function allowScripts()

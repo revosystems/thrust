@@ -8,6 +8,7 @@ class BelongsTo extends Relationship
 {
     protected $allowNull = false;
     protected $inlineCreation = false;
+    protected ?string $icon = null;
 
     public function allowNull($allowNull = true) : self
     {
@@ -47,34 +48,45 @@ class BelongsTo extends Relationship
         return $possibleRelations;
     }
 
+    public function icon(?string $icon) : self {
+        $this->icon = $icon;
+        return $this;
+    }
+
     public function displayInEdit($object, $inline = false)
     {
         if ($this->ajaxSearch) {
-            return view('thrust::fields.selectAjax', [
+            return view('thrust::fields.selectAjaxDejavu', [
                 'resourceName'  => app(ResourceManager::class)->resourceNameFromModel(get_class($object)),
                 'title'         => $this->getTitle(),
                 'field'         => $this->databaseField($object),
                 'relationship'  => $this->field,
                 'value'         => $this->getValueId($object),
+                'icon'          => $this->icon,
                 'name'          => $this->getRelationName($object),
                 'id'            => $object->id,
                 'allowNull'     => $this->allowNull,
                 'inline'        => $inline,
                 'description'   => $this->getDescription(),
                 'inlineCreation' => $this->inlineCreation,
-                'inlineCreationData' => $this->inlineCreationData($object)
+                'inlineCreationData' => $this->inlineCreationData($object),
+                'showAside'     => false,
+                'learnMoreUrl' => $this->learnMoreUrl,
             ])->render();
         }
-        return view('thrust::fields.select', [
+        return view('thrust::fields.belongsto-select', [
             'title'         => $this->getTitle(),
-            'field'         => $this->databaseField($object),
+            'icon'          => $this->icon,
+            'field'          => $this->databaseField($object),
             'searchable'    => $this->searchable,
             'value'         => $this->getValueId($object),
             'options'       => $this->getOptions($object),
             'inline'        => $inline,
             'description'   => $this->getDescription(),
             'inlineCreation' => $this->inlineCreation,
-            'inlineCreationData' => $this->inlineCreationData($object)
+            'inlineCreationData' => $this->inlineCreationData($object),
+            'showAside'     => false,
+            'learnMoreUrl' => $this->learnMoreUrl,
         ])->render();
     }
 

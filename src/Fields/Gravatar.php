@@ -4,8 +4,8 @@ namespace BadChoice\Thrust\Fields;
 
 class Gravatar extends Field
 {
-    public $field      = 'email';
-    public $showInEdit = false;
+    public ?string $field      = 'email';
+    public bool $showInEdit = false;
     protected $default = 'mm';
 
     public function displayInIndex($object)
@@ -35,6 +35,6 @@ class Gravatar extends Field
     public function getImageTag($email, $size = 30)
     {
         $gravatarURL = $this->getUrl($email, $size);
-        return '<img id = '.$email.''.$size.' class="gravatar" src="'.$gravatarURL.'" width="'.$size.'">';
+        return '<img id = '.$email.''.$size.' class="rounded-full" src="'.$gravatarURL.'" width="'.$size.'">';
     }
 }

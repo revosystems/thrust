@@ -34,6 +34,7 @@
                     fetch(callbackUrl + self.value.replace(new RegExp(' ', 'g'), '%20')).then(response => {
                         response.text().then(html => {
                             document.getElementById(settings.resultsDiv).innerHTML = html
+                            settings.onFound()
                         })
                     })
                     window.dispatchEvent(new Event('thrust.searchStarted'))
@@ -53,7 +54,7 @@
 
 function RVAjaxSelect2(url, options) {
     this.options = {
-        width: '300px',
+        //width: '300px',
         dropdownAutoWidth: true,
         ajax: {
             url: url,

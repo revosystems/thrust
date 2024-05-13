@@ -4,8 +4,8 @@ namespace BadChoice\Thrust\Fields;
 
 class Integer extends Decimal
 {
-    protected function getFieldAttributes()
+    protected function getFieldAttributes() : array
     {
-        return $this->attributes . ' step=1';
+        return array_merge($this->attributes, ['step' => '1']);
     }
 }

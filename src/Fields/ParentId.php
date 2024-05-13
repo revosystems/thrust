@@ -4,7 +4,7 @@ namespace BadChoice\Thrust\Fields;
 
 class ParentId extends Text
 {
-    public $showInIndex = false;
+    public bool $showInIndex = false;
 
     protected function getFieldType()
     {

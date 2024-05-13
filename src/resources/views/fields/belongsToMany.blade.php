@@ -1,13 +1,13 @@
 @if ($withLink)
-    <a href="{{route('thrust.belongsToMany', [$resourceName, $id , $relationship])}}" class="showPopup">
+    <x-ui::a href="{{route('thrust.belongsToMany', [$resourceName, $id , $relationship])}}" class="showPopup">
         @if($icon)
-            <i class="fa fa-{{$icon}}" style="color:black; font-size:15px"></i>
+            <x-ui::icon>{{$icon}}</x-ui::icon>
         @elseif( strlen($value) == 0)
             --
         @else
             {!! $value !!}
         @endif
-    </a>
+    </x-ui::a>
 @else
     {!! $value !!}
 @endif

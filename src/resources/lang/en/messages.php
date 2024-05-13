@@ -28,5 +28,7 @@ return [
     'rowsToImport'           => 'Columns to import',
     'next'                   => 'Next',
     'importFailed'           => 'Import failed',
-    'retryImport'            => 'Import again'
+    'retryImport'            => 'Import again',
+    'learnMore'              => 'Learn more',
+    'globalSearchNoResultsFor' => 'No results for',
 ];

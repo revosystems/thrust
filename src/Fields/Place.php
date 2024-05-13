@@ -66,6 +66,9 @@ class Place extends Text
             'value'             => $this->getValue($object),
             'type'              => $this->type,
             'relatedFields'     => $this->relatedFields,
+            'description'       => $this->description,
+            'inline'            => false,
+            'attributes'        => $this->getComponentBagAttributes($object),
             'validationRules'   => $this->getHtmlValidation($object, $this->getFieldType()),
         ])->render();
     }

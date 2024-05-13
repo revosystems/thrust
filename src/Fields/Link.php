@@ -2,17 +2,19 @@
 
 namespace BadChoice\Thrust\Fields;
 
+use Illuminate\View\ComponentAttributeBag;
+
 class Link extends Field
 {
-    public $showInEdit = false;
+    public bool $showInEdit = false;
     protected $link    = '';
     protected $route;
     protected $classes      = '';
     protected $icon         = '';
     protected $displayCount = false;
     protected $displayCallback;
-    protected $attributes;
-    public $importable = false;
+    protected $attributes = [];
+    public bool $importable = false;
 
     public function link($link)
     {
@@ -33,7 +35,7 @@ class Link extends Field
         return $this;
     }
 
-    public function attributes($attributes)
+    public function attributes(array $attributes)
     {
         $this->attributes = $attributes;
         return $this;
@@ -49,7 +51,12 @@ class Link extends Field
     {
         if ($this->displayCallback) {
             $value = call_user_func($this->displayCallback, $object);
-            return "<a href='{$this->getUrl($object)}' class='{$this->classes}'>{$value}</a>";
+            return view('thrust::fields.link',[
+                'class'      => $this->classes,
+                'url'        => $this->getUrl($object),
+                'value'      => $value,
+                'attributes' => null
+            ]);
         }
         return view('thrust::fields.link', [
             'class'        => $this->classes,
@@ -57,7 +64,7 @@ class Link extends Field
             'value'        => $this->getTitle(),
             'displayCount' => $this->displayCount,
             'url'          => $this->getUrl($object),
-            'attributes'   => $this->attributes,
+            'attributes'   => new ComponentAttributeBag($this->attributes),
         ])->render();
     }
 
@@ -66,6 +73,14 @@ class Link extends Field
         $this->icon     = $icon;
         $this->rowClass = $this->rowClass . ' action';
         return $this;
+    }
+
+    public function getRowCss(): string
+    {
+        if($icon = $this->icon) {
+            return parent::getRowCss() . " w-10 ";
+        }
+        return parent::getRowCss();
     }
 
     public function getUrl($object)

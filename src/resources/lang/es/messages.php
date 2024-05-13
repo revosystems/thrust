@@ -28,5 +28,7 @@ return [
     'rowsToImport'           => 'Columnas a importar',
     'next'                   => 'Siguiente',
     'importFailed'           => 'Ha fallado la importación',
-    'retryImport'            => 'Volver a importar'
+    'retryImport'            => 'Volver a importar',
+    'learnMore'              => 'Saber más',
+    'globalSearchNoResultsFor' => 'Sin resultados para',
 ];

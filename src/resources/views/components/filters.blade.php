@@ -1,20 +1,29 @@
-<?php $filters = $resource->filters() ?>
+@props(['resource', 'filters'])
 @if ($filters && count($filters) > 0)
-    <div x-data = "{isOpen : false}">
-        <button class="secondary relative" x-on:click="isOpen = !isOpen"> @icon(filter) @icon(caret-down)</button>
+    <x-ui::dropdown :offset="14" :arrow="true">
+        <x-slot name="trigger">
+            <x-ui::secondary-button>
+                @icon(filter) @icon(caret-down)
+            </x-ui::secondary-button>
+        </x-slot>
         <?php $filtersApplied = $resource->filtersApplied(); ?>
-        <div class="thrust-filters-dropdown absolute" x-show="isOpen" x-transition x-cloak x-on:click.away = "isOpen = false">
-            <form id="filtersForm" class="thrust-filters-form">
-            @foreach (collect($filters) as $filter)
-                <div>
-                    <div> {!! $filter->getIcon() !!} {!! $filter->getTitle() !!}</div>
-                    <div class="text-left">
-                        {!! $filter->display($filtersApplied) !!}
+        <form id="filtersForm">
+            <div class="flex flex-col space-y-4">
+                @foreach (collect($filters) as $filter)
+                    <div class="flex flex-col space-y-1">
+                        <div> {!! $filter->getIcon() !!} {!! $filter->getTitle() !!}</div>
+                        <div class="text-left">
+                            {!! $filter->display($filtersApplied) !!}
+                        </div>
                     </div>
-                </div>
-            @endforeach
-            <button class="secondary">{{ __("thrust::messages.apply") }}</button>
-            </form>
-        </div>
-    </div>
+                @endforeach
+                <x-ui::secondary-button
+                        class="w-full"
+                        async="true"
+                        type="submit">
+                    {{ __("thrust::messages.apply") }}
+                </x-ui::secondary-button>
+            </div>
+        </form>
+    </x-ui::dropdown>
 @endif

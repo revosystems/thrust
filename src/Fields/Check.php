@@ -6,10 +6,10 @@ use BadChoice\Thrust\Facades\Thrust;
 
 class Check extends Text
 {
-    protected $withLink = true;
+    protected bool $withLink = true;
     protected $withLinkPolicyAction = null;
-    protected $asSwitch = false;
-    public $rowClass    = 'action';
+    protected bool $asSwitch = false;
+    public string $rowClass    = 'w-10 text-center';
 
     public function withLink($withLink = true, $policyAction = null)
     {
@@ -35,7 +35,7 @@ class Check extends Text
             'field'        => $this->field,
             'withLinks'    => $this->shouldShowLinks($resource, $object),
             'asSwitch'     => $this->asSwitch,
-            'description'  => $this->getDescription()
+            'description'  => $this->getDescription(),
         ])->render();
     }
 
@@ -47,6 +47,7 @@ class Check extends Text
             'value'  => $this->getValue($object),
             'inline' => $inline,
             'description' => $this->getDescription(),
+            'learnMoreUrl' => $this->learnMoreUrl,
         ])->render();
     }
 

@@ -18,6 +18,7 @@ class Panel extends FieldContainer
     public $policyAction = null;
 
     public $excludeOnMultiple = false;
+    protected $sideBySide = false;
 
     public static function make($fields, $title = null)
     {
@@ -39,21 +40,25 @@ class Panel extends FieldContainer
         return $this;
     }
 
-    public function displayInEdit($object, $inline = false)
+    public function sideBySide(bool $sideBySide = true) : self
     {
-        $html = '<div class="'. $this->panelClass .'" id="panel_'.$this->getId().'" title="'. $this->title .'">';
-        $html .= $this->getTitle();
-        return $html . collect($this->fields)->filter->shouldShow($object, 'edit')->where('showInEdit', true)->reduce(function ($carry, $field) use ($object) {
-            return $carry . ($field->shouldHide($object, 'edit') ? '' : $field->displayInEdit($object));
-        }) .'</div>';
+        $this->sideBySide = $sideBySide;
+        return $this;
     }
 
-    protected function getTitle()
+    public function displayInEdit($object, $inline = false)
     {
-        if (! $this->title && ! $this->icon) {
-            return '';
-        }
-        return implode('', ['<h4>', $this->icon ? icon($this->icon) : '', ' ', $this->title, '</h4>']);
+        return view('thrust::fields.panel', [
+            'id' => $this->getId(),
+            'object' => $object,
+            'icon' => $this->icon,
+            'title' => $this->title,
+            'fields' => collect($this->fields)->filter->showInEdit,
+            'description' => $this->description,
+            'descriptionIcon' => $this->descriptionIcon,
+            'sideBySide' => $this->sideBySide,
+            'learnMoreUrl' => $this->learnMoreUrl,
+        ]);
     }
 
     public function getId()

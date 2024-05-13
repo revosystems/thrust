@@ -1,0 +1,1 @@
+<x-ui::a href='mailto:{{$value}}'>{{ $value }}</x-ui::a>

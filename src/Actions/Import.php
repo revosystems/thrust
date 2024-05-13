@@ -16,7 +16,7 @@ class Import extends MainAction
 
     public function getClasses()
     {
-        return "button secondary";
+        return 'button';
     }
 
     public function getAction($resourceName) : string

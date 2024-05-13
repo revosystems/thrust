@@ -4,10 +4,13 @@ namespace BadChoice\Thrust\Fields;
 
 class Email extends Text
 {
+    protected ?string $icon = "envelope";
+    
     public function displayInIndex($object)
     {
-        $value = $this->getValue($object);
-        return "<a href='mailto:$value'>$value</a>" ;
+        return view('thrust::fields.email', [
+            "value" => $this->getValue($object)
+        ]);
     }
 
     protected function getFieldType()

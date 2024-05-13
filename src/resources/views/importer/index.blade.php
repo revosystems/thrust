@@ -12,7 +12,11 @@
             <div class="flex-row space-y-4">
                 <div>{{ __('thrust::messages.selectCsvFile') }}</div>
                 <div><input type="file" required name="csv"></div>
-                <div><button class="button"> {{ __('thrust::messages.next') }} @icon(arrow-right) </button></div>
+                <div>
+                    <x-ui::go-button type="submit" :async="true">
+                        {{ __('thrust::messages.next') }}
+                    </x-ui::go-button>
+                </div>
             </div>
         </form>
     </div>

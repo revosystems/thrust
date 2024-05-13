@@ -1,40 +1,46 @@
 @include('thrust::components.paginator', ["data" => $rows])
 @if (count($rows) > 0)
-    @include('thrust::components.tableDensity')
-    <table class="thrust-table list striped">
-        <thead class="sticky">
-            <th class="hide-mobile">
-                <input type="checkbox" onclick="toggleSelectAll(this)">
-            </th>
+    <x-ui::table.table>
+        <x-ui::table.header>
+            <x-ui::table.row>
+            <x-ui::table.header-cell class="w-8 pl-4 text-center">
+                <x-ui::forms.check onclick="toggleSelectAll(this)" />
+            </x-ui::table.header-cell>
             @if ($sortable)
-                <th class="hide-mobile">  </th>
+                <x-ui::table.header-cell class="hidden w-8 text-center sm:table-cell" />
             @endif
             @foreach($fields as $field)
-                <th class="{{ $field->rowClass }}">
-                    @include('thrust::fieldHeader')
-                </th>
+                <x-ui::table.header-cell class="{{ $field->getRowCss() }}">
+                    <x-thrust::index.field-header :field="$field"/>
+                </x-ui::table.header-cell>
             @endforeach
-        </thead>
+            </x-ui::table.row>
+        </x-ui::table.header>
 
-        <tbody class="@if($sortable) sortable @endif">
-        @foreach ($rows as $row)
-            <tr id="sort_{{$row->id}}">
-                <td class="action hide-mobile"><input class='actionCheckbox' type="checkbox" name="selected[{{$row->id}}]" meta:id="{{$row->id}}"></td>
-                @if ($sortable)
-                    <td class="sort action hide-mobile"></td>
-                @endif
-                @foreach($fields as $field)
-                    <td class="{{$field->rowClass}}">
-                        @if (! $field->shouldHide($row, 'index') && $field->shouldShow($row, 'index') && $resource->can($field->policyAction, $row))
-                            {!! $field->displayInIndex($row) !!}
-                        @endif
-                    </td>
-                @endforeach
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
+        @php $sortableClass = $sortable ? "sortable" : "" @endphp
+        <x-ui::table.body class="{{$sortableClass}}">
+            @foreach ($rows as $row)
+                <x-ui::table.row id="sort_{{$row->id}}" @endif >
+                    <x-ui::table.cell class="pl-4 w-8 text-center">
+                        <x-ui::forms.check class='actionCheckbox' name="selected[{{$row->id}}]" meta:id="{{$row->id}}" />
+                    </x-ui::table.cell>
+                    @if ($sortable)
+                        <x-ui::table.cell class="sort w-8 text-center hidden sm:table-cell text-gray-300 cursor-grab">
+                            @icon(grip-lines)
+                        </x-ui::table.cell>
+                    @endif
+                    @foreach($fields as $field)
+                        <x-ui::table.cell class="{{$field->getRowCss()}}">
+                            @if (! $field->shouldHide($row, 'index') && $field->shouldShow($row, 'index') && $resource->can($field->policyAction, $row))
+                                {!! $field->displayInIndex($row) !!}
+                            @endif
+                        </x-ui::table.cell>
+                    @endforeach
+                </x-ui::table.row>
+            @endforeach
+        </x-ui::table.body>
+    </x-ui::table.table>
     @include('thrust::components.paginator',["data" => $rows])
 @else
-    @include('thrust::components.noData')
+    <x-thrust::no-data />
 @endif

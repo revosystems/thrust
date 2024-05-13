@@ -5,6 +5,9 @@ namespace BadChoice\Thrust\Fields;
 abstract class FieldContainer
 {
     public $fields;
+    public $description;
+    public $descriptionIcon;
+    public ?string $learnMoreUrl = null;
 
     public function fieldsFlattened()
     {
@@ -19,4 +22,16 @@ abstract class FieldContainer
     }
 
     public function withObject($object): void {}
+
+    public function withDesc(string $desc, ?string $icon = null) : self
+    {
+        $this->description = $desc;
+        $this->descriptionIcon = $icon;
+        return $this;
+    }
+
+    public function learnMoreUrl($url) : self {
+        $this->learnMoreUrl = $url;
+        return $this;
+    }
 }

@@ -1,49 +1,35 @@
 @extends(config('thrust.indexLayout'))
 @section('content')
-    <div class="thrust-index-header description">
-        <span class="thrust-index-title title">
-            @if (isset($parent_id) )
-                @php $parent = $resource->parent($parent_id) @endphp
-                @if($isChild)
-                    <a href="{{ route('thrust.hasMany', $hasManyBackUrlParams) }}"> {{ \BadChoice\Thrust\Facades\Thrust::make(app(\BadChoice\Thrust\ResourceManager::class)->resourceNameFromModel($parent))->parent($parent)->name }} </a>
-                @elseif (in_array(\BadChoice\Thrust\Contracts\CustomBackRoute::class,class_implements(get_class($resource))))
-                    <a href="{{ $resource->backRoute() }}"> {{ $resource->backRouteTitle() }} </a>
-                @else
-                    <a href="{{ route('thrust.index', [app(\BadChoice\Thrust\ResourceManager::class)->resourceNameFromModel($parent) ]) }}"> {{ trans_choice(config('thrust.translationsPrefix') . Illuminate\Support\Str::singular(app(\BadChoice\Thrust\ResourceManager::class)->resourceNameFromModel($parent)), 2) }} </a>
-                @endif
-                 / {{ $parent->name }} -
-            @endif
-            {{ $resource->getTitle() }}
-            ({{ $resource->rows()->total() }})
-        </span>
-        <br><br>
-        @include('thrust::components.mainActions')
-        <div class="thrust-title-description">
+    <div class="flex flex-col space-y-2 px-4 py-3">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                @component(config('thrust.sidebar-collapsed-button'))@endcomponent
+                <x-ui::breadcrums :data="$resource->breadcrumbs($parent_id ?? null)" :count="$resource->rows()->total()" class="text-sm sm:text-lg"/>
+            </div>
+            <x-thrust::main-actions :resource="$resource" :resourceName="$resourceName" :parentId="$parent_id ?? null"/>
+        </div>
+
+        <div class="">
             {!! $description ?? "" !!}
         </div>
 
-        @include('thrust::components.search')
-        <div class="thrust-actions">
-            @include('thrust::components.filters')
-            @include('thrust::components.actions')
+        <div class="flex items-center justify-between space-x-4">
+            @if ($searchable) <x-thrust::index.search :resourceName="$resourceName" /> @else <div></div> @endif
+            <div class="flex items-center space-x-2">
+                <x-thrust::filters :resource="$resource" :filters="$resource->filters()" />
+                <x-thrust::actions :actions="$actions" :resourceName="$resourceName"/>
+            </div>
         </div>
-
     </div>
 
-
-    <div id="all" @if(request('search')) style="display: none;" @endif>
+    <div id="all" @class(['hidden' => request('search')])>
         {!! (new BadChoice\Thrust\Html\Index($resource))->show() !!}
     </div>
     <div id="results"></div>
 @stop
 
 @section('scripts')
-    @parent
-    @if ($searchable)
-        @include('thrust::components.searchScript', ['resourceName' => $resourceName])
-    @endif
     @include('thrust::components.js.actions', ['resourceName' => $resourceName])
     @include('thrust::components.js.filters', ['resourceName' => $resourceName])
     @include('thrust::components.js.editInline', ['resourceName' => $resourceName])
-
 @stop

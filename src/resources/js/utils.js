@@ -6,9 +6,10 @@ $(document).ready(function(){
     setupFormLoadingImage();
 
     $('#popup').popup({
-        scrolllock:true,
-        blur:true,
+        scrolllock: true,
+        blur: false,
         transition:'all 0.3s',
+        keepfocus : true,
     });
 
     $(".sortable").sortable({
@@ -18,31 +19,11 @@ $(document).ready(function(){
     //     $(this).css("width", $(this).width());
     // });
 
-    $('.dropdown').click(function() {
-        $(this).next('.dropdown-container-inverse').toggle();
-        $(this).next('.dropdown-container').toggle();
-    });
-
     addListeners();
 });
 
-function addActionsDropdownListener() {
-    $(document).on('click.actionsDropdown', function onClickDropdownContainer(mouseClickEvent) {
-        let clickOutDropdownContainer = !$(mouseClickEvent.target).parents(".dropdown-container").length;
-        let clickOutActionButtons = !$(mouseClickEvent.target).parents(".dropdown.inline").length;
-        let dropdownContainer = $('.dropdown-container');
-        if (dropdownContainer.is(":visible") && clickOutDropdownContainer &&clickOutActionButtons) {
-            dropdownContainer.hide();
-            $(this).off('click.actionsDropdown');
-        }
-    });
-}
 
 function addListeners(){
-    $('.dropdown.inline').on('click', function () {
-        addActionsDropdownListener()
-    });
-
     $('[data-post]').off('click').on('click', function (e) {
         e.preventDefault();
         return $('<form action="' + $(this).attr('href') + `" method="POST"><input type="hidden" name="_token" value="${csrf_token}"></form>`).appendTo('body').submit();
@@ -109,6 +90,7 @@ function loadPopup(url){
     $("#popupContent").load(url,function(response,status,xhr) {
         console.log('ok', url, status);
         $(".loadingImage").hide();
+        $('#popup').popup('show')
         if(status == "error")
             $("#popupContent").html("Error while loading: " + xhr.status + " " + xhr.statusText);
         else
@@ -189,25 +171,25 @@ function ajaxGet(url, callback){
 //========================================
 // SORT
 //========================================
-function saveOrder(model, startAt){
+async function saveOrder(model, startAt){
     $(".loadingImage").show();
-    postSaveOrder(window.location.origin + '/thrust/' + model + '/updateOrder?startAt=' + startAt,
+    await postSaveOrder(window.location.origin + '/thrust/' + model + '/updateOrder?startAt=' + startAt,
                  ".sortable");
 }
 
-function saveChildOrder(model, id, field){
+async function saveChildOrder(model, id, field){
     $(".loadingImage").show();
-    postSaveOrder(window.location.origin + '/thrust/' + model + '/' + id + '/belongsToMany/' + field + '/updateOrder',
+    await postSaveOrder(window.location.origin + '/thrust/' + model + '/' + id + '/belongsToMany/' + field + '/updateOrder',
                  '.sortableChild');
 }
 
-function postSaveOrder(url, classToSerialize){
+async function postSaveOrder(url, classToSerialize){
     let serialized  =  $(classToSerialize).sortable('serialize');
     serialized = serialized + "&_token="+csrf_token;
     console.log("Url:"   + url);
     console.log("Serialized:"   + serialized);
 
-    $.post(url, serialized, function(){})
+    await $.post(url, serialized, function(){})
         .done(function(data) {
             if(data) {
                 $(".loadingImage").hide();

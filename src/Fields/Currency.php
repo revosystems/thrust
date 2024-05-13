@@ -6,6 +6,7 @@ class Currency extends Decimal
 {
     static $formatter;
     static $currency = 'EUR';
+    protected ?string $icon = 'euro';
 
     public static function setFormatter($locale, $currency = 'EUR')
     {

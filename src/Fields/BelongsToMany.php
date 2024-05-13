@@ -17,9 +17,9 @@ class BelongsToMany extends Relationship
     public $icon                         = null;
     public $hideName;
 
-    public $sortable     = false;
+    public bool $sortable     = false;
     public $sortField    = 'order';
-    public $importable   = false;
+    public bool $importable   = false;
 
     public $relatedSortable   = false;
     public $relatedSortField  = 'id';
@@ -123,16 +123,16 @@ class BelongsToMany extends Relationship
             return $this->getRelation($object)->count();
         }
 
-        $related = $object->{$this->field};
+        $related = $object->{$this->field}();
         if ($this->sortable) {
-            $related = $related->sortBy($this->sortField);
+            $related = $related->orderBy('pivot_' . $this->sortField);
         }
 
         $glue = $this->displayMultipleLines
             ? '<br>'
             : ', ';
 
-        return $related->map(function ($child) {
+        return $related->get()->map(function ($child) {
             return "<span {$this->activeAttributes($child)}>".strip_tags($child->{$this->relationDisplayField}).'</span>';
         })->implode($glue);
     }

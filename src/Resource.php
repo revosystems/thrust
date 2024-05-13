@@ -8,6 +8,7 @@ use BadChoice\Thrust\Actions\MainAction;
 use BadChoice\Thrust\Contracts\FormatsNewObject;
 use BadChoice\Thrust\Contracts\Prunable;
 use BadChoice\Thrust\Exceptions\CanNotDeleteException;
+use BadChoice\Thrust\Facades\Thrust;
 use BadChoice\Thrust\Fields\Edit;
 use BadChoice\Thrust\Fields\FieldContainer;
 use BadChoice\Thrust\Fields\Relationship;
@@ -50,6 +51,11 @@ abstract class Resource
      */
     public static $search = [];
 
+    /**
+     * @var bool Defines if the resource can be globaly searched
+     */
+    public static $allowsGlobalSearch = true;
+
 
     /**
     * You can make that search is performed to another resource and the result is displayed in the same page
@@ -88,6 +94,11 @@ abstract class Resource
      */
     public static $importable = false;
 
+    /** 
+     * @var array in case the resource has fields that togheter are like a primary key (for example a morphable_id morphable_type) we want in the import for it to be treated as an id. Add those fields in this variable
+     */
+    public static $compoundKeyFields = null;
+
 
     /**
      * @var bool define if the resource is sortable and can be arranged in the index view
@@ -96,6 +107,7 @@ abstract class Resource
     public static $sortField    = 'order';
     public static $defaultSort  = 'id';
     public static $defaultOrder = 'ASC';
+    public static $canSaveOrderWhenSorted = false;
 
     /**
      * @var array Set the default eager loading relationships
@@ -115,10 +127,10 @@ abstract class Resource
     public function getFields(?bool $inline = false)
     {
         return array_merge(
-            $this->fields(),
+            ($this->fields() ?? []),
             $inline
                 ? []
-                : $this->editAndDeleteFields()
+                : ($this->editAndDeleteFields() ?? [])
         );
     }
 
@@ -143,6 +155,14 @@ abstract class Resource
     public function name()
     {
         return app(ResourceManager::class)->resourceNameFromModel(static::$model);
+    }
+
+    public function indexUrl() : string {
+        return route('thrust.index', lcFirst(class_basename($this)));
+    }
+
+    public function editUrl($object) : string {
+        return route('thrust.edit', [lcFirst(class_basename($this)), $object->id]);
     }
 
     public function find($id)
@@ -182,6 +202,11 @@ abstract class Resource
         if ($data->has('id')) {
             return static::$model::updateOrCreate($data->only('id')->all(), $data->except('id')->all());
         }
+
+        if (static::$compoundKeyFields && $data->has(static::$compoundKeyFields)) {
+            return static::$model::updateOrCreate($data->only(static::$compoundKeyFields)->all(), $data->except(static::$compoundKeyFields)->all());
+        }
+        
         return static::$model::create($data->all());
     }
 
@@ -237,7 +262,7 @@ abstract class Resource
         }
 
         if (static::$sortable) {
-            $object->{static::$sortField} = $this->count();
+            $object->{static::$sortField} = $this->getBaseQuery()->orderBy(static::$sortField, 'DESC')->first()?->{static::$sortField} + 1;
         }
         return $object;
     }
@@ -280,6 +305,13 @@ abstract class Resource
         return $this->canDelete(static::$model)
             ? [new Delete()]
             : [];
+    }
+
+    public function searchActions(?bool $whileSearch = false)
+    {
+        return $whileSearch && static::$searchResource
+            ? Thrust::make(static::$searchResource)->actions()
+            : $this->actions();
     }
 
     public function filters()
@@ -392,11 +424,12 @@ abstract class Resource
     protected function editAndDeleteFields()
     {
         return [Edit::make('edit'), Fields\Delete::make('delete')];
+
     }
 
     protected function fetchRows()
     {
-        $this->alreadyFetchedRows = $this->query()->paginate($this->getPagination());
+        $this->alreadyFetchedRows = $this->query()->paginate($this->getPagination())->withQueryString();
         return $this->alreadyFetchedRows;
     }
 
@@ -410,7 +443,7 @@ abstract class Resource
 
     public function sortableIsActive()
     {
-        return $this->canSort() && ! request('sort');
+        return $this->canSort() && (static::$canSaveOrderWhenSorted || ! request('sort'));
     }
 
     public function getUpdateConfirmationMessage()
@@ -428,15 +461,15 @@ abstract class Resource
         return $this->overlook;
     }
 
-    public function breadcrumbs(mixed $object): ?string
+    public function breadcrumbs(mixed $object): array
     {
-        return null;
+        return [$this->getTitle() => route('thrust.index', Thrust::resourceNameFromModel($this))];
     }
 
     /**
      * @throws ValidationException
      */
-    final public function validate(Request $request, ?int $id = null): void
+    final public function validate(Request $request, string|int|null $id = null): void
     {
         $validator = \Illuminate\Support\Facades\Validator::make($request->all(), $this->getValidationRules($id));
         $this->withValidator($request, $validator);

@@ -6,11 +6,14 @@ use Illuminate\Support\Collection;
 
 class Select extends Field
 {
-    protected $options          = [];
+    protected $options               = [];
+    protected $descriptions          = [];
     protected bool $allowNull        = false;
     protected bool $searchable       = false;
     protected bool $forceIntValue    = false;
-    protected $attributes       = '';
+    protected array $attributes      = [];
+    protected $showAside = false;
+    protected ?string $icon = null;
 
     public function options(array|Collection $options, bool $allowNull = false)
     {
@@ -18,6 +21,19 @@ class Select extends Field
             ? $options
             : $options->toArray();
         $this->allowNull = $allowNull;
+        return $this;
+    }
+
+    public function optionDescriptions(array|Collection $descriptions) : self
+    {
+        $this->descriptions = is_array($descriptions)
+            ? $descriptions
+            : $descriptions->all();
+        return $this;
+    }
+
+    public function icon(?string $icon) : self {
+        $this->icon = $icon;
         return $this;
     }
 
@@ -47,6 +63,12 @@ class Select extends Field
         return $this;
     }
 
+    public function showAside(bool $aside = true) :self
+    {
+        $this->showAside = $aside;
+        return $this;
+    }
+
     public function displayInIndex($object)
     {
         if ($this->hasCategories()){
@@ -62,13 +84,17 @@ class Select extends Field
             'title'       => $this->getTitle(),
             'inline'      => $inline,
             'field'       => $this->field,
+            'icon'       => $this->icon,
             'searchable'  => $this->searchable,
 //            'value'       => intval($this->getValue($object)),
+            'showAside'     => $this->showAside,
             'value'       => $this->getValue($object),
             'options'     => $this->getOptions(),
+            'descriptions' => $this->descriptions,
             'description' => $this->getDescription(),
-            'attributes'  => $this->getFieldAttributes(),
+            'fieldAttributes'  => $this->getFieldAttributes(),
             'hasCategories' => $this->hasCategories(),
+            'learnMoreUrl'    => $this->learnMoreUrl,
         ])->render();
     }
 
@@ -80,13 +106,13 @@ class Select extends Field
         return parent::getValue($object);
     }
 
-    public function attributes($attributes)
+    public function attributes(array $attributes) : self
     {
         $this->attributes = $attributes;
         return $this;
     }
 
-    protected function getFieldAttributes()
+    protected function getFieldAttributes() : array
     {
         return $this->attributes;
     }

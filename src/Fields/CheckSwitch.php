@@ -4,7 +4,7 @@ namespace BadChoice\Thrust\Fields;
 
 class CheckSwitch extends Check
 {
-    protected $asSwitch = true;
+    protected bool $asSwitch = true;
 
     public function displayInEdit($object, $inline = false)
     {

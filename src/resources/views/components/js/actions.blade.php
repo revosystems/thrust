@@ -6,7 +6,7 @@
             return alert("{!! __("thrust::messages.noRowsSelected") !!}")
         }
 
-        this.setAttribute('href', this.getAttribute('href') + "&ids=" + selected)
+        this.setAttribute('href', this.getAttribute('href') + "&ids=" + selected + "&search=" + searching)
         showPopup(this.getAttribute('href'))
     }
 
@@ -18,7 +18,7 @@
         })
     }
 
-    function runAction(actionClass, needsConfirmation, needsSelection, confirmationMessage){
+    async function runAction(actionClass, needsConfirmation, needsSelection, confirmationMessage){
         var selected = getSelectedRowsIds()
 
         if (needsSelection == 1 && selected.length == 0){
@@ -26,16 +26,17 @@
         }
 
         if (! needsConfirmation || confirm(confirmationMessage)){
-            doAction(actionClass, selected)
+            await doAction(actionClass, selected)
         }
     }
 
-    function doAction(actionClass, selected){
+    async function doAction(actionClass, selected){
         document.getElementById('actions-loading').style.display = 'block'
-        $.post("{{ route('thrust.actions.perform', [$resourceName]) }}", {
+        await $.post("{{ route('thrust.actions.perform', [$resourceName]) }}", {
             "_token": "{{ csrf_token() }}",
             "action" : actionClass,
-            "ids" : selected
+            "ids" : selected,
+            "search": searching,
         }).done(function(data){
             document.getElementById('actions-loading').style.display = 'none'
             if (data["responseAsPopup"]){
@@ -58,7 +59,6 @@
     }
 
     function toggleSelectAll(checkbox){
-        console.log([...document.querySelectorAll('input[name^=selected]')]);
         [...document.querySelectorAll('input[name^=selected]')]
             .forEach(elem => checkbox.checked
                 ? elem.checked = true
@@ -68,21 +68,26 @@
 
     registerActionPopupListeners()
 
-    window.addEventListener('thrust.searchStarted', () => {
-        fetch("{{ route('thrust.actions.index', ['resourceName' => $resourceName, 'search' => true]) }}").then(response => {
-            response.text().then(html => {
-                document.getElementById('thrust-resource-actions').innerHTML = html
-                registerActionPopupListeners()
+    let searching = 0
+    @if($resource::$searchResource)
+        window.addEventListener('thrust.searchStarted', () => {
+            searching = 1
+            fetch("{{ route('thrust.actions.index', ['resourceName' => $resourceName, 'search' => true]) }}").then(response => {
+                response.text().then(html => {
+                    document.getElementById('thrust-resource-actions').innerHTML = html
+                    registerActionPopupListeners()
+                })
             })
         })
-    })
 
-    window.addEventListener('thrust.searchEnded', () => {
-        fetch("{{ route('thrust.actions.index', ['resourceName' => $resourceName]) }}").then(response => {
-            response.text().then(html => {
-                document.getElementById('thrust-resource-actions').innerHTML = html
-                registerActionPopupListeners()
+        window.addEventListener('thrust.searchEnded', () => {
+            searching = 0
+            fetch("{{ route('thrust.actions.index', ['resourceName' => $resourceName]) }}").then(response => {
+                response.text().then(html => {
+                    document.getElementById('thrust-resource-actions').innerHTML = html
+                    registerActionPopupListeners()
+                })
             })
         })
-    })
+    @endif
 </script>

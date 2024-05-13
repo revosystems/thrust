@@ -4,9 +4,9 @@ namespace BadChoice\Thrust\Fields;
 
 class Decimal extends Text
 {
-    protected $asInteger = false;
-    protected $nullable = false;
-    public $rowClass = 'text-right';
+    protected bool $asInteger = false;
+    protected bool $nullable = false;
+    public string $rowClass = 'text-right';
 
     public function getValue($object)
     {
@@ -45,8 +45,14 @@ class Decimal extends Text
         return 'number';
     }
 
-    protected function getFieldAttributes()
+    protected function shouldShowAside(): bool
     {
-        return $this->attributes . ' step=any';
+        return true;
     }
+
+    protected function getFieldAttributes() : array
+    {
+        return array_merge($this->attributes, ['step' => 'any']);
+    }
+
 }
