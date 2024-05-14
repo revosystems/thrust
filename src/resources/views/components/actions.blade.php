@@ -8,7 +8,9 @@
                     <div class="sm:hidden">
                         <x-ui::icon>ellipsis</x-ui::icon>
                     </div>
-                    <i id='actions-loading' class="fa fa-circle-o-notch fa-spin fa-fw hidden"></i>
+                    <div id='actions-loading' class="hidden">
+                        <i class="fa fa-circle-notch fa-spin fa-fw"></i>
+                    </div>
                     <div class="hidden sm:block">
                         {{ __("thrust::messages.actions") }} @icon(caret-down)
                     </div>
