@@ -4,7 +4,7 @@ namespace BadChoice\Thrust\Fields;
 
 class TimeRangeValue extends Field
 {
-    public $showInEdit   = false;
+    public bool $showInEdit   = false;
     public $keyOptions   = null;
     public $valueOptions = null;
     public $searchable   = false;
