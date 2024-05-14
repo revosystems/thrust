@@ -4,7 +4,7 @@
         <x-ui::dropdown :offset="14" :arrow="true">
             <x-slot name="trigger">
             <x-ui::secondary-button>
-                <div class="flex items-center space-x-2">
+                <div class="flex items-center gap-2">
                     <div class="sm:hidden">
                         <x-ui::icon>ellipsis</x-ui::icon>
                     </div>
