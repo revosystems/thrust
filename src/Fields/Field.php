@@ -13,6 +13,7 @@ abstract class Field
 
     public ?string $field;
     public bool $sortable = false;
+    public ?string $sortField = null;
     protected ?string $title;
     public $validationRules;
 
@@ -86,8 +87,9 @@ abstract class Field
 
     }
 
-    public function sortable($sortable = true)
+    public function sortable($sortable = true, $sortField = null)
     {
+        $this->sortField = $sortField ?? $this->field;
         $this->sortable = $sortable;
         return $this;
     }

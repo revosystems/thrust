@@ -2,10 +2,10 @@
 <div class='{{$field->getSortableHeaderClass()}}'>
     @if ($field->sortableInIndex() && !request('search'))
     <x-ui::sort-header
-        :active="request('sort') == $field->field"
+        :active="request('sort') == $field->sortField"
         direction="{{strtolower(request('sort_order'))}}"
-        :sortDescLink="BadChoice\Thrust\ResourceFilters\Sort::link($field->field, 'desc')"
-        :sortAscLink="BadChoice\Thrust\ResourceFilters\Sort::link($field->field, 'asc')"
+        :sortDescLink="BadChoice\Thrust\ResourceFilters\Sort::link($field->sortField, 'desc')"
+        :sortAscLink="BadChoice\Thrust\ResourceFilters\Sort::link($field->sortField, 'asc')"
         :tooltip="$field->getTooltip()"
     >
         {{ $field->getTitle(true) }}
