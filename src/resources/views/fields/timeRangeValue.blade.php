@@ -52,7 +52,11 @@
     </div>
     @if(! $fixed)
         <div>
-            <a class="button secondary" onclick="keyValueRangeAdd('{{$field}}')" class="pointer"> @icon(plus) {{ __('admin.add') }}</a>
+            <a onclick="keyValueRangeAdd('{{$field}}')">
+                <x-ui::secondary-button icon="plus">
+                    {{ __('admin.add') }}
+                </x-ui::secondary-button>
+            </a>
         </div>
     @endif
 
