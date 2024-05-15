@@ -5,19 +5,21 @@
         <div id="keyValue-template" class="mb2 keyValueField-{{$field}}" style="height:auto">
             <div class="inline" id="keyValueFields-template">
                 <div class="inline" id="range">
-                    <input type='time' id='{{$field.'[template][null]'}}' value='' name='{{$field.'[template][null]'}}' placeholder='start' style='width:132px'>
-                    <input type='time' id='{{$field.'[template][null]'}}' value='' name='{{$field.'[template][null]'}}' placeholder='end' style='width:132px'>
+                    <input type='time' id='{{$field.'[template][null]'}}' value='' name='{{$field.'[template][null]'}}' placeholder='start' class="rounded px-2 w-20">
+                    <input type='time' id='{{$field.'[template][null]'}}' value='' name='{{$field.'[template][null]'}}' placeholder='end' class="rounded px-2 w-20">
                 </div>
                 <div class="inline" id="value">
                     @if(! $keyValueField->valueOptions)
-                        <input type='text' id='{{$field.'[template][null]'}}' value='' name='{{$field.'[template][null]'}}' placeholder='value' style='width:132px'>
+                        <input type='text' id='{{$field.'[template][null]'}}' value='' name='{{$field.'[template][null]'}}' placeholder='value' class="rounded px-2 w-20">
                     @else
                         <select @if($searchable) class="searchable" @endif @if($multiple) multiple @endif id='{{$field.'[template][null]'}}' name='{{$field.'[template][null]'}}' style='width:132px'>{!! $keyValueField->generateOptions($keyValueField->valueOptions, null) !!}</select>
                     @endif
                 </div>
             </div>
             <span>
-                <a class="button secondary" onclick="keyValueRangeRemove(this)">@icon(times)</a>
+                <a onclick="keyValueRangeRemove(this)">
+                    <x-ui::secondary-button>@icon(times)</x-ui::secondary-button>
+                </a>
             </span>
         </div>
 {{--    </template>--}}
@@ -28,14 +30,14 @@
                 <div id="keyValue-{{$loop->iteration}}" class="mb2 keyValueField-{{$field}}" style="height:auto">
                     <div class="inline" id="keyValueFields-{{$loop->iteration}}">
                         <div class="inline" id="start">
-                            <input @if($fixed) readonly="readonly" @endif type='time' id='{{$field.'['.$loop->iteration.'][start]'}}' value='{{$v->start}}' name='{{$field.'['.$loop->iteration.'][start]'}}' placeholder='start' style='width:132px'>
+                            <input @if($fixed) readonly="readonly" @endif type='time' id='{{$field.'['.$loop->iteration.'][start]'}}' value='{{$v->start}}' name='{{$field.'['.$loop->iteration.'][start]'}}' placeholder='start' class="rounded px-2 w-20">
                         </div>
                         <div class="inline" id="end">
-                            <input @if($fixed) readonly="readonly" @endif type='time' id='{{$field.'['.$loop->iteration.'][end]'}}' value='{{$v->end}}' name='{{$field.'['.$loop->iteration.'][end]'}}' placeholder='end' style='width:132px'>
+                            <input @if($fixed) readonly="readonly" @endif type='time' id='{{$field.'['.$loop->iteration.'][end]'}}' value='{{$v->end}}' name='{{$field.'['.$loop->iteration.'][end]'}}' placeholder='end' class="rounded px-2 w-20">
                         </div>
                         <div class="inline" id="value">
                             @if(! $keyValueField->valueOptions)
-                                <input type='text' id='{{$field.'['.$loop->iteration.'][value]'}}' value='{{$v->value}}' name='{{$field.'['.$loop->iteration.'][value]'}}' placeholder='value' style='width:132px'>
+                                <input type='text' id='{{$field.'['.$loop->iteration.'][value]'}}' value='{{$v->value}}' name='{{$field.'['.$loop->iteration.'][value]'}}' placeholder='value' class="rounded px-2 w-20">
                             @else
                                 <select @if($searchable) class="searchable" @endif @if($multiple) multiple @endif id='{{$field.'['.$loop->iteration.'][value]'}}' name='{{$field.'['.$loop->iteration.'][value]'}}@if($multiple)[]@endif' style='width:132px'>{!! $keyValueField->generateOptions($keyValueField->valueOptions, $v->value) !!}</select>
                             @endif
@@ -43,7 +45,9 @@
                     </div>
                     @if(!$fixed)
                         <span>
-                            <a class="button secondary" onclick="keyValueRangeRemove(this)">@icon(times)</a>
+                            <a onclick="keyValueRangeRemove(this)">
+                                <x-ui::secondary-button>@icon(times)</x-ui::secondary-button>
+                            </a>
                         </span>
                     @endif
                 </div>
