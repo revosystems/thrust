@@ -6,7 +6,7 @@
             <div class="inline" id="keyValueFields-template">
                 <div class="inline" id="key">
                     @if(! $keyValueField->keyOptions) 
-                        <input type='text' id='{{$field.'[template][null]'}}' value='' name='{{$field.'[template][null]'}}' placeholder='key' style='width:132px'>
+                        <input type='text' id='{{$field.'[template][null]'}}' value='' name='{{$field.'[template][null]'}}' placeholder='key' style='width:132px' class="rounded px-2">
                     @else
                         <select id='{{$field.'[template][null]'}}' name='{{$field.'[template][null]'}}' style='width:132px' class="rounded px-2">{!! $keyValueField->generateOptions($keyValueField->keyOptions, null) !!}</select>
                     @endif
