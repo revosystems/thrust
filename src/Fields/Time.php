@@ -25,7 +25,7 @@ class Time extends Text
     protected function getFieldAttributes() : array
     {
         return array_merge($this->attributes,
-            $this->withSeconds ? ['step' => 1] : []
+            ($this->withSeconds ?? false) ? ['step' => 1] : []
         );
     }
 }
