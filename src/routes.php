@@ -34,6 +34,7 @@ Route::group(['prefix' => config('thrust.routePrefix', 'thrust'), 'namespace' =>
     Route::put('{resourceName}/{id}', 'ThrustController@update')->name('thrust.update');
     Route::delete('{resourceName}/{id}', 'ThrustController@delete')->name('thrust.delete');
     Route::get('{resourceName}/search/{search}', 'ThrustSearchController@index')->name('thrust.search');
+    Route::get('{resourceName}/search', 'ThrustSearchController@json')->name('thrust.search.json');
     Route::get('{resourceName}/export', 'ThrustExportController@index')->name('thrust.export');
 
     Route::get('{resourceName}/import', 'ThrustImportController@index')->name('thrust.import');
