@@ -18,7 +18,7 @@ class BelongsToMany extends Relationship
     public $hideName;
 
     public bool $sortable     = false;
-    public $sortField    = 'order';
+    public ?string $sortField = 'order';
     public bool $importable   = false;
 
     public $relatedSortable   = false;
