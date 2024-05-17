@@ -20,7 +20,7 @@
         @php $sortableClass = $sortable ? "sortable" : "" @endphp
         <x-ui::table.body class="{{$sortableClass}}">
             @foreach ($rows as $row)
-                <x-ui::table.row id="sort_{{$row->id}}" @endif >
+                <x-ui::table.row id="sort_{{$row->id}}">
                     <x-ui::table.cell class="pl-4 w-8 text-center">
                         <x-ui::forms.check class='actionCheckbox' name="selected[{{$row->id}}]" meta:id="{{$row->id}}" />
                     </x-ui::table.cell>
