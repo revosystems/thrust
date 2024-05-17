@@ -92,7 +92,7 @@ class Select extends Field
             'options'     => $this->getOptions(),
             'descriptions' => $this->descriptions,
             'description' => $this->getDescription(),
-            'fieldAttributes'  => $this->getFieldAttributes(),
+            'disabled'    => $this->attributes['disabled'] ?? false,
             'hasCategories' => $this->hasCategories(),
             'learnMoreUrl'    => $this->learnMoreUrl,
         ])->render();
@@ -110,11 +110,6 @@ class Select extends Field
     {
         $this->attributes = $attributes;
         return $this;
-    }
-
-    protected function getFieldAttributes() : array
-    {
-        return $this->attributes;
     }
 
     protected function hasCategories()

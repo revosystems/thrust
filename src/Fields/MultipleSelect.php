@@ -38,6 +38,7 @@ class MultipleSelect extends Select
             'clearable'   => $this->clearable,
             'showAside'   => false,
             'learnMoreUrl'=> $this->learnMoreUrl,
+            'disabled'    => $this->attributes['disabled'] ?? false,
         ])->render();
     }
 
