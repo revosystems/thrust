@@ -7,14 +7,14 @@ use Illuminate\View\ComponentAttributeBag;
 
 class Select extends Field
 {
-    protected array $options        = [];
-    protected array$descriptions    = [];
-    protected bool $allowNull       = false;
-    protected bool $searchable      = false;
-    protected bool $forceIntValue   = false;
-    protected array $attributes     = [];
-    protected bool $showAside       = false;
-    protected ?string $icon         = null;
+    protected array $options      = [];
+    protected array $descriptions = [];
+    protected bool $allowNull     = false;
+    protected bool $searchable    = false;
+    protected bool $forceIntValue = false;
+    protected array $attributes   = [];
+    protected bool $showAside     = false;
+    protected ?string $icon       = null;
 
     public function options(array|Collection $options, bool $allowNull = false): static
     {
@@ -94,7 +94,6 @@ class Select extends Field
             'options'     => $this->getOptions(),
             'descriptions' => $this->descriptions,
             'description' => $this->getDescription(),
-            'disabled'    => $this->attributes['disabled'] ?? false,
             'attributes'      => $this->getComponentBagAttributes($object),
             'hasCategories' => $this->hasCategories(),
             'learnMoreUrl'    => $this->learnMoreUrl,
