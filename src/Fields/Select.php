@@ -3,19 +3,20 @@
 namespace BadChoice\Thrust\Fields;
 
 use Illuminate\Support\Collection;
+use Illuminate\View\ComponentAttributeBag;
 
 class Select extends Field
 {
-    protected $options               = [];
-    protected $descriptions          = [];
-    protected bool $allowNull        = false;
-    protected bool $searchable       = false;
-    protected bool $forceIntValue    = false;
-    protected array $attributes      = [];
-    protected $showAside = false;
-    protected ?string $icon = null;
+    protected array $options      = [];
+    protected array $descriptions = [];
+    protected bool $allowNull     = false;
+    protected bool $searchable    = false;
+    protected bool $forceIntValue = false;
+    protected array $attributes   = [];
+    protected bool $showAside     = false;
+    protected ?string $icon       = null;
 
-    public function options(array|Collection $options, bool $allowNull = false)
+    public function options(array|Collection $options, bool $allowNull = false): static
     {
         $this->options = is_array($options)
             ? $options
@@ -24,7 +25,7 @@ class Select extends Field
         return $this;
     }
 
-    public function optionDescriptions(array|Collection $descriptions) : self
+    public function optionDescriptions(array|Collection $descriptions): static
     {
         $this->descriptions = is_array($descriptions)
             ? $descriptions
@@ -32,24 +33,25 @@ class Select extends Field
         return $this;
     }
 
-    public function icon(?string $icon) : self {
+    public function icon(?string $icon): static
+    {
         $this->icon = $icon;
         return $this;
     }
 
-    public function forceIntValue(bool $forceIntValue = true): self
+    public function forceIntValue(bool $forceIntValue = true): static
     {
         $this->forceIntValue = $forceIntValue;
         return $this;
     }
 
-    public function searchable(bool $searchable = true): self
+    public function searchable(bool $searchable = true): static
     {
         $this->searchable = $searchable;
         return $this;
     }
 
-    protected function getOptions()
+    protected function getOptions(): array
     {
         if ($this->allowNull) {
             return ['' => '--'] + $this->options;
@@ -57,13 +59,13 @@ class Select extends Field
         return $this->options;
     }
 
-    public function allowNull(bool $allowNull = true): self
+    public function allowNull(bool $allowNull = true): static
     {
         $this->allowNull = $allowNull;
         return $this;
     }
 
-    public function showAside(bool $aside = true) :self
+    public function showAside(bool $aside = true): static
     {
         $this->showAside = $aside;
         return $this;
@@ -92,10 +94,15 @@ class Select extends Field
             'options'     => $this->getOptions(),
             'descriptions' => $this->descriptions,
             'description' => $this->getDescription(),
-            'fieldAttributes'  => $this->getFieldAttributes(),
+            'attributes'      => $this->getComponentBagAttributes($object),
             'hasCategories' => $this->hasCategories(),
             'learnMoreUrl'    => $this->learnMoreUrl,
         ])->render();
+    }
+
+    protected function getComponentBagAttributes($object): ComponentAttributeBag
+    {
+        return new ComponentAttributeBag($this->getFieldAttributes());
     }
 
     public function getValue($object)
@@ -106,18 +113,18 @@ class Select extends Field
         return parent::getValue($object);
     }
 
-    public function attributes(array $attributes) : self
+    public function attributes(array $attributes): static
     {
         $this->attributes = $attributes;
         return $this;
     }
 
-    protected function getFieldAttributes() : array
+    protected function getFieldAttributes(): array
     {
         return $this->attributes;
     }
 
-    protected function hasCategories()
+    protected function hasCategories(): bool
     {
         $options = $this->getOptions();
         return is_array($options[array_key_first($options)] ?? null);
