@@ -17,7 +17,7 @@ class MultipleSelect extends Select
             fn($value) => $this->getOptions()[$value])->implode(', ');
     }
 
-    public function icon(?string $icon): self
+    public function icon(?string $icon): static
     {
         $this->icon = $icon;
         return $this;
@@ -46,7 +46,7 @@ class MultipleSelect extends Select
         return array_filter($value);
     }
 
-    public function clearable(bool $clearable = true): self
+    public function clearable(bool $clearable = true): static
     {
         $this->clearable = $clearable;
         return $this;

@@ -25,7 +25,7 @@ class Select extends Field
         return $this;
     }
 
-    public function optionDescriptions(array|Collection $descriptions): self
+    public function optionDescriptions(array|Collection $descriptions): static
     {
         $this->descriptions = is_array($descriptions)
             ? $descriptions
@@ -33,19 +33,19 @@ class Select extends Field
         return $this;
     }
 
-    public function icon(?string $icon) : self
+    public function icon(?string $icon): static
     {
         $this->icon = $icon;
         return $this;
     }
 
-    public function forceIntValue(bool $forceIntValue = true): self
+    public function forceIntValue(bool $forceIntValue = true): static
     {
         $this->forceIntValue = $forceIntValue;
         return $this;
     }
 
-    public function searchable(bool $searchable = true): self
+    public function searchable(bool $searchable = true): static
     {
         $this->searchable = $searchable;
         return $this;
@@ -59,13 +59,13 @@ class Select extends Field
         return $this->options;
     }
 
-    public function allowNull(bool $allowNull = true): self
+    public function allowNull(bool $allowNull = true): static
     {
         $this->allowNull = $allowNull;
         return $this;
     }
 
-    public function showAside(bool $aside = true): self
+    public function showAside(bool $aside = true): static
     {
         $this->showAside = $aside;
         return $this;
@@ -113,7 +113,7 @@ class Select extends Field
         return parent::getValue($object);
     }
 
-    public function attributes(array $attributes): self
+    public function attributes(array $attributes): static
     {
         $this->attributes = $attributes;
         return $this;
