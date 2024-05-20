@@ -4,7 +4,7 @@ namespace BadChoice\Thrust\Fields;
 
 class MultipleSelect extends Select
 {
-    protected $options    = [];
+    protected array $options    = [];
     protected bool $allowNull  = false;
     protected bool $searchable = false;
     protected bool $isMultiple = true;
@@ -13,16 +13,15 @@ class MultipleSelect extends Select
 
     public function displayInIndex($object): string
     {
-        return collect($this->getValue($object))->map(function ($value) {
-            return $this->getOptions()[$value];
-        })->implode(', ');
+        return collect($this->getValue($object))->map(
+            fn($value) => $this->getOptions()[$value])->implode(', ');
     }
 
-    public function icon(?string $icon) : self {
+    public function icon(?string $icon): self
+    {
         $this->icon = $icon;
         return $this;
     }
-
 
     public function displayInEdit($object, $inline = false)
     {
@@ -39,6 +38,7 @@ class MultipleSelect extends Select
             'showAside'   => false,
             'learnMoreUrl'=> $this->learnMoreUrl,
             'disabled'    => $this->attributes['disabled'] ?? false,
+            'attributes'  => $this->getComponentBagAttributes($object),
         ])->render();
     }
 
