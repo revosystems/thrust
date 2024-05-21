@@ -5,6 +5,7 @@ namespace BadChoice\Thrust\Fields;
 class CheckSwitch extends Check
 {
     protected bool $asSwitch = true;
+    protected bool $inverted = false;
 
     public function displayInEdit($object, $inline = false)
     {
@@ -13,7 +14,14 @@ class CheckSwitch extends Check
             'field'       => $this->field,
             'value'       => $this->getValue($object),
             'inline'      => $inline,
+            'inverted'    => $this->inverted,
             'description' => $this->getDescription(),
         ])->render();
+    }
+
+    public function inverted(bool $inverted = true) : self
+    {
+        $this->inverted = $inverted;
+        return $this;
     }
 }
