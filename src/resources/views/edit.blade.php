@@ -1,7 +1,7 @@
     @if ($fullPage)
         <div class="flex items-center mb-4 w-xl text-sm md:text-lg">
             @component(config('thrust.sidebar-collapsed-button'))@endcomponent
-	        <h2>{{ $title }}</h2>
+            <h2>{{ $title }}</h2>
         </div>
     @else
         <div class="flex space-x-1 items-center text-lg pb-2">
@@ -28,13 +28,15 @@
     </div>
 
     {{-- SAVE BUTTONS --}}
-    <div class="mt-4 pt-4">
+    <div class="mt-4 pt-4 flex items-center gap-2">
         @if (isset($object->id))
             @if (app(BadChoice\Thrust\ResourceGate::class)->can($resourceName, 'update', $object))
                 <x-thrust::saveButton :updateConfirmationMessage="$updateConfirmationMessage" />
-                <x-ui::secondary-button class="hidden" id="thrust-save-and-continue" onclick="submitAjaxForm('thrust-form-{{$object->id}}')">
-                    {{ __("thrust::messages.saveAndContinueEditing") }}
-                </x-ui::secondary-button>
+                <div class="hidden" id="thrust-save-and-continue">
+                    <x-ui::ajax-form-button>
+                        {{ __("thrust::messages.saveAndContinueEditing") }}
+                    </x-ui::ajax-form-button>
+                </div>
             @endif
         @else
             @if (app(BadChoice\Thrust\ResourceGate::class)->can($resourceName, 'create', $object))
