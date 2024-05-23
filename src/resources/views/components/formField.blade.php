@@ -6,28 +6,24 @@
     <div id="{{$field}}_div"
         @class([
             'w-full flex py-4',
-            'flex-col' => !(isset($aside) && $aside),
-            'flex-col sm:flex-row sm:items-center sm:space-x-4 sm:justify-between' => isset($aside) && $aside
+            'w-full flex py-4 flex-col gap-y-2 gap-x-4',
+            'sm:flex-row sm:items-center sm:justify-between' => isset($aside) && $aside
         ])
         >
         <div @class([
-            "field flex flex-col",
+            "field flex flex-col gap-1",
             "w-full" => !(isset($aside) && $aside),
         ])>
-            <div class="font-semibold">
+            <label class="font-semibold" for="{{$field}}">
                 {{ $title }}
-            </div>
-            <div class="flex flex-col ">
-                @if (isset($description))
-                    <div class="text-gray-400 mt-1 mb-2">{!! $description !!}</div>
-                @endif
-            </div>
+            </label>
+            @if (isset($description) && $description)
+                <div class="text-gray-400">{!! $description !!}</div>
+            @endif
             @if(isset($learnMoreUrl) && $learnMoreUrl)
-                <div class="my-1">
-                    <x-ui::learn-more href="{{$learnMoreUrl}}" :withIcon="true">
-                        {{ __('thrust::messages.learnMore') }}
-                    </x-ui::learn-more>
-                </div>
+                <x-ui::learn-more href="{{$learnMoreUrl}}" :withIcon="true">
+                    {{ __('thrust::messages.learnMore') }}
+                </x-ui::learn-more>
             @endif
         </div>
         <div @class([
