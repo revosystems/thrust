@@ -1,13 +1,13 @@
     @if ($fullPage)
         <div class="flex items-center mb-4 w-xl text-sm md:text-lg">
             @component(config('thrust.sidebar-collapsed-button'))@endcomponent
-	        <h2>{{ $title }}</h2>
+            <h2>{{ $title }}</h2>
         </div>
     @else
-        <div class="flex space-x-1 items-center text-lg pb-2">
+        <div class="flex gap-1 items-center text-lg mb-4">
             @if($breadcrumbs)
-                 <x-ui::breadcrums :data="$breadcrumbs" />
-                 <x-ui::icon class="text-gray-400 text-sm">chevron-right</x-ui::icon>
+                <x-ui::breadcrums :data="$breadcrumbs" />
+                <x-ui::icon class="text-gray-400 text-sm">chevron-right</x-ui::icon>
             @endif
             <span>{{ $object->{$nameField} ?: __('thrust::messages.new') }}</span>
         </div>
@@ -28,7 +28,7 @@
     </div>
 
     {{-- SAVE BUTTONS --}}
-    <div class="mt-4 pt-4">
+    <div class="mt-6">
         @if (isset($object->id))
             @if (app(BadChoice\Thrust\ResourceGate::class)->can($resourceName, 'update', $object))
                 <x-thrust::saveButton :updateConfirmationMessage="$updateConfirmationMessage" />
@@ -66,7 +66,6 @@
         setTimeout(function(){  //Since it is called before alpine, we need to give it a $nextTick (delay)
             setupVisibility({!! json_encode($hideVisibility)  !!}, {!! json_encode($showVisibility)  !!});
         }, 10)
-
     </script>
 @endpush
 

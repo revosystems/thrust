@@ -1,4 +1,4 @@
-<div id="panel_{{$id}}" class="py-4">
+<div id="panel_{{$id}}" class="py-4 first:pt-0 last:pb-0">
     @if($title)
         <div class="py-2 text-lg mb-2">
             @if($icon)
