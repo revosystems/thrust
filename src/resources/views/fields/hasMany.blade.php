@@ -9,9 +9,19 @@
         @elseif( strlen($value) == 0)
             --
         @else
-            {{ $value }}
+            <x-ui::tooltip>
+                <x-slot name="trigger">
+                    {{ Illuminate\Support\Str::limit($value, 50) }}
+                </x-slot>
+                {{ $value }}
+            </x-ui::tooltip>
         @endif
     </a>
 @else
-    {{ $value }}
+    <x-ui::tooltip>
+        <x-slot name="trigger">
+            {{ Illuminate\Support\Str::limit($value, 50) }}
+        </x-slot>
+        {{ $value }}
+    </x-ui::tooltip>
 @endif
