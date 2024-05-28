@@ -3,20 +3,22 @@
     searchText : '{{request('search')}}',
     loading : false,
     ajaxSearch(){
+        var searchingText = this.searchText
         if (this.searchText.length >= {{ config('thrust.minSearchChars') }}) {
             this.loading = true
             let url = '/thrust/{{$resourceName}}/search/' + this.searchText + '?page={{request('page')}}'
             console.log(url)
             fetch(url)
                 .then(response => response.text())
-                .then(data => this.onLoaded(data));
+                .then(data => this.onLoaded(data, searchingText));
         } else {
             this.loading = false
             document.getElementById('all').style.display = 'block'
             document.getElementById('results').style.display = 'none'
         }
     },
-    onLoaded(data){
+    onLoaded(data, searchingText){
+        if (searchingText != this.searchText) { return }
         this.loading = false
         document.getElementById('all').style.display = 'none'
         document.getElementById('results').style.display = 'block'
