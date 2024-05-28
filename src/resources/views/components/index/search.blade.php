@@ -31,7 +31,7 @@
             focusable="true"
             class="grow"
             x-model="searchText"
-            x-on:input.debounce="ajaxSearch"
+            x-on:input.debounce.500ms="ajaxSearch"
     />
     <div class="absolute top-2 right-8" x-show="loading" x-cloak>
         <x-ui::spinner></x-ui::spinner>
