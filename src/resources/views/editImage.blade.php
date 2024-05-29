@@ -1,32 +1,26 @@
-
-<div class="mb-8">
-    <x-ui::h2>{{ $fileField->getTitle() }}</x-ui::h2>
-</div>
-
-<div class="mb-4">
-    @if ($fileField->displayPath($object))
-        <div class="relative">
-        <img class='' src="{{ url($fileField->displayPath($object)) }}" style="">
-
-            <div class="absolute top-0 right-0">
-                <form action="{{ route('thrust.image.delete', [$resourceName, $object->id, $fileField->field]) }}" method="POST">
-                    {{ csrf_field() }}
-                    {{ method_field('delete')  }}
-                    <x-ui::secondary-button type="submit" :async="true">@icon(trash) {{ __("thrust::messages.delete") }}</x-ui::secondary-button>
-                </form>
-            </div>
-        </div>
+<div class="flex flex-col gap-4">
+    @if ($fileField->getTitle())
+        <x-ui::h2>{{ $fileField->getTitle() }}</x-ui::h2>
     @endif
-</div>
 
-<div class="">
-    <div class="inline max-h-52">
-        <form action="{{ route('thrust.image.store', [$resourceName, $object->id, $fileField->field]) }}" method="POST" enctype="multipart/form-data">
-            {{ csrf_field() }}
-            <input type="file" name="image" accept="image/png, image/gif, image/jpeg">
-            <div class="my-4">
-                <x-ui::primary-button :async="true" type="submit">{{ __("thrust::messages.save") }}</x-ui::primary-button>
-            </div>
-        </form>
+    @if ($fileField->displayPath($object))
+        <img class="size-24 rounded" src="{{ url($fileField->displayPath($object)) }}">
+    @endif
+
+    <form action="{{ route('thrust.image.delete', [$resourceName, $object->id, $fileField->field]) }}" method="POST" class="hidden" id="deleteForm">
+        {{ csrf_field() }}
+        {{ method_field('delete')  }}
+    </form>
+    
+    <form action="{{ route('thrust.image.store', [$resourceName, $object->id, $fileField->field]) }}" method="POST" enctype="multipart/form-data" id="submitForm">
+        {{ csrf_field() }}
+        <x-ui::forms.file id="image" name="image" accept="image/png, image/gif, image/jpeg" />
+    </form>
+    
+    <div class="flex gap-2 items-center">
+        <x-ui::primary-button type=submit async form="submitForm">{{ __("thrust::messages.save") }}</x-ui::primarybutton>
+        @if ($fileField->displayPath($object) && $fileField->exists($object))
+            <x-ui::secondary-button type=submit async form="deleteForm">@icon(trash) {{ __("thrust::messages.delete") }}</x-ui::secondary-button>
+        @endif
     </div>
 </div>
