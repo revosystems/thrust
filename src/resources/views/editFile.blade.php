@@ -1,21 +1,26 @@
-<div>
+<div class="flex flex-col gap-4">
     @if ($fileField->displayPath($object) && $fileField->exists($object))
-        @icon(file) <span class='br1'>{{ basename($fileField->displayPath($object)) }}</span>
+        <div class="flex gap-2 items-center p-2 rounded border border-gray-200 w-fit">
+            @icon(file)
+            <span>{{ basename($fileField->displayPath($object)) }}</span>
+        </div>
     @endif
-</div>
 
-<div class="inline mt4">
-    <form action="{{ route('thrust.file.store', [$resourceName, $object->id, $fileField->field]) }}" method="POST" enctype="multipart/form-data">
+    <form class="flex flex-col gap-2" action="{{ route('thrust.file.store', [$resourceName, $object->id, $fileField->field]) }}" method="POST" enctype="multipart/form-data" id="submitForm">
         {{ csrf_field() }}
-        <input type="file" name="file">
-        <br>
-        <button class="button-with-loading">{{ __("thrust::messages.save") }}</button>
+
+        <input type="file" name="file" id="file" class="block max-w-md min-w-60 border border-gray-200 shadow-sm rounded text-xs focus:z-10 outline-none focus:outline-none ring-0 focus:ring-0 disabled:opacity-50 disabled:pointer-events-none
+            file:bg-gray-100 file:border-0 file:me-4 file:py-2 file:px-4">
     </form>
-</div>
-<div class="inline" style="margin-left: -205px;">
-    <form action="{{ route('thrust.file.delete', [$resourceName, $object->id, $fileField->field]) }}" method="POST">
+    <form action="{{ route('thrust.file.delete', [$resourceName, $object->id, $fileField->field]) }}" method="POST" class="hidden" id="deleteForm">
         {{ csrf_field() }}
         {{ method_field('delete')  }}
-        <button class="secondary">@icon(trash) {{ __("thrust::messages.delete") }}</button>
     </form>
+
+    <div class="flex gap-2 items-center">
+        <x-ui::primary-button type=submit async form="submitForm">{{ __("thrust::messages.save") }}</x-ui::primarybutton>
+        @if ($fileField->displayPath($object) && $fileField->exists($object))
+            <x-ui::secondary-button type=submit async form="deleteForm">@icon(trash) {{ __("thrust::messages.delete") }}</x-ui::secondary-button>
+        @endif
+    </div>
 </div>
