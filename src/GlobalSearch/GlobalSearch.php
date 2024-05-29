@@ -11,7 +11,8 @@ class GlobalSearch
     protected string $search;
 
     public function search($text){
-        $this->search = withoutDiacritic(mb_strtolower($text));
+        $this->search = trim(withoutDiacritic(mb_strtolower($text)));
+        if (strlen($this->search) < 3) { return []; }
         return collect(Thrust::resources())->map(function($class){
             $resource = (new $class());
             if (!$resource::$allowsGlobalSearch) { return null; }
