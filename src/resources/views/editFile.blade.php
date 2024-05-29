@@ -6,10 +6,9 @@
         </div>
     @endif
 
-    <form class="flex flex-col gap-2" action="{{ route('thrust.file.store', [$resourceName, $object->id, $fileField->field]) }}" method="POST" enctype="multipart/form-data" id="submitForm">
+    <form action="{{ route('thrust.file.store', [$resourceName, $object->id, $fileField->field]) }}" method="POST" enctype="multipart/form-data" id="submitForm">
         {{ csrf_field() }}
-
-        <input type="file" name="file" id="file" class="block max-w-md min-w-60 border border-gray-200 shadow-sm rounded text-xs focus:z-10 outline-none focus:outline-none ring-0 focus:ring-0 disabled:opacity-50 disabled:pointer-events-none
+        <input type="file" name="file" id="file" class="block border border-gray-200 shadow-sm rounded text-xs focus:z-10 outline-none focus:outline-none ring-0 focus:ring-0 disabled:opacity-50 disabled:pointer-events-none
             file:bg-gray-100 file:border-0 file:me-4 file:py-2 file:px-4">
     </form>
     <form action="{{ route('thrust.file.delete', [$resourceName, $object->id, $fileField->field]) }}" method="POST" class="hidden" id="deleteForm">
