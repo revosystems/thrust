@@ -30,6 +30,7 @@
             },
         }"
          @keydown.window.prevent.ctrl.k="open()"
+         @keydown.window.prevent.meta.k="open()"
     >
         <div class="relative">
             <x-ui::forms.search-text-input
