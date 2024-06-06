@@ -40,6 +40,7 @@
                     focusable
                     class="grow"
                     x-model="searchText"
+                    maxLength="50"
                     x-on:input.debounce="ajaxSearch"
             />
             <div class="absolute top-2 right-8" x-show="loading">
