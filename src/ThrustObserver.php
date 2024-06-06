@@ -2,24 +2,26 @@
 
 namespace BadChoice\Thrust;
 
+use BadChoice\Thrust\Contracts\DatabaseActionAuthor;
 use BadChoice\Thrust\Models\DatabaseAction;
+use BadChoice\Thrust\Models\DatabaseActionDefaultAuthor;
 use BadChoice\Thrust\Models\Enums\DatabaseActionEvent;
-use Closure;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
-class ThrustObserver
+final class ThrustObserver
 {
     // https://laravel.com/docs/9.x/eloquent#observers-and-database-transactions
     public bool $afterCommit = true;
 
     protected bool $enabled = true;
-    protected Closure $authorModel;
-    protected Closure $authorName;
+
     protected ResourceManager $manager;
+
+    protected DatabaseActionAuthor $author;
 
     protected array $overlook = [
         'id',
@@ -30,9 +32,12 @@ class ThrustObserver
 
     public function __construct()
     {
-        $this->setAuthorModelCallback(fn () => auth()->user());
-        $this->setAuthorNameCallback(fn ($author) => $author?->email ?? 'Nameless');
-        $this->manager = new ResourceManager;
+        $this->manager = app(ResourceManager::class);
+    }
+
+    public function author(DatabaseActionAuthor $author): void
+    {
+        $this->author = $author;
     }
 
     public function enable(bool $value = true): void
@@ -55,6 +60,7 @@ class ThrustObserver
         if (! $this->enabled) {
             return;
         }
+
         collect($this->manager->models(observable: true))
             ->each(fn ($model) => $model::observe(static::class));
     }
@@ -127,7 +133,7 @@ class ThrustObserver
         }
 
         $attributes = [
-            ...$this->author(),
+            ...$this->authorAttributes(),
             'model_type' => $model::class,
             'model_id' => $model->id,
             'event' => $event,
@@ -147,46 +153,15 @@ class ThrustObserver
         return null;
     }
 
-    public function setAuthorModelCallback(callable $callback): void
+    protected function authorAttributes(): array
     {
-        $this->authorModel = Closure::fromCallable($callback);
-    }
-
-    public function setAuthorNameCallback(callable $callback): void
-    {
-        $this->authorName = Closure::fromCallable($callback);
-    }
-
-    protected function author(): array
-    {
-        if (app()->runningInConsole() && ! app()->runningUnitTests()) {
-            return [
-                'author_name' => $this->runningCommand(),
-            ];
-        }
-
-        $author = ($this->authorModel)();
-
-        if (! $author instanceof Model) {
-            return [
-                'author_name' => 'Unknown',
-            ];
-        }
+        $author = $this->author ?? new DatabaseActionDefaultAuthor;
 
         return [
-            'author_name' => ($this->authorName)($author),
-            'author_type' => $author::class,
-            'author_id' => $author->id,
+            'author_name' => $author->name(),
+            'author_type' => $author->type(),
+            'author_id' => $author->id(),
         ];
-    }
-
-    protected function runningCommand(): string
-    {
-        $command = request()->server('argv');
-        if (is_array($command)) {
-            $command = implode(' ', $command);
-        }
-        return "php {$command}";
     }
 
     protected function mergeOverlookedAttributes(Model $model): void

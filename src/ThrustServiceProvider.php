@@ -34,7 +34,7 @@ class ThrustServiceProvider extends ServiceProvider
 
     public function register()
     {
-        app()->singleton(ResourceManager::class, fn () => new ResourceManager);
-        app()->singleton(ThrustObserver::class, fn () => new ThrustObserver);
+        $this->app->singleton(ResourceManager::class, fn () => new ResourceManager);
+        $this->app->singleton(ThrustObserver::class, fn () => new ThrustObserver);
     }
 }
