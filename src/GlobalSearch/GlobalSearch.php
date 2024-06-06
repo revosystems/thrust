@@ -37,7 +37,7 @@ class GlobalSearch
         return collect($resource->fieldsFlattened())->filter(function($field) use($resource){
             try {
 //                dd($this->search, $field->getTitle());
-                return Str::contains(withoutDiacritic(mb_strtolower($field->getTitle())), $this->search);
+                return $field->allowsGlobalSearch && Str::contains(withoutDiacritic(mb_strtolower($field->getTitle())), $this->search);
             } catch(\Exception $e) {
                 dd($e, $field, $resource);
                 return false;

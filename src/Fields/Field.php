@@ -21,6 +21,7 @@ abstract class Field
     public bool $showInEdit   = true;
     public bool $showInSearch = false;
     public $policyAction = null;
+    public bool $allowsGlobalSearch = true;
 
     public bool $withDesc    = false;
     public $description = false;
@@ -77,6 +78,11 @@ abstract class Field
     public function withoutIndexHeader($withoutIndexHeader = true)
     {
         $this->withoutIndexHeader = $withoutIndexHeader;
+        return $this;
+    }
+
+    public function withoutGlobalSearch() : self{
+        $this->allowsGlobalSearch = false;
         return $this;
     }
 
