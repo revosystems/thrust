@@ -15,8 +15,12 @@
 
     @push('edit-scripts')
     <script>
-        const gmFindAddressComponent = (place, type) => place.address_components.find(o => o.types.indexOf(type) !== -1)?.long_name || '';
+        function gmFindAddressComponent(place, type, format = 'long_name') {
+            const address = place.address_components.find(o => o.types.indexOf(type) !== -1);
+            return address ? address[format] : '';
+        }
         const gmAutocomplete = new google.maps.places.Autocomplete(document.getElementById('{{$field}}'));
+
         gmAutocomplete.addListener('place_changed', () => {
             const place = gmAutocomplete.getPlace();
             const street = gmFindAddressComponent(place, 'route') || gmFindAddressComponent(place, 'premise');
@@ -32,7 +36,13 @@
                 document.getElementById('{{$relatedFields['state']}}').value = gmFindAddressComponent(place, 'administrative_area_level_2');
             @endif
             @if($relatedFields['country'])
-                document.getElementById('{{$relatedFields['country']}}').value = gmFindAddressComponent(place, 'country');
+                document.getElementById('{{$relatedFields['country']}}').value = gmFindAddressComponent(place, 'country', 'short_name');
+                document.dispatchEvent(new CustomEvent('places-updated', {
+                    detail: {
+                        shortName: gmFindAddressComponent(place, 'country', 'short_name'),
+                        longName: gmFindAddressComponent(place, 'country')
+                    }
+                }));
             @endif
         });
     </script>
