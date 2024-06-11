@@ -15,7 +15,10 @@
 
     @push('edit-scripts')
     <script>
-        const gmFindAddressComponent = (place, type) => place.address_components.find(o => o.types.indexOf(type) !== -1)?.long_name || '';
+        function gmFindAddressComponent(place, type, format = 'long_name') {
+            const address = place.address_components.find(o => o.types.indexOf(type) !== -1);
+            return address ? address[format] : '';
+        }
         const gmAutocomplete = new google.maps.places.Autocomplete(document.getElementById('{{$field}}'));
         gmAutocomplete.addListener('place_changed', () => {
             const place = gmAutocomplete.getPlace();
@@ -32,7 +35,9 @@
                 document.getElementById('{{$relatedFields['state']}}').value = gmFindAddressComponent(place, 'administrative_area_level_2');
             @endif
             @if($relatedFields['country'])
-                document.getElementById('{{$relatedFields['country']}}').value = gmFindAddressComponent(place, 'country');
+                document.getElementById('{{$relatedFields['country']}}').value = gmFindAddressComponent(place, 'country', 'short_name');
+                // Update country searchable_select to match the selected country
+                window['country_searchable_select'].select(0,gmFindAddressComponent(place, 'country', 'short_name'), gmFindAddressComponent(place, 'country'))
             @endif
         });
     </script>
