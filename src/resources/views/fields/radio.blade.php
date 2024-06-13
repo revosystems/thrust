@@ -2,14 +2,14 @@
     <fieldset class="flex items-center space-x-10 min-w-60">
         @foreach($options as $key => $optionValue)
             <div class="flex flex-col space-y-4 items-start text-center">
-                <div>
+                <label for="{{$field}}-{{$key}}">
                     @if($images[$key])
                         <img src="{{url($images[$key])}}" class="h-20 rounded shadow-sm"  />
                     @endif
-                </div>
+                </label>
 
                 <div class="flex space-x-2">
-                    <input type="radio" name="{{$field}}" value="{{$key}}" @if($key == $value) checked @endif/>
+                    <input type="radio" name="{{$field}}" id="{{$field}}-{{$key}}" value="{{$key}}" @if($key == $value) checked @endif/>
                     <div class="flex flex-col items-start">
                         <div class="text-xs">{{ $optionValue }}</div>
                         @if($optionDescription = $descriptions[$key])
