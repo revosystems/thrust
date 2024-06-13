@@ -55,11 +55,13 @@
 
     function getSelectedRowsIds(){
         return [...document.querySelectorAll('input[name^=selected]:checked')]
+            .filter(elem => elem.checkVisibility())
             .map(elem => elem.getAttribute("meta:id"))
     }
 
     function toggleSelectAll(checkbox){
         [...document.querySelectorAll('input[name^=selected]')]
+            .filter(elem => elem.checkVisibility())
             .forEach(elem => checkbox.checked
                 ? elem.checked = true
                 : elem.checked = false
