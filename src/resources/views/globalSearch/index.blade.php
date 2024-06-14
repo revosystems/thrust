@@ -37,7 +37,7 @@
             @foreach($data['models'] as $model)
                 <div class="text-gray-700">
                     <x-ui::a href="{{ $data['resource']->editUrl($model) }}" class="showPopup">
-                        {{ $model->name ?? "something" }}
+                        {{ $model->{$data['resource']->nameField} ?? $model->id ?? "Something"  }}
                     </x-ui::a>
                 </div>
             @endforeach
