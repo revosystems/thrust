@@ -66,6 +66,9 @@ class TextLanguage extends Text
 
     public function update($object, &$newData)
     {
+        if (!isset($newData['translation_'.$this->field])) {
+            return;
+        }
         collect($newData['translation_'.$this->field])->each(function($translation, $language) use($object) {
             $compoundKey = [
                 'language' => $language,

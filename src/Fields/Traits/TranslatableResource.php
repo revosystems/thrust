@@ -8,8 +8,12 @@ use BadChoice\Thrust\Fields\TextLanguage;
 trait TranslatableResource
 {
     public function create($data){
+
         $translatableFields = collect($this->fieldsFlattened())->filter(fn($field) => $field instanceof TextLanguage);
         $translations = $translatableFields->mapWithKeys(function($field) use(&$data) {
+            if (!isset($data['translation_' . $field->field])){
+                return [];
+            }
             $toReturn = ['translation_'.$field->field => $data['translation_'.$field->field]];
             unset($data['translation_'.$field->field]);
             return $toReturn;
