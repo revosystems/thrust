@@ -14,7 +14,7 @@
         </div>
 
         <div class="flex items-center justify-between space-x-4">
-            @if ($searchable) <x-thrust::index.search :resourceName="$resourceName" /> @else <div></div> @endif
+            @if ($searchable) <x-thrust::index.search :resourceName="$resourceName" :autofocus="$searchAutofocus" /> @else <div></div> @endif
             <div class="flex items-center space-x-2">
                 <x-thrust::filters :resource="$resource" :filters="$resource->filters()" />
                 <x-thrust::actions :actions="$actions" :resourceName="$resourceName"/>

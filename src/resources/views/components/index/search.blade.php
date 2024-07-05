@@ -1,4 +1,4 @@
-@props(['resourceName'])
+@props(['resourceName', 'autofocus' => false])
 <div class="resourceSearch grow relative" x-data="{
     searchText : '{{request('search')}}',
     loading : false,
@@ -34,6 +34,7 @@
             class="grow"
             x-model="searchText"
             x-on:input.debounce.500ms="ajaxSearch"
+            :autofocus="$autofocus"
     />
     <div class="absolute top-2 right-8" x-show="loading" x-cloak>
         <x-ui::spinner></x-ui::spinner>
