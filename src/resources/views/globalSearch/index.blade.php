@@ -5,14 +5,14 @@
                 @if($data['resource'] instanceof \BadChoice\Thrust\ChildResource)
                     {{ $data['resource']->getTitle() }}
                 @elseif(isset($data['link']))
-                    <a href="{{$data['link']}}" class="cursor-pointer">
+                    <a href="{{$data['link']}}" class="cursor-pointer text-blue-400">
                         <div class="flex items-center justify-between">
                             <div>{{$data['title']}}</div>
                             <div class="text-sm text-gray-400">@icon(arrow-right)</div>
                         </div>
                     </a>
                 @else
-                    <a href="{{ $data['resource']->indexUrl() }}" class="cursor-pointer">
+                    <a href="{{ $data['resource']->indexUrl() }}" class="cursor-pointer text-blue-400">
                         <div class="flex items-center justify-between">
                             <div>{{ $data['resource']->getTitle() }}</div>
                             <div class="text-sm text-gray-400">@icon(arrow-right)</div>
@@ -24,7 +24,7 @@
             @foreach($data['fields'] as $field)
                 <div class="py-1">
                     @if($data['resource']::$singleResource)
-                        <a class="cursor-pointer" href="{{ $data['resource']->indexUrl() }}?#{{ $field->field }}_div">
+                        <a class="cursor-pointer text-blue-400" href="{{ $data['resource']->indexUrl() }}?#{{ $field->field }}_div">
                             @icon(caret-right){{ $field->getTitle() }}
                         </a>
                     @else

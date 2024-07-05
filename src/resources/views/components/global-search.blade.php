@@ -10,7 +10,8 @@
                 $nextTick(() => { $refs.search.focus() })
             },
             ajaxSearch(){
-                    if (this.searchText.length >= {{ config('thrust.minSearchChars') }}) {
+                {{-- if (this.searchText.length >= {{ config('thrust.minSearchChars') }}) {--}}
+                if(true) {
                     this.loading = true
                     let url = '/thrust/globalSearch?search=' + this.searchText
                     console.log(url)
