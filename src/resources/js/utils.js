@@ -89,6 +89,7 @@ function setupFormLoadingImage(){
 function loadPopup(url){
     $("#popupContent").load(url,function(response,status,xhr) {
         console.log('ok', url, status);
+        addListeners();
         $(".loadingImage").hide();
         $('#popup').popup('show')
         if(status == "error")
