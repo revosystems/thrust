@@ -1,4 +1,4 @@
-@props(['resourceName', 'autofocus' => false])
+@props(['resourceName', 'autofocus' => true])
 <div class="resourceSearch grow relative" x-data="{
     searchText : '{{request('search')}}',
     loading : false,
