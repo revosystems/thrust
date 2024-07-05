@@ -28,7 +28,7 @@ class ThrustController extends Controller
             'resource'        => $resource,
             'actions'         => collect($resource->actions()),
             'searchable'      => count($resource::$search) > 0,
-            'searchAutofocus' => $resource::$searchAutofocus ?? false,
+            'searchAutofocus' => $resource::$searchAutofocus,
             'description'     => $resource->getDescription(),
         ]);
     }
