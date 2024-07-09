@@ -24,6 +24,7 @@ class ThrustHasManyController extends Controller
             'actions'                 => collect($childResource->actions()),
             'parent_id'               => $id,
             'description'             => $childResource->getDescription(),
+            'searchAutofocus'         => $childResource::$searchAutofocus,
 //            "object"                  => $object,
 //            "title"                   => $object->{$resource->nameField},
 //            "children"                => $object->{$relationship},
