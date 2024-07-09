@@ -62,6 +62,11 @@ abstract class Resource
     */
     public static $searchResource = null;
 
+    /**
+    * Defines if the search input must be focused on page load
+    */
+    public static $searchAutofocus = false;
+
 
     /**
      * @var Defines the global gate ability for the actions to be performed,
