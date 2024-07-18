@@ -169,6 +169,13 @@ class File extends Field implements Prunable
         return str_replace('{user}', auth()->user()->username, $this->basePath);
     }
 
+    public function mapAttributeFromRequest($value)
+    {
+        $this->store(null, $value);
+
+        return $this->filename;
+    }
+
     public function store($object, $file)
     {
         $this->delete($object, false);
@@ -182,7 +189,7 @@ class File extends Field implements Prunable
         if ($this->onlyUpload) {
             return;
         }
-        $object->update([$this->field => $value]);
+        $object?->update([$this->field => $value]);
     }
 
     public function exists($object)
@@ -217,6 +224,11 @@ class File extends Field implements Prunable
     public function withoutExistCheck(){
         $this->withoutExistsCheck = true;
         return $this;
+    }
+
+    public function onStoreFailed(): void
+    {
+        $this->onlyUpload(true)->deleteFile(null);
     }
 
     protected function getStorage() : \Illuminate\Filesystem\FilesystemAdapter {

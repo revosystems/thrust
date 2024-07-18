@@ -266,4 +266,8 @@ abstract class Field
     {
         return $this->field;
     }
+
+    public function onStoreFailed(): void
+    {
+    }
 }

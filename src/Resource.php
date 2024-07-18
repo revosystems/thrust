@@ -477,6 +477,11 @@ abstract class Resource
         return [$this->getTitle() => route('thrust.index', Thrust::resourceNameFromModel($this))];
     }
 
+    public function onStoreFailed(): void
+    {
+        $this->fieldsFlattened()->each->onStoreFailed();
+    }
+
     /**
      * @throws ValidationException
      */

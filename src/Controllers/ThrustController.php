@@ -3,16 +3,12 @@
 namespace BadChoice\Thrust\Controllers;
 
 use BadChoice\Thrust\Facades\Thrust;
-use BadChoice\Thrust\Fields\File;
 use BadChoice\Thrust\Html\Edit;
-use BadChoice\Thrust\Resource;
 use BadChoice\Thrust\ResourceGate;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class ThrustController extends Controller
@@ -71,27 +67,20 @@ class ThrustController extends Controller
 
     public function store($resourceName)
     {
-        $request = request();
-
         $resource = Thrust::make($resourceName);
-        $resource->validate($request, null);
-
-        $files = $this->saveUploadedFiles($resource, $request);
-        $data = $request->collect()->merge(
-            $files->mapWithKeys(fn (File $file) => [$file->field => $file->filename])
-        );
+        $resource->validate(request(), null);
 
         try {
-            $result = $resource->create($data->all());
+            $result = $resource->create(request()->all());
         } catch (Exception $e) {
-            $this->deleteUploadedFiles($files);
+            $resource->onStoreFailed();
 
-            return $request->ajax()
+            return request()->ajax()
                 ? response()->json(['error' => $e->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY)
                 : back()->withErrors(['message' => $e->getMessage()]);
         }
 
-        return $request->ajax()
+        return request()->ajax()
             ? response()->json($result)
             : $this->backWithMessage('created');
     }
@@ -162,18 +151,5 @@ class ThrustController extends Controller
             return redirect(session('thrust-redirect'));
         }
         return back()->withMessage(__("thrust::messages.{$message}"));
-    }
-
-    private function saveUploadedFiles(Resource $resource, Request $request): Collection
-    {
-        return $resource->fieldsFlattened()
-            ->filter(fn (mixed $field) => $field instanceof File)
-            ->filter(fn (File $file) => $request->hasFile($file->field) && $request->file($file->field)->isValid())
-            ->each(fn (File $file) => $file->onlyUpload(true)->store(null, $request->file($file->field)));
-    }
-
-    private function deleteUploadedFiles(Collection $files): void
-    {
-        $files->each(fn (File $file) => $file->delete(null));
     }
 }
