@@ -22,6 +22,10 @@
         </div>
     </div>
 
+    @isset ($header)
+        <x-ui::card>{{ $header }}</x-ui::card>
+    @endisset
+
     <div id="all" @class(['hidden' => request('search')])>
         {!! (new BadChoice\Thrust\Html\Index($resource))->show() !!}
     </div>

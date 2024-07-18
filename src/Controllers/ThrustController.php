@@ -35,6 +35,7 @@ class ThrustController extends Controller
             'searchable'      => count($resource::$search) > 0,
             'searchAutofocus' => $resource::$searchAutofocus,
             'description'     => $resource->getDescription(),
+            'header'          => $resource->indexHeader(),
         ]);
     }
 
