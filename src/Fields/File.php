@@ -4,27 +4,27 @@ namespace BadChoice\Thrust\Fields;
 
 use BadChoice\Thrust\Contracts\Prunable;
 use BadChoice\Thrust\Facades\Thrust;
-use BadChoice\Thrust\ResourceManager;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class File extends Field implements Prunable
 {
-    public string $rowClass = 'fw3';
+    public string $rowClass              = 'fw3';
     protected $basePath;
-    protected $basePathBindings = [];
+    protected $basePathBindings          = [];
     protected $displayCallback;
-    public $prunable            = true;
-    public bool $showInEdit          = false;
-    public $editClasses         = 'br1';
-    protected $classes             = '';
-    public $indexStyle          = 'height:30px; width:30px; object-fit: contain; border:solid 1px #eee;';
-    public $editStyle           = 'height:150px; width:100%; object-fit: contain; border:solid 1px #eee;';
-    public $withLink            = true;
-    protected $filename         = null;
-    public $onlyUpload          = false;
-    protected $withoutExistsCheck = false;
+    public $prunable                     = true;
+    public bool $showInEdit              = false;
+    public $editClasses                  = 'br1';
+    protected $classes                   = '';
+    public $indexStyle                   = 'height:30px; width:30px; object-fit: contain; border:solid 1px #eee;';
+    public $editStyle                    = 'height:150px; width:100%; object-fit: contain; border:solid 1px #eee;';
+    public $withLink                     = true;
+    public $filename                     = null;
+    public $onlyUpload                   = false;
+    protected $withoutExistsCheck        = false;
     protected ?string $storageVisibility = null;
+    protected string $accept             = ''; // accept all types
 
     protected $maxFileSize = 10240; // 10 MB
 
@@ -45,6 +45,12 @@ class File extends Field implements Prunable
     public function withLink($withLink = true)
     {
         $this->withLink = $withLink;
+        return $this;
+    }
+
+    public function accept(string $accept): static
+    {
+        $this->accept = $accept;
         return $this;
     }
 
@@ -110,7 +116,7 @@ class File extends Field implements Prunable
 
     public function displayInEdit($object, $inline = false)
     {
-        return view('thrust::fields.file', [
+        return view('thrust::fields.file-edit', [
             'title'         => $this->getTitle(),
             'path'          => $this->displayPath($object),
             'exists'        => $this->exists($object),
@@ -121,7 +127,9 @@ class File extends Field implements Prunable
             'field'         => $this->field,
             'inline'        => $inline,
             'description'   => $this->getDescription(),
-            'withLink'      => ! $inline && $this->withLink
+            'withLink'      => ! $inline && $this->withLink,
+            'learnMoreUrl'  => $this->learnMoreUrl,
+            'accept'        => $this->accept,
         ])->render();
     }
 
@@ -164,9 +172,9 @@ class File extends Field implements Prunable
     public function store($object, $file)
     {
         $this->delete($object, false);
-        $filename   = Str::random(10) . "." . $file->extension();
-        $this->getStorage()->putFileAs($this->getPath(), $file, $this->filename ?? $filename, $this->storageVisibility);
-        $this->updateField($object, $filename);
+        $this->filename ??= Str::random(10) . "." . $file->extension();
+        $this->getStorage()->putFileAs($this->getPath(), $file, $this->filename, $this->storageVisibility);
+        $this->updateField($object, $this->filename);
     }
 
     protected function updateField($object, $value)

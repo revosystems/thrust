@@ -2,12 +2,17 @@
 
 namespace BadChoice\Thrust\Controllers;
 
+use BadChoice\Thrust\Facades\Thrust;
+use BadChoice\Thrust\Fields\File;
+use BadChoice\Thrust\Html\Edit;
+use BadChoice\Thrust\Resource;
+use BadChoice\Thrust\ResourceGate;
+use Exception;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use BadChoice\Thrust\ResourceGate;
-use BadChoice\Thrust\Html\Edit;
-use BadChoice\Thrust\Facades\Thrust;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class ThrustController extends Controller
@@ -65,18 +70,29 @@ class ThrustController extends Controller
 
     public function store($resourceName)
     {
+        $request = request();
+
         $resource = Thrust::make($resourceName);
-        $resource->validate(request(), null);
+        $resource->validate($request, null);
+
+        $files = $this->saveUploadedFiles($resource, $request);
+        $data = $request->collect()->merge(
+            $files->mapWithKeys(fn (File $file) => [$file->field => $file->filename])
+        );
 
         try {
-            $result = $resource->create(request()->all());
-        } catch (\Exception $e) {
-            if (request()->ajax()) { return response()->json(["error" => $e->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);}
-            return back()->withErrors(['message' => $e->getMessage()]);
-        }
-        if (request()->ajax()) { return response()->json($result);}
+            $result = $resource->create($data->all());
+        } catch (Exception $e) {
+            $this->deleteUploadedFiles($files);
 
-        return $this->backWithMessage('created');
+            return $request->ajax()
+                ? response()->json(['error' => $e->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY)
+                : back()->withErrors(['message' => $e->getMessage()]);
+        }
+
+        return $request->ajax()
+            ? response()->json($result)
+            : $this->backWithMessage('created');
     }
 
     public function storeMultiple($resourceName)
@@ -92,7 +108,7 @@ class ThrustController extends Controller
 
             try {
                 $resource->create($request);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 DB::rollBack();
                 return back()->withErrors(['message' => $e->getMessage()]);
             }
@@ -112,7 +128,7 @@ class ThrustController extends Controller
 
         try {
             $resource->update($id, request()->except('inline'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->withErrors(['message' => $e->getMessage()]);
         }
 
@@ -123,7 +139,7 @@ class ThrustController extends Controller
     {
         try {
             Thrust::make($resourceName)->delete($id);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->withErrors(['delete' => $e->getMessage()]);
         }
 
@@ -145,5 +161,18 @@ class ThrustController extends Controller
             return redirect(session('thrust-redirect'));
         }
         return back()->withMessage(__("thrust::messages.{$message}"));
+    }
+
+    private function saveUploadedFiles(Resource $resource, Request $request): Collection
+    {
+        return $resource->fieldsFlattened()
+            ->filter(fn (mixed $field) => $field instanceof File)
+            ->filter(fn (File $file) => $request->hasFile($file->field) && $request->file($file->field)->isValid())
+            ->each(fn (File $file) => $file->onlyUpload(true)->store(null, $request->file($file->field)));
+    }
+
+    private function deleteUploadedFiles(Collection $files): void
+    {
+        $files->each(fn (File $file) => $file->delete(null));
     }
 }
