@@ -1,4 +1,4 @@
-@component('thrust::components.formField' , ["field" => $field, "title" => $title, "description" => $description, "inline" => $inline])
+<x-thrust::formField :field="$field" :title="$title" :description="$description ?? null" :inline="$inline">
     @if($withLink)
     <a href="{{route('thrust.file.edit', [$resourceName, $id, $field]) }}" class="showPopup">
     @endif
@@ -13,4 +13,4 @@
     @if ($exists && $path)
         <a href="{{ url($path) }}" style="margin-left: 10px">@icon(download)</a>
     @endif
-@endcomponent
+</x-thrust::formField>

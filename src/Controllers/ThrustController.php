@@ -2,12 +2,13 @@
 
 namespace BadChoice\Thrust\Controllers;
 
+use BadChoice\Thrust\Facades\Thrust;
+use BadChoice\Thrust\Html\Edit;
+use BadChoice\Thrust\ResourceGate;
+use Exception;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use BadChoice\Thrust\ResourceGate;
-use BadChoice\Thrust\Html\Edit;
-use BadChoice\Thrust\Facades\Thrust;
 use Illuminate\Support\Facades\DB;
 
 class ThrustController extends Controller
@@ -30,6 +31,7 @@ class ThrustController extends Controller
             'searchable'      => count($resource::$search) > 0,
             'searchAutofocus' => $resource::$searchAutofocus,
             'description'     => $resource->getDescription(),
+            'header'          => $resource->indexHeader(),
         ]);
     }
 
@@ -70,13 +72,17 @@ class ThrustController extends Controller
 
         try {
             $result = $resource->create(request()->all());
-        } catch (\Exception $e) {
-            if (request()->ajax()) { return response()->json(["error" => $e->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);}
-            return back()->withErrors(['message' => $e->getMessage()]);
-        }
-        if (request()->ajax()) { return response()->json($result);}
+        } catch (Exception $e) {
+            $resource->onStoreFailed();
 
-        return $this->backWithMessage('created');
+            return request()->ajax()
+                ? response()->json(['error' => $e->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY)
+                : back()->withErrors(['message' => $e->getMessage()]);
+        }
+
+        return request()->ajax()
+            ? response()->json($result)
+            : $this->backWithMessage('created');
     }
 
     public function storeMultiple($resourceName)
@@ -92,7 +98,7 @@ class ThrustController extends Controller
 
             try {
                 $resource->create($request);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 DB::rollBack();
                 return back()->withErrors(['message' => $e->getMessage()]);
             }
@@ -112,7 +118,7 @@ class ThrustController extends Controller
 
         try {
             $resource->update($id, request()->except('inline'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->withErrors(['message' => $e->getMessage()]);
         }
 
@@ -123,7 +129,7 @@ class ThrustController extends Controller
     {
         try {
             Thrust::make($resourceName)->delete($id);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->withErrors(['delete' => $e->getMessage()]);
         }
 
