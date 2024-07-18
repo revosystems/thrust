@@ -19,6 +19,7 @@ use BadChoice\Thrust\ResourceFilters\Sort;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -411,6 +412,11 @@ abstract class Resource
             return $description;
         }
         return '';
+    }
+
+    public function indexHeader(): ?HtmlString
+    {
+        return null;
     }
 
     public function filtersApplied()
