@@ -6,7 +6,7 @@
                 @foreach($options as $category => $values)
                     <optgroup label="{{$category}}">
                         @foreach($values as $key => $optionValue)
-                            <option @if((! $key && $key === 0) || $key == $value) selected @endif
+                            <option @if($key == $value) selected @endif
                                     value="{{$key}}"
                                     description="{{$descriptions[$key] ?? ""}}"
                             >
@@ -17,7 +17,7 @@
                 @endforeach
                 @else
                     @foreach($options as $key => $optionValue)
-                        <option @if((! $key && $key === 0) || $key == $value) selected @endif
+                        <option @if($key == $value) selected @endif
                             value="{{$key}}"
                             description="{{$descriptions[$key] ?? ""}}"
                         >
