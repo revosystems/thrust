@@ -64,7 +64,8 @@ class Edit
             'showVisibility'            => Field::getPanelShowVisibilityJson(collect($this->resource->panels($object))),
             'fullPage'                  => $fullPage,
             'updateConfirmationMessage' => $this->resource->getUpdateConfirmationMessage(),
-            'multiple'                  => $multiple
+            'multiple'                  => $multiple,
+            'eventListeners'            => $this->resource->getValidationEventListeners(),
         ])->render();
     }
 

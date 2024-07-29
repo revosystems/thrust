@@ -13,6 +13,7 @@ use BadChoice\Thrust\Fields\Edit;
 use BadChoice\Thrust\Fields\FieldContainer;
 use BadChoice\Thrust\Fields\Relationship;
 use BadChoice\Thrust\Helpers\Translation;
+use BadChoice\Thrust\Html\Validation;
 use BadChoice\Thrust\ResourceFilters\Filters;
 use BadChoice\Thrust\ResourceFilters\Search;
 use BadChoice\Thrust\ResourceFilters\Sort;
@@ -286,6 +287,14 @@ abstract class Resource
         })->filter(function ($value) {
             return $value != null;
         })->toArray();
+    }
+
+    public function getValidationEventListeners()
+    {
+        $fields = $this->fieldsFlattened()->where('showInEdit', true);
+        return $fields->reduce(function ($carry, $field) {
+            return $carry . Validation::make($field->validationRules)->generateEventListeners($field->field);
+        }, '');
     }
 
     public function mapRequest($data)

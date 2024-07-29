@@ -32,22 +32,17 @@ class Validation
     {
         $params = collect(explode(':', $rule));
         $rule   = $params->first();
-        if ($rule == 'required') {
-            return $this->ruleRequired();
-        } elseif ($rule == 'min') {
-            return $this->ruleMin($params[1]);
-        } elseif ($rule == 'max') {
-            return $this->ruleMax($params[1]);
-        } elseif ($rule == 'digits') {
-            return $this->ruleDigits($params[1]);
-        } elseif ($rule == 'email') {
-            return $this->ruleEmail();
-        } elseif ($rule == 'ip') {
-            return $this->ruleIp();
-        } elseif ($rule == 'regex') {
-            return $this->ruleRegex($params[1]);
-        }
-        return [];
+
+        return match($rule) {
+            'required' => $this->ruleRequired(),
+            'min'      => $this->ruleMin($params->get(1)),
+            'max'      => $this->ruleMax($params->get(1)),
+            'digits'   => $this->ruleDigits($params->get(1)),
+            'email'    => $this->ruleEmail(),
+            'ip'       => $this->ruleIp(),
+            'regex'    => $this->ruleRegex($params->get(1)),
+            default    => [],
+        };
     }
 
     public function ruleRequired() : array
@@ -118,7 +113,51 @@ class Validation
             "title" => '{$pattern}'
         ];
     }
+
+    public function generateEventListeners($targetField) : string
+    {
+        return $this->rules->reduce(function ($carry, $rule) use ($targetField) {
+            return $carry . $this->getEventListeners($rule, $targetField);
+        }, '');
+    }
+
+    public function getEventListeners(string $rule, $targetField) : string
+    {
+        $explodedRule = explode(':', $rule);
+        $rule = $explodedRule[0];
+        $params = explode(',', $explodedRule[1] ?? '');
+
+        return match($rule) {
+            'requiredIf' => $this->ruleRequiredIf($targetField, $params[0], $params[1]),
+            default      => '',
+        };
+    }
+
+    public function ruleRequiredIf($targetField, $conditionalField, $conditionalValue) : string
+    {
+        return <<<EOD
+            requiredIf{$targetField}()
+
+            function requiredIf{$targetField}() {
+                let targetInput = document.getElementById("{$targetField}")
+                let conditionalInput = document.getElementById("{$conditionalField}")
+    
+                function updateFieldRequirement() {
+                    if (conditionalInput.value === "{$conditionalValue}") {
+                        targetInput.required = true;
+                        return;
+                    }
+                    targetInput.required = false;
+                }
+    
+                ['change', 'input'].forEach(event => conditionalInput.addEventListener(event, updateFieldRequirement));
+                
+                setTimeout(updateFieldRequirement, 100);
+            }
+        EOD;
+    }
 }
+
 
 /*
 
