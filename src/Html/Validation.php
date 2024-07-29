@@ -136,18 +136,24 @@ class Validation
     public function ruleRequiredIf($targetField, $conditionalField, $conditionalValue) : string
     {
         return <<<EOD
-            requiredIf{$targetField}()
+            var requiredIfConditions = requiredIfConditions || {};
 
-            function requiredIf{$targetField}() {
+            if (requiredIfConditions["{$targetField}"] === undefined) {
+                requiredIfConditions["{$targetField}"] = [];
+            }
+
+            requiredIfConditions["{$targetField}"].push(["{$conditionalField}", "{$conditionalValue}"]);
+
+            requiredIf{$targetField}BasedOn{$conditionalField}()
+
+            function requiredIf{$targetField}BasedOn{$conditionalField}() {
                 let targetInput = document.getElementById("{$targetField}")
                 let conditionalInput = document.getElementById("{$conditionalField}")
     
                 function updateFieldRequirement() {
-                    if (conditionalInput.value === "{$conditionalValue}") {
-                        targetInput.required = true;
-                        return;
-                    }
-                    targetInput.required = false;
+                    let hasRequiredCondition = requiredIfConditions["{$targetField}"].some(condition => document.getElementById(condition[0]).value == condition[1]);
+
+                    targetInput.required = hasRequiredCondition;
                 }
     
                 ['change', 'input'].forEach(event => conditionalInput.addEventListener(event, updateFieldRequirement));
