@@ -84,7 +84,7 @@
         @endif
     </div>
     @if(! $fixed)
-        <x-ui::secondary-button onclick="keyValueAdd('{{$field}}', '{{$searchable}}', '{{$multiple}}')" class="mt-2"> @icon(plus) {{ __('admin.add') }}</x-ui::secondary-button>
+        <x-ui::secondary-button onclick="keyValueAdd('{{$field}}', '{{$multiple}}')" class="mt-2"> @icon(plus) {{ __('admin.add') }}</x-ui::secondary-button>
     @endif
 
     @push('edit-scripts')
@@ -96,7 +96,7 @@
                 }, 100)
             }
 
-            function keyValueAdd(fieldName, searchable, multiple){
+            function keyValueAdd(fieldName, multiple){
                 var template    = $("#template-"+fieldName).html();
                 var newKeyValue = $(template);
                 let n = 100 + Math.floor(Math.random() * 50);
