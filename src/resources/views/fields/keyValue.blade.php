@@ -6,27 +6,27 @@
                     <div class="flex gap-2 items-center flex-wrap grow sm:grow-0" id="keyValueFields-template">
                         <div id="key" @class(['basis-full sm:basis-auto', 'grow' => $keyValueField->keyOptions])>
                             @if(! $keyValueField->keyOptions) 
-                                <x-ui::forms.text-input :id="$field.'[template][null]'" value="" :name="$field.'[template][null]'" placeholder='key' class="w-full" />
+                                <x-ui::forms.text-input id="templateID" name="templateID" placeholder='key' class="w-full" />
                             @else
-                                <x-ui::forms.select :id="$field.'[template][null]'" :name="$field.'[template][null]'" class="w-full sm:min-w-40">
+                                <x-ui::forms.select id="templateID" name="templateID" class="w-full sm:min-w-40">
                                     {!! $keyValueField->generateOptions($keyValueField->keyOptions, null) !!}
                                 </x-ui::forms.select>
                             @endif
                         </div>
                         <div id="value" @class(['basis-full sm:basis-auto', 'grow' => $keyValueField->valueOptions])>
                             @if(! $keyValueField->valueOptions)
-                                <x-ui::forms.text-input :id="$field.'[template][null]'" value="" :name="$field.'[template][null]'" placeholder='value' class="w-full" />
+                                <x-ui::forms.text-input id="templateID" name="templateID" placeholder='value' class="w-full" />
                             @elseif($multiple)
-                                <x-ui::forms.multiple-select :id="$field.'[template][null]'" :name="$field.'[template][null][]'" class="w-full sm:min-w-40">
+                                <x-ui::forms.multiple-select id="templateID" name="templateID" class="w-full sm:min-w-40">
                                     {!! $keyValueField->generateOptions($keyValueField->valueOptions, null) !!}
                                 </x-ui::forms.multiple-select>
                             @else
                                 @if($searchable)
-                                    <x-ui::forms.searchable-select :id="$field.'[template][null]'" :name="$field.'[template][null]'" class="w-full sm:min-w-40">
+                                    <x-ui::forms.searchable-select id="templateID" name="templateID" class="w-full sm:min-w-40">
                                         {!! $keyValueField->generateOptions($keyValueField->valueOptions, null) !!}
                                     </x-ui::forms.searchable-select>
                                 @else
-                                    <x-ui::forms.select :id="$field.'[template][null]'" :name="$field.'[template][null]'" class="w-full sm:min-w-40">
+                                    <x-ui::forms.select id="templateID" name="templateID" class="w-full sm:min-w-40">
                                         {!! $keyValueField->generateOptions($keyValueField->valueOptions, null) !!}
                                     </x-ui::forms.select>
                                 @endif
@@ -84,7 +84,7 @@
         @endif
     </div>
     @if(! $fixed)
-        <x-ui::secondary-button onclick="keyValueAdd('{{$field}}')" class="mt-2"> @icon(plus) {{ __('admin.add') }}</x-ui::secondary-button>
+        <x-ui::secondary-button onclick="keyValueAdd('{{$field}}', '{{$multiple}}')" class="mt-2"> @icon(plus) {{ __('admin.add') }}</x-ui::secondary-button>
     @endif
 
     @push('edit-scripts')
@@ -96,24 +96,24 @@
                 }, 100)
             }
 
-            function keyValueAdd(fieldName){
+            function keyValueAdd(fieldName, multiple){
                 var template    = $("#template-"+fieldName).html();
                 var newKeyValue = $(template);
-
                 let n = 100 + Math.floor(Math.random() * 50);
 
                 newKeyValue.prop('id', 'keyValue-' + n);
-                newKeyValue.find('div').first('div').prop('id', 'keyValueFields-' + n);
+                newKeyValue.find('#keyValueFields-template').first().prop('id', 'keyValueFields-' + n);
 
-                newKeyValue.find('div').first('div').find('div').first().find('input').first().prop('id', fieldName + '['+ n +'][key]');
-                newKeyValue.find('div').first('div').find('div').first().find('input').first().prop('name', fieldName + '['+ n +'][key]');
-                newKeyValue.find('div').first('div').find('div').first().find('select').first().prop('id', fieldName + '['+ n +'][key]');
-                newKeyValue.find('div').first('div').find('div').first().find('select').first().prop('name', fieldName + '['+ n +'][key]');
+                let key = newKeyValue.find('#key').first();
+                let value = newKeyValue.find('#value').first();
 
-                newKeyValue.find('div').first('div').find('div').last().find('input').last().prop('id', fieldName + '['+ n +'][value]');
-                newKeyValue.find('div').first('div').find('div').last().find('input').last().prop('name', fieldName + '['+ n +'][value]');
-                newKeyValue.find('div').first('div').find('div').last().find('select').last().prop('id', fieldName + '['+ n +'][value]');
-                newKeyValue.find('div').first('div').find('div').last().find('select').last().prop('name', fieldName + '['+ n +'][value]');
+                key.find('#templateID').first().prop({'id': fieldName + '['+ n +'][key]', 'name': fieldName + '['+ n +'][key]'});
+
+                if (multiple) {
+                    value.find('#templateID').first().prop({'id': fieldName + '['+ n +'][value][]', 'name': fieldName + '['+ n +'][value][]'});
+                } else {
+                    value.find('#templateID').first().prop({'id': fieldName + '['+ n +'][value]', 'name': fieldName + '['+ n +'][value]'});
+                }
                 $('#keyValue-' + fieldName).append(newKeyValue);
             }
         </script>
