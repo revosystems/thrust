@@ -6,6 +6,8 @@ use BadChoice\Thrust\Facades\Thrust;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\Access\Response;
+
 
 class ResourceGate
 {
@@ -40,7 +42,9 @@ class ResourceGate
         if (method_exists($policyInstance, 'before') && $policyInstance->before($this->getUser(), $ability, $object) !== null) {
             return $policyInstance->before($this->getUser(), $ability, $object);
         }
-        return $policyInstance->$ability($this->getUser(), $object ?? $resource::$model);
+        $response = $policyInstance->$ability($this->getUser(), $object ?? $resource::$model);
+
+        return $response instanceof Response ? $response->allowed() : $response;
     }
 
     public function policyFor($resource){
