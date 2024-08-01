@@ -69,6 +69,8 @@
             setupVisibility({!! json_encode($hideVisibility)  !!}, {!! json_encode($showVisibility)  !!});
         }, 10)
 
+        {!! $eventListeners !!}
+
     </script>
 @endpush
 
