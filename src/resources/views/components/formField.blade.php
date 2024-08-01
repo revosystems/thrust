@@ -7,9 +7,20 @@
         @class([
             'w-full flex py-4',
             'w-full flex py-4 flex-col gap-y-2 gap-x-4',
-            'sm:flex-row sm:items-center sm:justify-between' => isset($aside) && $aside
+            'sm:flex-row sm:items-center sm:justify-between flex-wrap' => isset($aside) && $aside
         ])
-        >
+        x-data="{
+            validityMessage: null,
+            checkValidity() {
+                let invalidInput = $el.querySelector(':invalid');
+                if (invalidInput !== null) {
+                    this.validityMessage = invalidInput.validationMessage;
+                    return;
+                }
+                this.validityMessage = null;
+            }
+        }"
+        x-on:invalid-form.window="checkValidity">
         <div @class([
             "field flex flex-col gap-1",
             "w-full" => !(isset($aside) && $aside),
@@ -31,5 +42,14 @@
         ])>
             {{ $slot }}
         </div>
+        <p x-transition 
+            x-cloak 
+            x-show="validityMessage" 
+            x-text="validityMessage" 
+            @class([
+                'text-red-500',
+                'basis-full' => isset($aside) && $aside
+            ])>
+        </p>
     </div>
 @endif
