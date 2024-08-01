@@ -151,8 +151,12 @@ class Validation
                 let conditionalInput = document.getElementById("{$conditionalField}")
     
                 function updateFieldRequirement() {
-                    let hasRequiredCondition = requiredIfConditions["{$targetField}"].some(condition => document.getElementById(condition[0]).value == condition[1]);
-
+                    let hasRequiredCondition = requiredIfConditions["{$targetField}"].some((condition) => {
+                        if (condition[1] == 'null') {
+                            return document.getElementById(condition[0]).value == '';
+                        }
+                        return document.getElementById(condition[0]).value == condition[1];
+                    });
                     targetInput.required = hasRequiredCondition;
                 }
     
