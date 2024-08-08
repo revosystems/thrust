@@ -29,4 +29,6 @@ return [
     'next'                   => 'Próximo',
     'importFailed'           => 'Falha na importação',
     'retryImport'            => 'Importar novamente',
+    'deleteResource'         => 'Excluir recurso',
+    'deleteResourceDesc'     => 'Você tem certeza de que deseja excluir o recurso ":resourceName"? Esta ação não pode ser desfeita.',
 ];

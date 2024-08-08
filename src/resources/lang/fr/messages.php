@@ -29,4 +29,6 @@ return [
     'next'                   => 'Suivant',
     'importFailed'           => 'Échec de l\'importation',
     'retryImport'            => 'Importer à nouveau',
+    'deleteResource'         => 'Supprimer la ressource',
+    'deleteResourceDesc'     => 'Êtes-vous sûr de vouloir supprimer la ressource ":resourceName"? Cette action est irréversible.',
 ];

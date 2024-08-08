@@ -28,5 +28,7 @@ return [
     'rowsToImport'           => '要导入的行',
     'next'                   => '下一步',
     'importFailed'           => '导入失败',
-    'retryImport'            => '重试导入'
+    'retryImport'            => '重试导入',
+    'deleteResource'         => '删除资源',
+    'deleteResourceDesc'     => '您确定要删除资源“:resourceName”吗? 此操作无法撤销。',
 ];

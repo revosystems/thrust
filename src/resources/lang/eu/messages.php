@@ -28,5 +28,7 @@ return [
     'rowsToImport'           => 'Inportatu beharreko errenkadak',
     'next'                   => 'Hurrengoa',
     'importFailed'           => 'Inportazioa huts egin du',
-    'retryImport'            => 'Inportazioa saiatu berriro'
+    'retryImport'            => 'Inportazioa saiatu berriro',
+    'deleteResource'         => 'Baliabidea ezabatu',
+    'deleteResourceDesc'     => 'Ziur zaude ":resourceName" baliabidea ezabatu nahi duzula? Ekintza hau ezin da desegin.',
 ];

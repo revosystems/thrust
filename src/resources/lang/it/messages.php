@@ -28,5 +28,7 @@ return [
     'rowsToImport'           => 'Righe da importare',
     'next'                   => 'Avanti',
     'importFailed'           => 'Importazione fallita',
-    'retryImport'            => 'Riprova l\'importazione'
+    'retryImport'            => 'Riprova l\'importazione',
+    'deleteResource'         => 'Elimina risorsa',
+    'deleteResourceDesc'     => 'Sei sicuro di voler eliminare la risorsa ":resourceName"? Questa azione non può essere annullata.',
 ];

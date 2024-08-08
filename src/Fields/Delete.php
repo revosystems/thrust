@@ -24,9 +24,9 @@ class Delete extends Field {
             'link' => route('thrust.delete', [Thrust::resourceNameFromModel($object), $object->id]),
             'title' => null,
             'icon' => 'trash',
-            'confirm' => htmlentities($this->getDeleteConfirmationMessage(), ENT_QUOTES),
+            'confirm' => $this->getConfirmMessage(),
             'deletion' => true,
-            'message' => $this->getMessage($object)
+            'message' => $this->displayMessage($object)
         ]);
     }
 
@@ -38,6 +38,17 @@ class Delete extends Field {
         return $this;
     }
 
+    protected function displayMessage($object) {
+        return empty($this->getMessage($object)) 
+            ? $this->getDefaultMessage($object) 
+            : $this->getMessage($object);
+    }
+
+    protected function getConfirmMessage(): string
+    {
+        return __("thrust::messages.deleteResource");
+    }
+
     protected function getMessage(mixed $object): string
     {
         if ($this->message instanceof Closure) {
@@ -45,6 +56,11 @@ class Delete extends Field {
         }
 
         return $this->message;
+    }
+
+    protected function getDefaultMessage(mixed $object): string
+    {
+        return __("thrust::messages.deleteResourceDesc", ['resourceName' => $object->name]);
     }
 
 }
