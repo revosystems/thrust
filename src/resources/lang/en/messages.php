@@ -31,6 +31,6 @@ return [
     'retryImport'            => 'Import again',
     'learnMore'              => 'Learn more',
     'globalSearchNoResultsFor' => 'No results for',
-    'deleteResource'         => 'Delete resource',
-    'deleteResourceDesc'     => 'Are you sure you want to delete the resource ":resourceName"? This action cannot be undone.',
+    'deleteResource'         => 'Confirm deletion',
+    'deleteResourceDesc'     => 'You are about to delete ":resourceName" from the database. This action cannot be undone. Are you sure you want to proceed?',
 ];

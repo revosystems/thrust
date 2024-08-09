@@ -29,6 +29,6 @@ return [
     'next'                   => 'Avanti',
     'importFailed'           => 'Importazione fallita',
     'retryImport'            => 'Riprova l\'importazione',
-    'deleteResource'         => 'Elimina risorsa',
-    'deleteResourceDesc'     => 'Sei sicuro di voler eliminare la risorsa ":resourceName"? Questa azione non può essere annullata.',
+    'deleteResource'         => 'Conferma eliminazione',
+    'deleteResourceDesc'     => 'Stai per eliminare ":resourceName" dal database. Questa azione non può essere annullata. Sei sicuro di voler procedere?',
 ];

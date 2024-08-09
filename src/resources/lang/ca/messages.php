@@ -31,6 +31,6 @@ return [
     'retryImport'            => 'Tornar a importar',
     'learnMore'              => 'Saber-ne més',
     'globalSearchNoResultsFor' => 'Sense resultats per',
-    'deleteResource'         => 'Eliminar recurs',
-    'deleteResourceDesc'     => 'Estas segur que vols eliminar el recurs ":resourceName"?. Aquesta acció no es pot desfer.',
+    'deleteResource'         => 'Confirmar eliminació',
+    'deleteResourceDesc'     => 'Estàs a punt d\'eliminar ":resourceName" de la base de dades. Aquesta acció no es pot desfer. Estàs segur que vols continuar?',
 ];

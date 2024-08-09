@@ -29,6 +29,6 @@ return [
     'next'                   => 'Hurrengoa',
     'importFailed'           => 'Inportazioa huts egin du',
     'retryImport'            => 'Inportazioa saiatu berriro',
-    'deleteResource'         => 'Baliabidea ezabatu',
-    'deleteResourceDesc'     => 'Ziur zaude ":resourceName" baliabidea ezabatu nahi duzula? Ekintza hau ezin da desegin.',
+    'deleteResource'         => 'Ezabatzea baieztatu',
+    'deleteResourceDesc'     => '":resourceName" datu-basetik ezabatzen ari zara. Ekintza hau ezin da desegin. Ziur jarraitu nahi duzula?',
 ];

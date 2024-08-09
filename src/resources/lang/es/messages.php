@@ -31,6 +31,6 @@ return [
     'retryImport'            => 'Volver a importar',
     'learnMore'              => 'Saber más',
     'globalSearchNoResultsFor' => 'Sin resultados para',
-    'deleteResource'         => 'Eliminar recurso',
-    'deleteResourceDesc'     => '¿Estás seguro de que quieres eliminar el recurso ":resourceName"? Esta acción no se puede deshacer.',
+    'deleteResource'         => 'Confirmar eliminación',
+    'deleteResourceDesc'     => 'Estás a punto de eliminar ":resourceName" de la base de datos. Esta acción no se puede deshacer. ¿Estás seguro de que deseas continuar?',
 ];

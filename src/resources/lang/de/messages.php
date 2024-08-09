@@ -29,6 +29,6 @@ return [
     'next'                   => 'Weiter',
     'importFailed'           => 'Import fehlgeschlagen',
     'retryImport'            => 'Import erneut versuchen',
-    'deleteResource'         => 'Ressource löschen',
-    'deleteResourceDesc'     => 'Sind Sie sicher, dass Sie die Ressource ":resourceName" löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.',
+    'deleteResource'         => 'Löschung bestätigen',
+    'deleteResourceDesc'     => 'Sie sind dabei, ":resourceName" aus der Datenbank zu löschen. Diese Aktion kann nicht rückgängig gemacht werden. Sind Sie sicher, dass Sie fortfahren möchten?',
 ];

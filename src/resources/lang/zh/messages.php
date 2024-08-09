@@ -29,6 +29,6 @@ return [
     'next'                   => '下一步',
     'importFailed'           => '导入失败',
     'retryImport'            => '重试导入',
-    'deleteResource'         => '删除资源',
-    'deleteResourceDesc'     => '您确定要删除资源“:resourceName”吗? 此操作无法撤销。',
+    'deleteResource'         => '确认删除',
+    'deleteResourceDesc'     => '您即将从数据库中删除 ":resourceName"。此操作无法撤销。您确定要继续吗?',
 ];
