@@ -30,5 +30,6 @@ return [
     'importFailed'           => '导入失败',
     'retryImport'            => '重试导入',
     'deleteResource'         => '确认删除',
-    'deleteResourceDesc'     => '您即将从数据库中删除 ":resourceName"。此操作无法撤销。您确定要继续吗?',
+    'deleteResourceDesc'     => '您即将从数据库中删除 <b>:resourceName</b>。此操作无法撤销。您确定要继续吗?',
+    'confirmDelete'          => '您确定要删除吗',
 ];

@@ -30,5 +30,6 @@ return [
     'importFailed'           => 'Falha na importação',
     'retryImport'            => 'Importar novamente',
     'deleteResource'         => 'Confirmar exclusão',
-    'deleteResourceDesc'     => 'Você está prestes a excluir ":resourceName" do banco de dados. Esta ação não pode ser desfeita. Tem certeza de que deseja continuar?',
+    'deleteResourceDesc'     => 'Você está prestes a excluir <b>:resourceName</b> do banco de dados. Esta ação não pode ser desfeita. Tem certeza de que deseja continuar?',
+    'confirmDelete'          => 'Você tem certeza de que deseja excluir?',
 ];

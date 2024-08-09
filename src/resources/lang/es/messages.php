@@ -32,5 +32,6 @@ return [
     'learnMore'              => 'Saber más',
     'globalSearchNoResultsFor' => 'Sin resultados para',
     'deleteResource'         => 'Confirmar eliminación',
-    'deleteResourceDesc'     => 'Estás a punto de eliminar ":resourceName" de la base de datos. Esta acción no se puede deshacer. ¿Estás seguro de que deseas continuar?',
+    'deleteResourceDesc'     => 'Estás a punto de eliminar <b>:resourceName</b> de la base de datos. Esta acción no se puede deshacer. ¿Estás seguro de que deseas continuar?',
+    'confirmDelete'          => '¿Estás seguro que quieres eliminar?',
 ];

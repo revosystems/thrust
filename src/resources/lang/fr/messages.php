@@ -30,5 +30,6 @@ return [
     'importFailed'           => 'Échec de l\'importation',
     'retryImport'            => 'Importer à nouveau',
     'deleteResource'         => 'Confirmer la suppression',
-    'deleteResourceDesc'     => 'Vous êtes sur le point de supprimer ":resourceName" de la base de données. Cette action est irréversible. Êtes-vous sûr de vouloir continuer?',
+    'deleteResourceDesc'     => 'Vous êtes sur le point de supprimer <b>:resourceName</b> de la base de données. Cette action est irréversible. Êtes-vous sûr de vouloir continuer?',
+    'confirmDelete'          => 'Es-tu sûr de vouloir supprimer?',
 ];

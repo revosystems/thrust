@@ -32,5 +32,6 @@ return [
     'learnMore'              => 'Learn more',
     'globalSearchNoResultsFor' => 'No results for',
     'deleteResource'         => 'Confirm deletion',
-    'deleteResourceDesc'     => 'You are about to delete ":resourceName" from the database. This action cannot be undone. Are you sure you want to proceed?',
+    'deleteResourceDesc'     => 'You are about to delete <b>:resourceName</b> from the database. This action cannot be undone. Are you sure you want to proceed?',
+    'confirmDelete'          => 'Are you sure you want to delete?',
 ];

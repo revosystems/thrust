@@ -32,5 +32,6 @@ return [
     'learnMore'              => 'Saber-ne més',
     'globalSearchNoResultsFor' => 'Sense resultats per',
     'deleteResource'         => 'Confirmar eliminació',
-    'deleteResourceDesc'     => 'Estàs a punt d\'eliminar ":resourceName" de la base de dades. Aquesta acció no es pot desfer. Estàs segur que vols continuar?',
+    'deleteResourceDesc'     => 'Estàs a punt d\'eliminar <b>:resourceName</b> de la base de dades. Aquesta acció no es pot desfer. Estàs segur que vols continuar?',
+    'confirmDelete'          => 'Estàs segur que vols eliminar?',
 ];
