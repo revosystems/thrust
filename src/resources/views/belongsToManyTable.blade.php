@@ -46,7 +46,7 @@
             @endforeach
             @if (app(BadChoice\Thrust\ResourceGate::class)->can($pivotResourceName, 'delete', $row->pivot))
                 <x-ui::table.cell class="w-10">
-                    <a class="delete-resource" data-delete="confirm resource" confirm-message="{{ __('admin.confirmDelete') }}" href="{{route('thrust.belongsToMany.delete', [$resourceName, $object->id, $belongsToManyField->field, $row->pivot->id])}}">
+                    <a class="delete-resource" data-delete="confirm resource" confirm-message="{{ __('thrust::messages.confirmDelete') }}" href="{{route('thrust.belongsToMany.delete', [$resourceName, $object->id, $belongsToManyField->field, $row->pivot->id])}}">
                         <x-ui::tertiary-button>@icon(trash)</x-ui::tertiary-button>
                     </a>
                 </x-ui::table.cell>

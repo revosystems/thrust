@@ -3,6 +3,7 @@
 namespace BadChoice\Thrust\Fields;
 
 use BadChoice\Thrust\Facades\Thrust;
+use Closure;
 
 class Delete extends Field {
 
@@ -11,6 +12,7 @@ class Delete extends Field {
     public string $rowClass          = '!py-0 !px-0 w-8 sm:w-10 text-center';
     public $policyAction             = 'delete';
     public bool $importable          = false;
+    public Closure|string $message   = '';
 
     public function displayInIndex($object)
     {
@@ -22,17 +24,43 @@ class Delete extends Field {
             'link' => route('thrust.delete', [Thrust::resourceNameFromModel($object), $object->id]),
             'title' => null,
             'icon' => 'trash',
-            'confirm' => htmlentities($this->getDeleteConfirmationMessage(), ENT_QUOTES),
-            'deletion' => true
+            'confirm' => $this->getConfirmMessage(),
+            'deletion' => true,
+            'message' => $this->displayMessage($object)
         ]);
-
-        //$link = route('thrust.delete', [Thrust::resourceNameFromModel($object), $object->id]);
-        //$escapedConfirmMessage = htmlentities($this->getDeleteConfirmationMessage(), ENT_QUOTES);
-        //return "<a class='delete-resource thrust-delete'".
-        //    ( $this->deleteConfirmationMessage ? "data-delete='resource confirm' confirm-message='{$escapedConfirmMessage}'" : "data-delete='resource'") .
-        //    " href='{$link}'>Delete</a>";
     }
 
     public function displayInEdit($object, $inline = false){ }
+
+    public function withMessage(Closure|string $message): self
+    {
+        $this->message = $message;
+        return $this;
+    }
+
+    protected function displayMessage($object) {
+        return empty($this->getMessage($object)) 
+            ? $this->getDefaultMessage($object) 
+            : $this->getMessage($object);
+    }
+
+    protected function getConfirmMessage(): string
+    {
+        return __("thrust::messages.deleteResource");
+    }
+
+    protected function getMessage(mixed $object): string
+    {
+        if ($this->message instanceof Closure) {
+            return ($this->message)($object);
+        }
+
+        return $this->message;
+    }
+
+    protected function getDefaultMessage(mixed $object): string
+    {
+        return __("thrust::messages.deleteResourceDesc", ['resourceName' => $object->name]);
+    }
 
 }

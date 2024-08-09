@@ -28,5 +28,8 @@ return [
     'rowsToImport'           => 'Zeilen zum Importieren',
     'next'                   => 'Weiter',
     'importFailed'           => 'Import fehlgeschlagen',
-    'retryImport'            => 'Import erneut versuchen'
+    'retryImport'            => 'Import erneut versuchen',
+    'deleteResource'         => 'Löschung bestätigen',
+    'deleteResourceDesc'     => 'Sie sind dabei, <b>:resourceName</b> aus der Datenbank zu löschen. Diese Aktion kann nicht rückgängig gemacht werden. Sind Sie sicher, dass Sie fortfahren möchten?',
+    'confirmDelete'          => 'Sind Sie sicher, dass Sie dies löschen wollen?',
 ];
