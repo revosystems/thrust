@@ -43,7 +43,7 @@ class MultipleSelect extends Select
 
     public function mapAttributeFromRequest($value)
     {
-        return array_filter($value);
+        return array_filter($value, fn(mixed $val) => !is_null($val) && $val !== '');
     }
 
     public function clearable(bool $clearable = true): static
