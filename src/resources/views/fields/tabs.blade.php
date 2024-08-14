@@ -18,7 +18,7 @@
             </x-slot>
             <x-slot :name="'content'.$index">
                 <div class="text-lg my-2">{{ $tab->title }}</div>
-                <x-thrust::fields.edit-fields :object="$object" :fields="collect($tab->fields)->filter(fn ($field) => $field->showInEdit && $resource->can($field->policyAction))->all()" />
+                <x-thrust::fields.edit-fields :object="$object" :fields="$tab->fields" />
             </x-slot>
             @php $index++ @endphp
         @endforeach
