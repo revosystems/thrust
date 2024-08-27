@@ -10,16 +10,19 @@ class Tabs extends Panel
     {
         $resource = Thrust::make(Thrust::resourceNameFromModel($object));
 
-        $fields = collect($this->fields)->map(function ($tab) use ($resource) {
+        return view('thrust::fields.tabs', [
+            'id' => $this->panelId,
+            'fields' => $this->editFields($resource),
+            'object' => $object,
+        ]);
+    }
+
+    private function editFields($resource)
+    {
+        return collect($this->fields)->map(function ($tab) use ($resource) {
             $tab->fields = collect($tab->fields)->filter(fn ($field) => $field->showInEdit && $resource->can($field->policyAction))->all();
             return $tab;
         })->all();
-
-        return view('thrust::fields.tabs', [
-            'id' => $this->panelId,
-            'fields' => $fields,
-            'object' => $object,
-        ]);
     }
 
 }
