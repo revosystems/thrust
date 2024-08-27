@@ -55,7 +55,7 @@ class Link extends Field
                 'class'      => $this->classes,
                 'url'        => $this->getUrl($object),
                 'value'      => $value,
-                'attributes' => null
+                'attributes' => new ComponentAttributeBag()
             ]);
         }
         return view('thrust::fields.link', [
