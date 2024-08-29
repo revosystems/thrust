@@ -1,9 +1,11 @@
 <x-thrust::formField :field="$field" :title="$title" :description="$description" :aside="$showAside" :inline="$inline" :learnMoreUrl="$learnMoreUrl">
 
-    <x-ui::forms.multiple-select id="{{$field}}" name="{{$field}}[]" :searchable="$searchable" class="w-full" :icon="$icon ?? null" :disabled="$attributes->get('disabled', false)" {{ $attributes }}>
-        @foreach($options as $key => $optionValue)
-            <option @if($value && in_array($key, (array)$value)) selected @endif value="{{$key}}">{{$optionValue}}</option>
-        @endforeach
+    <x-ui::forms.multiple-select id="{{$field}}" name="{{$field}}[]" :searchable="$searchable" class="w-full" :icon="$icon ?? null" :disabled="$attributes->get('disabled', false)" {{ $attributes }} :url="$optionsUrl ? url($optionsUrl) : null">
+        @if(!$optionsUrl)
+            @foreach($options as $key => $optionValue)
+                <option @if($value && in_array($key, (array)$value)) selected @endif value="{{$key}}">{{$optionValue}}</option>
+            @endforeach
+        @endif
     </x-ui::forms.multiple-select>
 
     @if($clearable)
@@ -16,4 +18,4 @@
         </script>
     @endif
 
-</x-thrust::formField>
+</x-thrust::formField> 
