@@ -4,11 +4,12 @@ namespace BadChoice\Thrust\Fields;
 
 class MultipleSelect extends Select
 {
-    protected array $options    = [];
-    protected bool $allowNull  = false;
+    protected array $options = [];
+    protected ?string $optionsUrl = null;
+    protected bool $allowNull = false;
     protected bool $searchable = false;
     protected bool $isMultiple = true;
-    protected bool $clearable  = false;
+    protected bool $clearable = false;
     protected ?string $icon = null;
 
     public function displayInIndex($object): string
@@ -26,18 +27,19 @@ class MultipleSelect extends Select
     public function displayInEdit($object, $inline = false)
     {
         return view('thrust::fields.multipleSelect', [
-            'title'       => $this->getTitle(),
-            'inline'      => $inline,
-            'field'       => $this->field,
-            'icon'       => $this->icon,
-            'searchable'  => $this->searchable,
-            'value'       => $this->getValue($object),
-            'options'     => $this->getOptions(),
-            'description' => $this->getDescription(),
-            'clearable'   => $this->clearable,
-            'showAside'   => false,
-            'learnMoreUrl'=> $this->learnMoreUrl,
-            'attributes'  => $this->getComponentBagAttributes($object),
+            'title'        => $this->getTitle(),
+            'inline'       => $inline,
+            'field'        => $this->field,
+            'icon'         => $this->icon,
+            'searchable'   => $this->searchable,
+            'value'        => $this->getValue($object),
+            'options'      => $this->getOptions(),
+            'description'  => $this->getDescription(),
+            'clearable'    => $this->clearable,
+            'showAside'    => false,
+            'learnMoreUrl' => $this->learnMoreUrl,
+            'optionsUrl'   => $this->optionsUrl,
+            'attributes'   => $this->getComponentBagAttributes($object),
         ])->render();
     }
 
@@ -49,6 +51,12 @@ class MultipleSelect extends Select
     public function clearable(bool $clearable = true): static
     {
         $this->clearable = $clearable;
+        return $this;
+    }
+
+    public function optionsUrl(string $url): static
+    {
+        $this->optionsUrl = $url;
         return $this;
     }
 }
