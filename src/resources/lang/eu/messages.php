@@ -32,4 +32,5 @@ return [
     'deleteResource'         => 'Ezabatzea baieztatu',
     'deleteResourceDesc'     => '<b>:resourceName</b> datu-basetik ezabatzen ari zara. Ekintza hau ezin da desegin. Ziur jarraitu nahi duzula?',
     'confirmDelete'          => 'Ezabatu nahi duzula ziur al zaude?',
+    'maxSearchResults'       => 'Emaitza posible gehienak aurkitu dira. Mesedez, zehaztu zure bilaketa.',
 ];

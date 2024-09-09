@@ -23,10 +23,20 @@ class Index
     public function show()
     {
         return view('thrust::indexTable', [
-            'sortable'  => $this->resource->sortableIsActive(),
-            'resource'  => $this->resource,
-            'fields'    => $this->getIndexFields(),
-            'rows'      => $this->resource->rows()
+            'sortable'              => $this->resource->sortableIsActive(),
+            'resource'              => $this->resource,
+            'fields'                => $this->getIndexFields(),
+            'rows'                  => $this->resource->rows(),
+            'displayResultsWarning' => $this->shouldDisplayMaxSearchResultsWarning()
         ])->render();
+    }
+
+    protected function shouldDisplayMaxSearchResultsWarning(): bool
+    {
+        if (!$this->resource->isBeingSearched()) {
+            return false;
+        }
+
+        return $this->resource::$maxSearchResults === $this->resource->rows()->count();
     }
 }

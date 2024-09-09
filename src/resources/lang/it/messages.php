@@ -32,4 +32,5 @@ return [
     'deleteResource'         => 'Conferma eliminazione',
     'deleteResourceDesc'     => 'Stai per eliminare <b>:resourceName</b> dal database. Questa azione non può essere annullata. Sei sicuro di voler procedere?',
     'confirmDelete'          => 'Sei sicuro di voler eliminare?',
+    'maxSearchResults'       => 'È stato trovato il numero massimo di risultati possibili. Per favore, affina la tua ricerca.',
 ];
