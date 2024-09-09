@@ -32,4 +32,5 @@ return [
     'deleteResource'         => 'Löschung bestätigen',
     'deleteResourceDesc'     => 'Sie sind dabei, <b>:resourceName</b> aus der Datenbank zu löschen. Diese Aktion kann nicht rückgängig gemacht werden. Sind Sie sicher, dass Sie fortfahren möchten?',
     'confirmDelete'          => 'Sind Sie sicher, dass Sie dies löschen wollen?',
+    'maxSearchResults'       => 'Es wurden die maximal möglichen Ergebnisse gefunden. Bitte verfeinern Sie Ihre Suche.',
 ];

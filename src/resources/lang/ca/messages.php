@@ -34,4 +34,5 @@ return [
     'deleteResource'         => 'Confirmar eliminació',
     'deleteResourceDesc'     => 'Estàs a punt d\'eliminar <b>:resourceName</b> de la base de dades. Aquesta acció no es pot desfer. Estàs segur que vols continuar?',
     'confirmDelete'          => 'Estàs segur que vols eliminar?',
+    'maxSearchResults'       => 'S\'han trobat el màxim de resultats possibles. Si us plau, afina la teva cerca.',
 ];

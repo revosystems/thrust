@@ -69,6 +69,16 @@ abstract class Resource
     */
     public static $searchAutofocus = false;
 
+    /**
+    * @var int Defines the maximum number of search results to be displayed
+    */
+    public static $maxSearchResults = 100;
+
+    /**
+    * @var ?string The text currently being searched to match with results
+    */
+    public $searchText = null;
+
 
     /**
      * @var Defines the global gate ability for the actions to be performed,
@@ -383,8 +393,8 @@ abstract class Resource
 
     protected function applySearch(&$query)
     {
-        if (request('search')) {
-            Search::apply($query, request('search'), static::$search);
+        if ($this->isBeingSearched()) {
+            Search::apply($query, $this->searchText, static::$search);
         }
     }
 
@@ -449,15 +459,15 @@ abstract class Resource
 
     protected function fetchRows()
     {
-        $this->alreadyFetchedRows = $this->query()->paginate($this->getPagination())->withQueryString();
+        $this->alreadyFetchedRows = $this->isBeingSearched()
+            ? $this->query()->limit(static::$maxSearchResults)->get()
+            : $this->query()->paginate($this->getPagination())->withQueryString();
+
         return $this->alreadyFetchedRows;
     }
 
     protected function getPagination()
     {
-        if (request('search')) {
-            return 200;
-        }
         return min(100, request('pagination') ?? $this->pagination);
     }
 
@@ -503,5 +513,16 @@ abstract class Resource
 
     protected function withValidator(Request $request, Validator $validator)
     {
+    }
+
+    public function setSearchText(string $text): self
+    {
+        $this->searchText = $text;
+        return $this;
+    }
+
+    public function isBeingSearched(): bool
+    {
+        return $this->searchText !== null;
     }
 }
