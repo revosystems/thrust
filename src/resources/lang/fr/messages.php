@@ -29,4 +29,8 @@ return [
     'next'                   => 'Suivant',
     'importFailed'           => 'Échec de l\'importation',
     'retryImport'            => 'Importer à nouveau',
+    'deleteResource'         => 'Confirmer la suppression',
+    'deleteResourceDesc'     => 'Vous êtes sur le point de supprimer <b>:resourceName</b> de la base de données. Cette action est irréversible. Êtes-vous sûr de vouloir continuer?',
+    'confirmDelete'          => 'Es-tu sûr de vouloir supprimer?',
+    'maxSearchResults'       => 'Le nombre maximal de résultats a été trouvé. Veuillez affiner votre recherche.',
 ];

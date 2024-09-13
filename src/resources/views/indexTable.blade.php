@@ -1,4 +1,12 @@
 @include('thrust::components.paginator', ["data" => $rows])
+
+@if ($displayResultsWarning)
+<p class="mx-4 mb-4">
+    <x-ui::icon class="fa-lg">circle-info</x-ui::icon>
+    {{ __('thrust::messages.maxSearchResults') }}
+</p>
+@endif
+
 @if (count($rows) > 0)
     <x-ui::table.table>
         <x-ui::table.header>

@@ -31,4 +31,8 @@ return [
     'retryImport'            => 'Volver a importar',
     'learnMore'              => 'Saber más',
     'globalSearchNoResultsFor' => 'Sin resultados para',
+    'deleteResource'         => 'Confirmar eliminación',
+    'deleteResourceDesc'     => 'Estás a punto de eliminar <b>:resourceName</b> de la base de datos. Esta acción no se puede deshacer. ¿Estás seguro de que deseas continuar?',
+    'confirmDelete'          => '¿Estás seguro que quieres eliminar?',
+    'maxSearchResults'       => 'Se han encontrado el máximo de resultados posibles. Por favor, afina tu búsqueda.',
 ];

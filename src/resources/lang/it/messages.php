@@ -28,5 +28,9 @@ return [
     'rowsToImport'           => 'Righe da importare',
     'next'                   => 'Avanti',
     'importFailed'           => 'Importazione fallita',
-    'retryImport'            => 'Riprova l\'importazione'
+    'retryImport'            => 'Riprova l\'importazione',
+    'deleteResource'         => 'Conferma eliminazione',
+    'deleteResourceDesc'     => 'Stai per eliminare <b>:resourceName</b> dal database. Questa azione non può essere annullata. Sei sicuro di voler procedere?',
+    'confirmDelete'          => 'Sei sicuro di voler eliminare?',
+    'maxSearchResults'       => 'È stato trovato il numero massimo di risultati possibili. Per favore, affina la tua ricerca.',
 ];

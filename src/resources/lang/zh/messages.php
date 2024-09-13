@@ -28,5 +28,9 @@ return [
     'rowsToImport'           => '要导入的行',
     'next'                   => '下一步',
     'importFailed'           => '导入失败',
-    'retryImport'            => '重试导入'
+    'retryImport'            => '重试导入',
+    'deleteResource'         => '确认删除',
+    'deleteResourceDesc'     => '您即将从数据库中删除 <b>:resourceName</b>。此操作无法撤销。您确定要继续吗?',
+    'confirmDelete'          => '您确定要删除吗',
+    'maxSearchResults'       => '找到了最大数量的结果。请优化您的搜索。',
 ];
