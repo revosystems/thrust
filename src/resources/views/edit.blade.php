@@ -63,10 +63,6 @@
                     <x-thrust::saveButton :updateConfirmationMessage="$updateConfirmationMessage" />
                 @endif
             @endif
-            <div class="w-fit bg-red-500 rounded p-2 text-white flex items-center gap-1" x-transition x-cloak x-show="!valid">
-                <x-ui::icon>warning</x-ui::icon>
-                <p>The form isn't valid</p>
-            </div>
         </div>
     </form>
 </div>
