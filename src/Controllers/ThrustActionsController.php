@@ -79,7 +79,7 @@ class ThrustActionsController extends Controller
     {
         $resource   = Thrust::make($resourceName);
         $action     =  collect($resource->searchActions(request('search')))->first(function ($action) use ($actionClass) {
-            return $action instanceof $actionClass;
+            return get_class($action) === $actionClass;
         });
 
         $action->resource = request('search') && $resource::$searchResource
