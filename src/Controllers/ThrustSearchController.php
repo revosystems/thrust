@@ -20,7 +20,7 @@ class ThrustSearchController extends Controller
 
     public function json($resourceName)
     {
-        $resource = Thrust::make($resourceName);
+        $resource = Thrust::make($resourceName)->setSearchText(request('search'));
         if ($resource::$searchResource){        
             $resource = Thrust::make($resource::$searchResource);
         }
