@@ -515,7 +515,7 @@ abstract class Resource
     {
     }
 
-    public function setSearchText(string $text): self
+    public function setSearchText(?string $text): self
     {
         $this->searchText = $text;
         return $this;
