@@ -54,7 +54,9 @@ class GlobalSearch
             return collect();
         }
         try {
-            return $resource->query()
+            return $resource
+                ->setSearchText($this->search)
+                ->query()
                 ->with([])
                 ->limit(10)
                 ->get()
