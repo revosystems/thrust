@@ -4,7 +4,7 @@
     </div>
 @else
     <div id="{{$field}}_div"
-        class="py-4"
+        class="py-4 w-full"
         x-data="{
             validityMessage: null,
             checkValidity() {
@@ -18,8 +18,7 @@
         }"
         x-on:invalid-form.window="checkValidity">
         <div @class([
-            'w-full flex',
-            'w-full flex flex-col gap-y-2 gap-x-4',
+            'flex flex-col gap-y-2 gap-x-4',
             'sm:flex-row sm:items-center sm:justify-between' => isset($aside) && $aside
         ])>
             <div @class([
