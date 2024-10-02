@@ -15,6 +15,7 @@ class Link extends Field
     protected $displayCallback;
     protected $attributes = [];
     public bool $importable = false;
+    protected $asButton = false;
 
     public function link($link)
     {
@@ -91,8 +92,21 @@ class Link extends Field
         return str_replace('{field}', $this->getValue($object), $this->link);
     }
 
+    public function asButton(bool $bool): self
+    {
+        $this->asButton = $bool;
+
+        return $this;
+    }
+
     public function displayInEdit($object, $inline = false)
     {
-        return $this->displayInIndex($object);
+        return view('thrust::fields.edit.link', [
+            'asButton'   => $this->asButton,
+            'class'      => $this->classes,
+            'url'        => $this->getUrl($object),
+            'text'       => $this->displayCallback ? call_user_func($this->displayCallback, $object) : $this->getTitle(),
+            'attributes' => new ComponentAttributeBag($this->attributes),
+        ])->render();
     }
 }
