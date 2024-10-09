@@ -16,7 +16,8 @@
     @push('edit-scripts')
     <script>
         const gmFindAddressComponent = (place, type) => place.address_components.find(o => o.types.indexOf(type) !== -1)?.long_name || '';
-        const gmAutocomplete = new google.maps.places.Autocomplete(document.getElementById('{{$field}}'));
+        const gmAutocompleteOptions = {fields: ["address_components"], types: ['address']};
+        const gmAutocomplete = new google.maps.places.Autocomplete(document.getElementById('{{$field}}'), gmAutocompleteOptions);
         gmAutocomplete.addListener('place_changed', () => {
             const place = gmAutocomplete.getPlace();
             const street = gmFindAddressComponent(place, 'route') || gmFindAddressComponent(place, 'premise');
