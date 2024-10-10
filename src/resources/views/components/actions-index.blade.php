@@ -9,7 +9,7 @@
                     {{ $action->getTitle() }}
                 </x-ui::tertiary-button>
             @else
-                <a href="{{route('thrust.actions.create',[$resourceName])}}?action={{get_class($action)}}" class='actionPopup'>
+                <a href="{{route('thrust.actions.create',[$resourceName])}}?action={{$action->getClassForUrl()}}" class='actionPopup'>
                     <x-ui::tertiary-button :icon="$action->icon" :async="false">
                         <div>{{ $action->getTitle() }}</div>
                     </x-ui::tertiary-button >
