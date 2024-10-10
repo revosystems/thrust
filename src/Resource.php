@@ -332,7 +332,7 @@ abstract class Resource
             : [];
     }
 
-    public function searchActions(?bool $whileSearch = false)
+    public function getActions(?bool $whileSearch = false)
     {
         return $whileSearch && static::$searchResource
             ? Thrust::make(static::$searchResource)->actions()
