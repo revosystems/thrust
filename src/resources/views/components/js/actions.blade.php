@@ -6,7 +6,15 @@
             return alert("{!! __("thrust::messages.noRowsSelected") !!}")
         }
 
-        this.setAttribute('href', this.getAttribute('href') + "&ids=" + selected + "&search=" + searching)
+        let actionsUrl = new URL(this.getAttribute('href'));
+        
+        let actionsUrlParams = new URLSearchParams(actionsUrl.search);
+
+        actionsUrlParams.set('ids', selected);
+        actionsUrlParams.set('search', searching);
+
+        this.setAttribute('href', actionsUrl.origin + actionsUrl.pathname + '?' + actionsUrlParams.toString());
+
         showPopup(this.getAttribute('href'))
     }
 

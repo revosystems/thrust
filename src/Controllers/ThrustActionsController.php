@@ -69,7 +69,7 @@ class ThrustActionsController extends Controller
         $resource = Thrust::make($resourceName);
 
         return view('thrust::components.actions-index', [
-            'actions' => collect($resource->getActions(whileSearching: request()->has('search'))),
+            'actions' => collect($resource->getActions(whileSearching: $this->searchingInResource())),
             'resourceName' => $resource->name(),
             'attributes' => new ComponentAttributeBag([])
         ]);
@@ -78,7 +78,7 @@ class ThrustActionsController extends Controller
     private function findActionForResource($resourceName, $actionClass)
     {
         $resource   = Thrust::make($resourceName);
-        $action     =  collect($resource->getActions(whileSearching: request()->has('search')))->first(function ($action) use ($actionClass) {
+        $action     =  collect($resource->getActions(whileSearching: $this->searchingInResource()))->first(function ($action) use ($actionClass) {
             return get_class($action) === $actionClass;
         });
 
@@ -87,5 +87,10 @@ class ThrustActionsController extends Controller
             : $resource;
             
         return $action;
+    }
+
+    private function searchingInResource(): bool
+    {
+        return (bool) request('search', false);
     }
 }
