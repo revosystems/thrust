@@ -44,6 +44,11 @@ abstract class Action
         return str_replace('\\', '\\\\', get_class($this));
     }
 
+    public function getClassForUrl()
+    {
+        return urlencode(get_class($this));
+    }
+
     /**
      * If the action needs to perform an update to all objects, this query can be used to do it
      * with just one query
