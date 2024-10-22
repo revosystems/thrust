@@ -13,6 +13,7 @@ abstract class ChildResource extends Resource
 
     public function __construct()
     {
+        parent::__construct();
         $this->parentId = request('parent_id');
     }
 

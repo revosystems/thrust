@@ -26,7 +26,6 @@ use Illuminate\Validation\ValidationException;
 
 abstract class Resource
 {
-
     /**
      * @var string defines the underlying model class
      */
@@ -58,7 +57,6 @@ abstract class Resource
      */
     public static $allowsGlobalSearch = true;
 
-
     /**
     * You can make that search is performed to another resource and the result is displayed in the same page
     */
@@ -78,7 +76,6 @@ abstract class Resource
     * @var ?string The text currently being searched to match with results
     */
     public $searchText = null;
-
 
     /**
      * @var Defines the global gate ability for the actions to be performed,
@@ -116,7 +113,6 @@ abstract class Resource
      */
     public static $compoundKeyFields = null;
 
-
     /**
      * @var bool define if the resource is sortable and can be arranged in the index view
      */
@@ -137,9 +133,39 @@ abstract class Resource
     private $alreadyFetchedRows;
 
     /**
+     * @var array The resources that have already been booted
+     */
+    protected static $booted = [];
+
+    /**
      * @return array array of fields
      */
     abstract public function fields();
+
+    public function __construct() {
+        if (! isset(static::$booted[static::class])) {
+            static::$booted[static::class] = true;
+
+            static::bootTraits();
+        }
+    }
+
+    protected static function bootTraits()
+    {
+        $class = static::class;
+        
+        $booted = [];
+        
+        foreach (class_uses_recursive($class) as $trait) {
+            $method = 'boot'.class_basename($trait);
+
+            if (method_exists($class, $method) && ! in_array($method, $booted)) {
+                forward_static_call([$class, $method]);
+
+                $booted[] = $method;
+            }
+        }
+    }
 
     public function getFields(?bool $inline = false)
     {
