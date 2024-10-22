@@ -40,7 +40,7 @@ class ThrustController extends Controller
         $resource = Thrust::make($resourceName);
         app(ResourceGate::class)->check($resource, 'create');
         $object = $resource->makeNew();
-        return (new Edit($resource))->show($object);
+        return (new Edit($resource))->show(id: $object, inline: request()->has('inline'));
     }
 
     public function createMultiple($resourceName)

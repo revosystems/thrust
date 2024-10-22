@@ -49,23 +49,24 @@ class Edit
         return $this->getIndexFields(true);
     }
 
-    public function show($id, $fullPage = false, $multiple = false)
+    public function show($id, $fullPage = false, $multiple = false, $inline = false)
     {
         view()->share('fullPage', $fullPage);
         $object = is_numeric($id) ? $this->resource->find($id) : $id;
         return view('thrust::edit', [
-            'title'                     => $this->resource->getTitle(),
-            'nameField'                 => $this->resource->nameField,
-            'breadcrumbs'               => $this->resource->breadcrumbs($object),
-            'resourceName'              => $this->resourceName ? : $this->resource->name(),
+            'title'                    => $this->resource->getTitle(),
+            'nameField'                => $this->resource->nameField,
+            'breadcrumbs'              => $this->resource->breadcrumbs($object),
+            'resourceName'             => $this->resourceName ? : $this->resource->name(),
             'fields'                    => $this->getEditFields($multiple),
-            'object'                    => $object,
-            'hideVisibility'            => Field::getPanelHideVisibilityJson(collect($this->resource->panels($object))),
-            'showVisibility'            => Field::getPanelShowVisibilityJson(collect($this->resource->panels($object))),
-            'fullPage'                  => $fullPage,
+            'object'                   => $object,
+            'hideVisibility'           => Field::getPanelHideVisibilityJson(collect($this->resource->panels($object))),
+            'showVisibility'           => Field::getPanelShowVisibilityJson(collect($this->resource->panels($object))),
+            'fullPage'                 => $fullPage,
             'updateConfirmationMessage' => $this->resource->getUpdateConfirmationMessage(),
-            'multiple'                  => $multiple,
-            'eventListeners'            => $this->resource->getValidationEventListeners(),
+            'multiple'                 => $multiple,
+            'eventListeners'           => $this->resource->getValidationEventListeners(),
+            'inline'                   => $inline, 
         ])->render();
     }
 
