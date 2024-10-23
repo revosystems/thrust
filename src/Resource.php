@@ -5,6 +5,7 @@ namespace BadChoice\Thrust;
 use BadChoice\Thrust\Actions\Delete;
 use BadChoice\Thrust\Actions\Import;
 use BadChoice\Thrust\Actions\MainAction;
+use BadChoice\Thrust\Concerns\BootableResource;
 use BadChoice\Thrust\Contracts\FormatsNewObject;
 use BadChoice\Thrust\Contracts\Prunable;
 use BadChoice\Thrust\Exceptions\CanNotDeleteException;
@@ -26,6 +27,8 @@ use Illuminate\Validation\ValidationException;
 
 abstract class Resource
 {
+    use BootableResource;
+
     /**
      * @var string defines the underlying model class
      */
@@ -133,39 +136,9 @@ abstract class Resource
     private $alreadyFetchedRows;
 
     /**
-     * @var array The resources that have already been booted
-     */
-    protected static $booted = [];
-
-    /**
      * @return array array of fields
      */
     abstract public function fields();
-
-    public function __construct() {
-        if (! isset(static::$booted[static::class])) {
-            static::$booted[static::class] = true;
-
-            static::bootTraits();
-        }
-    }
-
-    protected static function bootTraits()
-    {
-        $class = static::class;
-        
-        $booted = [];
-        
-        foreach (class_uses_recursive($class) as $trait) {
-            $method = 'boot'.class_basename($trait);
-
-            if (method_exists($class, $method) && ! in_array($method, $booted)) {
-                forward_static_call([$class, $method]);
-
-                $booted[] = $method;
-            }
-        }
-    }
 
     public function getFields(?bool $inline = false)
     {
