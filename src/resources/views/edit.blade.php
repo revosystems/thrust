@@ -16,6 +16,7 @@
 <div x-data="{
         valid: true,
         init() {
+            if ('{{ $inline }}') return;
             this.$refs.editForm.addEventListener('submit', this.handleFormSubmit.bind(this));
         },
         handleFormSubmit(event) {
