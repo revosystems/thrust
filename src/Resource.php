@@ -136,9 +136,22 @@ abstract class Resource
     private $alreadyFetchedRows;
 
     /**
+     * @var array The resources that have already been booted
+     */
+    protected static $booted = [];
+
+    /**
      * @return array array of fields
      */
     abstract public function fields();
+
+    public function __construct() {
+        if (! isset(static::$booted[static::class])) {
+            static::$booted[static::class] = true;
+
+            static::bootTraits();
+        }
+    }
 
     public function getFields(?bool $inline = false)
     {
