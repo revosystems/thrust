@@ -146,11 +146,7 @@ abstract class Resource
     abstract public function fields();
 
     public function __construct() {
-        if (! isset(static::$booted[static::class])) {
-            static::$booted[static::class] = true;
-
-            static::bootTraits();
-        }
+        static::bootIfNotBooted();
     }
 
     public function getFields(?bool $inline = false)

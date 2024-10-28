@@ -4,6 +4,15 @@ namespace BadChoice\Thrust\Concerns;
 
 trait BootableResource
 {
+    protected static function bootIfNotBooted()
+    {
+        if (! isset(static::$booted[static::class])) {
+            static::$booted[static::class] = true;
+
+            static::bootTraits();
+        }
+    }
+
     protected static function bootTraits()
     {
         $class = static::class;
