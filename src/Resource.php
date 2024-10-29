@@ -5,6 +5,7 @@ namespace BadChoice\Thrust;
 use BadChoice\Thrust\Actions\Delete;
 use BadChoice\Thrust\Actions\Import;
 use BadChoice\Thrust\Actions\MainAction;
+use BadChoice\Thrust\Concerns\BootableResource;
 use BadChoice\Thrust\Contracts\FormatsNewObject;
 use BadChoice\Thrust\Contracts\Prunable;
 use BadChoice\Thrust\Exceptions\CanNotDeleteException;
@@ -26,6 +27,7 @@ use Illuminate\Validation\ValidationException;
 
 abstract class Resource
 {
+    use BootableResource;
 
     /**
      * @var string defines the underlying model class
@@ -58,7 +60,6 @@ abstract class Resource
      */
     public static $allowsGlobalSearch = true;
 
-
     /**
     * You can make that search is performed to another resource and the result is displayed in the same page
     */
@@ -78,7 +79,6 @@ abstract class Resource
     * @var ?string The text currently being searched to match with results
     */
     public $searchText = null;
-
 
     /**
      * @var Defines the global gate ability for the actions to be performed,
@@ -116,7 +116,6 @@ abstract class Resource
      */
     public static $compoundKeyFields = null;
 
-
     /**
      * @var bool define if the resource is sortable and can be arranged in the index view
      */
@@ -137,9 +136,18 @@ abstract class Resource
     private $alreadyFetchedRows;
 
     /**
+     * @var array The resources that have already been booted
+     */
+    protected static $booted = [];
+
+    /**
      * @return array array of fields
      */
     abstract public function fields();
+
+    public function __construct() {
+        static::bootIfNotBooted();
+    }
 
     public function getFields(?bool $inline = false)
     {
