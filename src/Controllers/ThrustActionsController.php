@@ -12,12 +12,11 @@ class ThrustActionsController extends Controller
     {
         $resource  = Thrust::make($resourceName);
         $object    = $resource->find($id);
+        if(! method_exists($object, 'toggleActive')){
+            $object->update([$field => !$object->{$field}]);
+            return back();
+        }
         try {
-            if(! method_exists($object, 'toggleActive')){
-                $object->update([$field => !$object->{$field}]);
-                return back();
-            }
-        
             $object->toggleActive();
             return back();
         }catch(\Exception $e){
@@ -51,7 +50,41 @@ class ThrustActionsController extends Controller
         $ids        = is_string(request('ids')) ? explode(',', request('ids')) : request('ids');
 
         try {
-            $response   = $action->handle(collect($action->resource->find($ids)));
+            return $this->handleResponse($action, $action->handle(collect($action->resource->find($ids))));
+        } catch (\Exception $e) {
+            return $this->handleException($e);
+        }
+    }
+
+    private function handleException(\Exception $e) {
+        return request()->ajax() 
+            ? response()->json([
+                'ok' => false, 
+                'message' => $e->getMessage(), 
+                'shouldReload' => false, 
+                'responseAsPopup' => false
+            ]) 
+            :  back()->withErrors(['msg' => $e->getMessage()]);
+    }
+
+    private function handleResponse($action, $response){
+        if (request()->ajax()) {
+            return response()->json([
+                'ok' => true, 
+                'message' => $response ?? 'done', 
+                'shouldReload' => $action->shouldReload, 
+                'responseAsPopup' => $action->responseAsPopup
+            ]);
+        }
+
+        return back()->withMessage($response);
+    }
+
+    public function singleResourcePerform($resourceName)
+    {
+        $action = $this->findActionForResource($resourceName, request('action'));
+        try {
+            $response   = $action->handle();
         } catch (\Exception $e) {
             return request()->ajax() ?
                 response()->json(['ok' => false, 'message' => $e->getMessage(), 'shouldReload' => false, 'responseAsPopup' => false]) :

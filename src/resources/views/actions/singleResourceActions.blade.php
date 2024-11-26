@@ -11,25 +11,26 @@
             @endforeach
         </div>
     </x-ui::dropdown>
-@endif
 
-<script>
-    async function doSingleResourceAction(actionClass){
-        await $.post("{{ route('thrust.actions.singleResource.perform', [$resourceName]) }}", {
-            "_token": "{{ csrf_token() }}",
-            "action" : actionClass,
-        }).done(function(data){
-            if (data["responseAsPopup"]){
-                $('#popup').popup('show')
-                $("#popupContent").html(data["message"])
-            } else {
-                showMessage(data["message"])
-            }
-            if (data["shouldReload"]) {
-                location.reload()
-            }
-        }).fail(function(){
-            showMessage("Something went wrong")
-        })
-    }
-</script>
+
+    <script>
+        async function doSingleResourceAction(actionClass){
+            await $.post("{{ route('thrust.actions.singleResource.perform', [$resourceName]) }}", {
+                "_token": "{{ csrf_token() }}",
+                "action" : actionClass,
+            }).done(function(data){
+                if (data["responseAsPopup"]){
+                    $('#popup').popup('show')
+                    $("#popupContent").html(data["message"])
+                } else {
+                    showMessage(data["message"])
+                }
+                if (data["shouldReload"]) {
+                    location.reload()
+                }
+            }).fail(function(){
+                showMessage("Something went wrong")
+            })
+        }
+    </script>
+@endif

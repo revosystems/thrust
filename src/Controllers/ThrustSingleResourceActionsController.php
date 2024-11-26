@@ -13,21 +13,36 @@ class ThrustSingleResourceActionsController extends Controller
     {
         $action = $this->findActionForResource($resourceName, request('action'));
         try {
-            $response = $action->handle();
+            return $this->handleResponse($action, $action->handle());
         } catch (\Exception $e) {
-            return request()->ajax() ?
-                response()->json(['ok' => false, 'message' => $e->getMessage(), 'shouldReload' => false, 'responseAsPopup' => false]) :
-                back()->withErrors(['msg' => $e->getMessage()]);
+            return $this->handleException($e);
         }
+    }
 
+    private function handleException(\Exception $e) {
+        return request()->ajax()
+            ? response()->json([
+                'ok' => false, 
+                'message' => $e->getMessage(), 
+                'shouldReload' => false, 
+                'responseAsPopup' => false
+            ])
+            : back()->withErrors(['msg' => $e->getMessage()]);
+    }
+
+    private function handleResponse($action, $response){
         if (request()->ajax()) {
-            return response()->json(['ok' => true, 'message' => $response ?? 'done', 'shouldReload' => $action->shouldReload, 'responseAsPopup' => $action->responseAsPopup]);
+            return response()->json([
+                'ok' => true, 
+                'message' => $response ?? 'done', 
+                'shouldReload' => $action->shouldReload, 
+                'responseAsPopup' => $action->responseAsPopup
+            ]);
         }
 
         return back()->withMessage($response);
     }
 
-    
     private function findActionForResource($resourceName, $actionClass)
     {
         $resource   = Thrust::make($resourceName);
@@ -40,5 +55,10 @@ class ThrustSingleResourceActionsController extends Controller
             : $resource;
             
         return $action;
+    }
+
+    private function searchingInResource(): bool
+    {
+        return (bool) request('search', false);
     }
 }
