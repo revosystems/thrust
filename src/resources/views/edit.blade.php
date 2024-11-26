@@ -1,7 +1,12 @@
 @if ($fullPage)
-    <div class="flex items-center mb-4 w-xl text-sm md:text-lg">
-        @component(config('thrust.sidebar-collapsed-button'))@endcomponent
-        <h2>{{ $title }}</h2>
+    <div class="flex items-center justify-between mb-4 w-xl">
+        <div class="flex items-center">
+            @component(config('thrust.sidebar-collapsed-button'))@endcomponent
+            <h2 class="text-sm md:text-lg">{{ $title }}</h2>
+        </div>
+        <div>
+            @include('thrust::actions.singleResourceActions')
+        </div>
     </div>
 @else
     <div class="flex space-x-1 items-center text-lg pb-2">

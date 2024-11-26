@@ -20,6 +20,7 @@ Route::group(['prefix' => config('thrust.routePrefix', 'thrust'), 'namespace' =>
     Route::post('{resourceName}/actions', 'ThrustActionsController@perform')->name('thrust.actions.perform');
     Route::get('{resourceName}/actions', 'ThrustActionsController@create')->name('thrust.actions.create');
     Route::get('{resourceName}/index/actions', 'ThrustActionsController@index')->name('thrust.actions.index');
+    Route::post('{resourceName}/singleResource/actions', 'ThrustSingleResourceActionsController@perform')->name('thrust.actions.singleResource.perform');
 
     Route::post('{resourceName}/updateOrder', 'ThrustSortController@updateOrder')->name('thrust.updateOrder');
     Route::get('{resourceName}/{id}/toggle/{field}', 'ThrustActionsController@toggle')->name('thrust.toggle');
