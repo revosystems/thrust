@@ -13,11 +13,11 @@ abstract class SingleResourceAction
     public $shouldReload = false;
     public $responseAsPopup = true;
 
-    public static function make($title)
+    public static function make($title, ?string $icon = null)
     {
         $action        = new static;
         $action->title = $title;
-        $action->icon  = 'plus';
+        $action->icon  = $icon;
         return $action;
     }
 
