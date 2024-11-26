@@ -333,6 +333,10 @@ abstract class Resource
         ];
     }
 
+    public function singlePageActions(){
+        return [];
+    }
+
     public function actions()
     {
         return $this->canDelete(static::$model)
