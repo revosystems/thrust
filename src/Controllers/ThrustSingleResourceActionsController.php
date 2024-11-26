@@ -13,7 +13,7 @@ class ThrustSingleResourceActionsController extends Controller
     {
         $action = $this->findActionForResource($resourceName, request('action'));
         try {
-            $response   = $action->handle();
+            $response = $action->handle();
         } catch (\Exception $e) {
             return request()->ajax() ?
                 response()->json(['ok' => false, 'message' => $e->getMessage(), 'shouldReload' => false, 'responseAsPopup' => false]) :
@@ -27,17 +27,7 @@ class ThrustSingleResourceActionsController extends Controller
         return back()->withMessage($response);
     }
 
-    public function index($resourceName)
-    {
-        $resource = Thrust::make($resourceName);
-
-        return view('thrust::components.actions-index', [
-            'actions' => collect($resource->getActions(whileSearching: $this->searchingInResource())),
-            'resourceName' => $resource->name(),
-            'attributes' => new ComponentAttributeBag([])
-        ]);
-    }
-
+    
     private function findActionForResource($resourceName, $actionClass)
     {
         $resource   = Thrust::make($resourceName);
@@ -50,10 +40,5 @@ class ThrustSingleResourceActionsController extends Controller
             : $resource;
             
         return $action;
-    }
-
-    private function searchingInResource(): bool
-    {
-        return (bool) request('search', false);
     }
 }
